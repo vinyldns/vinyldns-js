@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/vinyldns/vinyldns-js.svg?branch=master)](https://travis-ci.org/vinyldns/vinyldns-js)
+
 # vinyldns-js
 
 This project is a work in progress! If you would like to help us get this where it needs to be, please reach out to us in [gitter](https://gitter.im/vinyldns), open a pull request, or create an issue.
