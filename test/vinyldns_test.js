@@ -16,6 +16,12 @@ function mockGet(path, resp) {
     .reply(200, resp);
 }
 
+function mockPost(path, body, resp) {
+  return nock(host)
+    .post(path, body)
+    .reply(200, resp);
+}
+
 
 describe('VinylDns', () => {
   it('is configurable', () => {
@@ -49,4 +55,37 @@ describe('VinylDns', () => {
         });
     });
   });
+
+  describe('getZone', () => {
+    it('fetches the zone with the ID it is passed', (done) => {
+      mockGet('/zones/123', fixtures.getZone);
+
+      vinyl.getZone('123')
+        .then(result => {
+          assert.equal(result.zone.name, 'system-test.');
+
+          done();
+        });
+    });
+  });
+
+  describe('createZone', () => {
+    it('creates the zone with the details it is passed', (done) => {
+      let create = {
+        adminGroupId: '123',
+        name: 'dummy.',
+        email: 'test@example.com'
+      };
+
+      mockPost('/zones', create, fixtures.createZone);
+
+      vinyl.createZone(create)
+        .then(result => {
+          assert.equal(result.zone.name, 'dummy.');
+
+          done();
+        });
+    });
+  });
+
 });

@@ -16,6 +16,7 @@
 
 const request = require('request');
 const aws4 = require('aws4');
+const url = require('url');
 const Urls = require('./urls');
 
 class VinylDns {
@@ -26,24 +27,26 @@ class VinylDns {
 
   requestOptions(opts) {
     return {
+      service: 'vinyldns',
+      region: 'us-east-1',
+      host: url.parse(opts.url).host,
       url: opts.url,
       method: opts.method || 'get',
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      body: opts.body || ''
     };
   }
 
   request(opts) {
-    opts.service = 'vinyldns';
-    opts.region = 'us-east-1';
-    opts.host = 'my-vinyldns.com';
+    let signedReq = aws4.sign(opts, {
+      accessKeyId: this.config.accessKeyId,
+      secretAccessKey: this.config.secretAccessKey
+    });
 
     return new Promise((fulfill, reject) => {
-      request(aws4.sign(opts, {
-        accessKeyId: this.config.accessKeyId,
-        secretAccessKey: this.config.secretAccessKey
-      }), (err, resp) => {
+      request(signedReq, (err, resp) => {
         if (err) reject(err);
 
         fulfill(JSON.parse(resp.body));
@@ -54,6 +57,21 @@ class VinylDns {
   getZones(queryOpts) {
     return this.request(this.requestOptions({
       url: this.urls.getZones(queryOpts)
+    }));
+
+  }
+
+  getZone(id) {
+    return this.request(this.requestOptions({
+      url: this.urls.getZone(id)
+    }));
+  }
+
+  createZone(zone) {
+    return this.request(this.requestOptions({
+      url: this.urls.createZone(),
+      body: JSON.stringify(zone),
+      method: 'post'
     }));
   }
 }

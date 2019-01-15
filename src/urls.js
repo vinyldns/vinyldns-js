@@ -27,6 +27,14 @@ class Urls {
     return this.zonesBase() + this.queryString(query);
   }
 
+  getZone(id) {
+    return `${this.zonesBase()}/${id}`;
+  }
+
+  createZone() {
+    return this.zonesBase();
+  }
+
   queryString(obj) {
     if (obj) {
       return '?' + Object.keys(obj).map(key => `${key}=${obj[key]}`).join('&');
