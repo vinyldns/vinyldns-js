@@ -50,16 +50,29 @@ vinylClient.getZone('123')
 
 ### REPL
 
-`vinyldns-js` ships with a built in REPL.
+`vinyldns-js` ships with a built in REPL. To use the REPL...
+
+Install dependencies:
 
 ```
 npm install
+```
 
+Create the requires environment variables:
+
+```
 export VINYLDNS_API_SERVER=http://my-vinyldns.com
 export VINYLDNS_ACCESS_KEY_ID=123
 export VINYLDNS_SECRET_ACCESS_KEY=123
+```
 
+Start the REPL:
+
+```
 npm run repl
+```
+
+Use the `vinyl` `vinyldns-js` client instance:
 
 > vinyl.getZones().then(res => { console.log(res) }).catch(err => { console.log(err) })
 ```
