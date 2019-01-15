@@ -25,6 +25,26 @@ class VinylDns {
     this.urls = new Urls(config.apiUrl);
   }
 
+  getZones(queryOpts) {
+    return this.request(this.requestOptions({
+      url: this.urls.getZones(queryOpts)
+    }));
+  }
+
+  getZone(id) {
+    return this.request(this.requestOptions({
+      url: this.urls.getZone(id)
+    }));
+  }
+
+  createZone(zone) {
+    return this.request(this.requestOptions({
+      url: this.urls.createZone(),
+      body: JSON.stringify(zone),
+      method: 'post'
+    }));
+  }
+
   requestOptions(opts) {
     return {
       service: 'vinyldns',
@@ -52,27 +72,6 @@ class VinylDns {
         fulfill(JSON.parse(resp.body));
       });
     });
-  }
-
-  getZones(queryOpts) {
-    return this.request(this.requestOptions({
-      url: this.urls.getZones(queryOpts)
-    }));
-
-  }
-
-  getZone(id) {
-    return this.request(this.requestOptions({
-      url: this.urls.getZone(id)
-    }));
-  }
-
-  createZone(zone) {
-    return this.request(this.requestOptions({
-      url: this.urls.createZone(),
-      body: JSON.stringify(zone),
-      method: 'post'
-    }));
   }
 }
 
