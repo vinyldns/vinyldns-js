@@ -85,5 +85,27 @@ module.exports = {
     "status": "Pending",
     "created": "2017-02-23T19:23:26Z",
     "id": "d1fcd28d-61fe-4c24-ac0b-4377d66d50db"
+  },
+
+  deleteZone: {
+    "status": "Pending",
+    "zone": {
+      "status": "Deleted",
+      "updated": "2016-12-28T18:45:53Z",
+      "name": "443ad9ff-8f38-4540-b53f-e23a35fdfc28.",
+      "adminGroupId": "test-group-id",
+      "created": "2016-12-28T18:45:53Z",
+      "account": "test_group",
+      "email": "test@test.com",
+      "shared": false,
+      "acl": {
+        "rules": []
+      },
+      "id": "4995e883-f314-4c5f-8ee8-75003ca08ab0"
+    },
+    "created": "2016-12-28T18:45:53Z",
+    "changeType": "Delete",
+    "userId": "vinyl",
+    "id": "89c463e3-1615-42f7-8299-a0ca7ccea439"
   }
 };

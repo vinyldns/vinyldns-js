@@ -53,6 +53,13 @@ class VinylDns {
     }));
   }
 
+  deleteZone(id) {
+    return this.request(this.requestOptions({
+      url: this.urls.zone(id),
+      method: 'delete'
+    }));
+  }
+
   requestOptions(opts) {
     return {
       service: 'vinyldns',

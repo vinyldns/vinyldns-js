@@ -28,6 +28,12 @@ function mockPut(path, body, resp) {
     .reply(200, resp);
 }
 
+function mockDelete(path, resp) {
+  return nock(host)
+    .delete(path)
+    .reply(200, resp);
+}
+
 describe('VinylDns', () => {
   it('is configurable', () => {
     assert.equal(vinyl.config.apiUrl, 'http://my-vinyldns.com');
@@ -106,6 +112,19 @@ describe('VinylDns', () => {
       vinyl.updateZone(update)
         .then(result => {
           assert.equal(result.zone.name, 'dummy.');
+
+          done();
+        });
+    });
+  });
+
+  describe('deleteZone', () => {
+    it('deletes the zone with the ID it is passed', (done) => {
+      mockDelete('/zones/123', fixtures.deleteZone);
+
+      vinyl.deleteZone('123')
+        .then(result => {
+          assert.equal(result.zone.status, 'Deleted');
 
           done();
         });
