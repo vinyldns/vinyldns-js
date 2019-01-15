@@ -33,5 +33,20 @@ describe('VinylDns', () => {
           done();
         });
     });
+
+    it('properly fetches zones with query params', (done) => {
+      mockGet('/zones?nameFilter=foo&startFrom=1&maxItems=100', fixtures.getZones);
+
+      vinyl.getZones({
+        nameFilter: 'foo',
+        startFrom: 1,
+        maxItems: 100
+      })
+        .then(result => {
+          assert.equal(result.zones[0].name, 'list-zones-test-searched-1.');
+
+          done();
+        });
+    });
   });
 });

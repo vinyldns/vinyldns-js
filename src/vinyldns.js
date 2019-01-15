@@ -51,9 +51,9 @@ class VinylDns {
     });
   }
 
-  getZones() {
+  getZones(queryOpts) {
     return this.request(this.requestOptions({
-      url: this.urls.zones()
+      url: this.urls.zones(queryOpts)
     }));
   }
 }
