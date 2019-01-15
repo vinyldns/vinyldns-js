@@ -20,7 +20,8 @@
     "url": "https://github.com/vinyldns/vinyldns-js/issues"
   },
   "dependencies": {
-    "request": "2.88.0"
+    "request": "2.88.0",
+    "aws4": "1.8.0"
   },
   "devDependencies": {
     "eslint": "5.12.0",
