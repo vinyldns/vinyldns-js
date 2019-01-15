@@ -19,10 +19,20 @@ class Urls {
     this.apiUrl = apiUrl;
   }
 
-  zones(query) {
-    let params = query ? '?' + Object.keys(query).map(key => `${key}=${query[key]}`).join('&') : '';
+  zonesBase() {
+    return `${this.apiUrl}/zones`;
+  }
 
-    return `${this.apiUrl}/zones${params}`;
+  zones(query) {
+    return this.zonesBase() + this.queryString(query);
+  }
+
+  queryString(obj) {
+    if (obj) {
+      return '?' + Object.keys(obj).map(key => `${key}=${obj[key]}`).join('&');
+    }
+
+    return '';
   }
 }
 
