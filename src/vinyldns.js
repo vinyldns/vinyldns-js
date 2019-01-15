@@ -53,7 +53,7 @@ class VinylDns {
 
   getZones(queryOpts) {
     return this.request(this.requestOptions({
-      url: this.urls.zones(queryOpts)
+      url: this.urls.getZones(queryOpts)
     }));
   }
 }

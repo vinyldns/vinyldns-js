@@ -23,7 +23,7 @@ class Urls {
     return `${this.apiUrl}/zones`;
   }
 
-  zones(query) {
+  getZones(query) {
     return this.zonesBase() + this.queryString(query);
   }
 
