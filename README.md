@@ -58,7 +58,7 @@ Install dependencies:
 npm install
 ```
 
-Create the requires environment variables:
+Create the required environment variables:
 
 ```
 export VINYLDNS_API_SERVER=http://my-vinyldns.com
@@ -74,6 +74,7 @@ npm run repl
 
 Use the `vinyl` `vinyldns-js` client instance:
 
+```
 > vinyl.getZones().then(res => { console.log(res) }).catch(err => { console.log(err) })
 ```
 
