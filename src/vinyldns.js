@@ -40,7 +40,7 @@ class VinylDns {
   createZone(zone) {
     return this.request(this.requestOptions({
       url: this.urls.createZone(),
-      body: JSON.stringify(zone),
+      body: zone,
       method: 'post'
     }));
   }
@@ -48,7 +48,7 @@ class VinylDns {
   updateZone(zone) {
     return this.request(this.requestOptions({
       url: this.urls.zone(zone.id),
-      body: JSON.stringify(zone),
+      body: zone,
       method: 'put'
     }));
   }
@@ -70,7 +70,7 @@ class VinylDns {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: opts.body || ''
+      body: opts.body ? JSON.stringify(opts.body) : ''
     };
   }
 
