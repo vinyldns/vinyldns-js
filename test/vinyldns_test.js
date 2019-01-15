@@ -22,6 +22,11 @@ function mockPost(path, body, resp) {
     .reply(200, resp);
 }
 
+function mockPut(path, body, resp) {
+  return nock(host)
+    .put(path, body)
+    .reply(200, resp);
+}
 
 describe('VinylDns', () => {
   it('is configurable', () => {
@@ -88,4 +93,22 @@ describe('VinylDns', () => {
     });
   });
 
+  describe('updateZone', () => {
+    it('updates the zone with the details it is passed', (done) => {
+      let update = {
+        name: 'dummy.',
+        email: 'test@example.com',
+        id: '123'
+      };
+
+      mockPut('/zones/123', update, fixtures.updateZone);
+
+      vinyl.updateZone(update)
+        .then(result => {
+          assert.equal(result.zone.name, 'dummy.');
+
+          done();
+        });
+    });
+  });
 });

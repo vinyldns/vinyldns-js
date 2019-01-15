@@ -27,7 +27,7 @@ class Urls {
     return this.zonesBase() + this.queryString(query);
   }
 
-  getZone(id) {
+  zone(id) {
     return `${this.zonesBase()}/${id}`;
   }
 

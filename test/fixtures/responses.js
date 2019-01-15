@@ -62,5 +62,28 @@ module.exports = {
     "changeType": "Create",
     "userId": "vinyl",
     "id": "dd449c27-bed5-4cd5-95e6-4c54fb20d930"
+  },
+
+  updateZone: {
+    "zone": {
+      "name": "dummy.",
+      "email": "update@update.com",
+      "status": "Active",
+      "created": "2017-02-23T14:52:44Z",
+      "updated": "2017-02-23T19:23:26Z",
+      "id": "2467dc05-68eb-4498-a9d5-78d24bb0893c",
+      "account": "9b22b686-54bc-47fb-a8f8-cdc48e6d04ae",
+      "shared": false,
+      "acl": {
+        "rules": []
+      },
+      "adminGroupId": "9b22b686-54bc-47fb-a8f8-cdc48e6d04ae",
+      "latestSync": "2017-02-23T19:05:33Z"
+    },
+    "userId": "0215d410-9b7e-4636-89fd-b6b948a06347",
+    "changeType": "Update",
+    "status": "Pending",
+    "created": "2017-02-23T19:23:26Z",
+    "id": "d1fcd28d-61fe-4c24-ac0b-4377d66d50db"
   }
 };

@@ -33,7 +33,7 @@ class VinylDns {
 
   getZone(id) {
     return this.request(this.requestOptions({
-      url: this.urls.getZone(id)
+      url: this.urls.zone(id)
     }));
   }
 
@@ -42,6 +42,14 @@ class VinylDns {
       url: this.urls.createZone(),
       body: JSON.stringify(zone),
       method: 'post'
+    }));
+  }
+
+  updateZone(zone) {
+    return this.request(this.requestOptions({
+      url: this.urls.zone(zone.id),
+      body: JSON.stringify(zone),
+      method: 'put'
     }));
   }
 
