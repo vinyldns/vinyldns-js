@@ -23,7 +23,7 @@ All methods return a Promise.
 ```javascript
 const Vinyldns = require('vinyldns-js');
 const vinylClient = new Vinyldns({
-  apiUrl: host,
+  apiUrl: 'http://my-vinyldns.com',
   accessKeyId: '123',
   secretAccessKey: '123'
 });
