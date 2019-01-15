@@ -48,9 +48,24 @@ vinylClient.getZone('123')
 });
 ```
 
+### REPL
+
+`vinyldns-js` ships with a built in REPL.
+
+```
+npm install
+
+export VINYLDNS_API_SERVER=http://my-vinyldns.com
+export VINYLDNS_ACCESS_KEY_ID=123
+export VINYLDNS_SECRET_ACCESS_KEY=123
+
+npm run repl
+
+> vinyl.getZones().then(res => { console.log(res) }).catch(err => { console.log(err) })
+```
+
 ## Work that needs to be done
 
 * Create CRUD methods for all VinylDNS resources (including unit tests)
 * Create a suite of integration/acceptance tests executed against a Dockerized VinylDNS API running on `localhost`
 * Publish to NPM
-* Create a REPL
