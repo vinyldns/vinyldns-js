@@ -49,9 +49,6 @@ vinylClient.getZone('123')
 ## Work that needs to be done
 
 * Create CRUD methods for all VinylDNS resources (including unit tests)
-* Set up TravisCI
 * Create a suite of integration/acceptance tests executed against a Dockerized VinylDNS API running on `localhost`
 * Publish to NPM
 * Create a REPL
-
-
