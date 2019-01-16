@@ -1,85 +1,85 @@
+[![Build Status](https://travis-ci.org/vinyldns/vinyldns-js.svg?branch=master)](https://travis-ci.org/vinyldns/vinyldns-js)
+
 # vinyldns-js
 
-This project is a work in progress! If you would like to help us get this where it needs to be, please reach out to us in [gitter](https://gitter.im/vinyldns)
+This project is a work in progress! If you would like to help us get this where it needs to be, please reach out to us in [gitter](https://gitter.im/vinyldns), open a pull request, or create an issue.
 
 ## Contributing
 
-To set up you environment run `npm install`
+Install dependencies:
 
-`npm run  prettier` is used to keep code consistent
+```
+npm install
+```
 
-`npm run webpack` is used to build a minimized version of the code to be published to npm
+Run tests and lint code:
 
-### Work that needs to be done
-
-* Validate standard record CRUD endpoints are created and that they work
-* Create automated javascript tests, recommend using `tape` and `faucet` npm packages
-* Set up travis
-* Publish to NPM
+```
+npm test
+```
 
 ## Usage
 
-### VinylDns JavaScript package
+All methods return a Promise.
 
-If listed in the projects `package.json`, vinyldns-js can be used in a node environment for server-side requests to a VinylDns API
-
-#### Example
-
-```
-const vinyldns = require('vinyldns-js');
-const vinylClient = new vinyldns();
-
-vinylClient.createGroup({
-  "name": "some-group",
-  "email": "test@vinyl.com",
-  "description": "an example group",
-  "members": [
-    {
-      "id": "2764183c-5e75-4ae6-8833-503cd5f4dcb0"
-    }
-  ],
-  "admins": [
-    {
-      "id": "2764183c-5e75-4ae6-8833-503cd5f4dcb0"
-    }
-  ]
+```javascript
+const Vinyldns = require('vinyldns-js');
+const vinylClient = new Vinyldns({
+  apiUrl: 'http://my-vinyldns.com',
+  accessKeyId: '123',
+  secretAccessKey: '123'
 });
-// returns promise
+
+vinylClient.createZone({
+  adminGroupId: '123',
+  name: 'dummy.',
+  email: 'test@example.com'
+}).then(result => {
+  console.log(result);
+}).catch(err => {
+  console.log(err);
+});
+
+vinylClient.getZone('123')
+.then(result => {
+  console.log(result);
+}).catch(err => {
+  console.log(err);
+});
 ```
 
-### VinylDns REPL
+### REPL
 
-`npm run vinylrepl` will bootstrap an interactive node repl with the
-`var vinylClient` already declared in scope. This is an instance of the `VinylDns`
-class in `src/vinyldns.js`
+`vinyldns-js` ships with a built in REPL. To use the REPL...
 
-This instance of the `VinylDns` class will be passed an optional repl flag, that
-will cause it to print api request results to the console
-
-#### Example
+Install dependencies:
 
 ```
-npm run vinylrepl
-> vinylClient.listZones();
-/*
-  {
-    "zones": [
-      {
-        "status": "Active",
-        "account": "a0b5ea74-cc05-4932-a294-9bf935d52744",
-        "name": "list-zones-test-searched-1.",
-        "created": "2016-12-16T15:21:47Z",
-        "adminGroupId": "a0b5ea74-cc05-4932-a294-9bf935d52744",
-        "email": "test@test.com",
-        "shared": false,
-        "acl": {
-          "rules": []
-        },
-        "id": "31a3d8a9-bea0-458f-9c24-3d39d4b929d6"
-      },
-    "maxItems": 100
-  }
-*/
->
->
+npm install
 ```
+
+Create the required environment variables:
+
+```
+export VINYLDNS_API_SERVER=http://my-vinyldns.com
+export VINYLDNS_ACCESS_KEY_ID=123
+export VINYLDNS_SECRET_ACCESS_KEY=123
+```
+
+Start the REPL:
+
+```
+npm run repl
+```
+
+Use the `vinyl` `vinyldns-js` client instance:
+
+```
+> vinyl.getZones().then(res => { console.log(res) }).catch(err => { console.log(err) })
+```
+
+## Work that needs to be done
+
+* Create CRUD methods for all VinylDNS resources (including unit tests)
+* Create a suite of integration/acceptance tests executed against a Dockerized VinylDNS API running on `localhost`
+* Publish to NPM
