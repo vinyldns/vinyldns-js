@@ -80,6 +80,14 @@ class VinylDns {
     }));
   }
 
+  updateGroup(group) {
+    return this.request(this.requestOptions({
+      url: this.urls.groupsBase(),
+      body: group,
+      method: 'put'
+    }));
+  }
+
   requestOptions(opts) {
     return {
       service: 'vinyldns',

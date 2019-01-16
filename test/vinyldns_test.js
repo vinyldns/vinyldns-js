@@ -215,5 +215,30 @@ describe('VinylDns', () => {
           });
       });
     });
+
+    describe('updateGroup', () => {
+      it('updates the group with the details it is passed', (done) => {
+        let update = {
+          name: 'some-group',
+          email: 'test@example.com',
+          description: 'an example group',
+          members: [{
+            id: '123'
+          }],
+          admins: [{
+            id: '456'
+          }]
+        };
+
+        mockPut('/groups', update, fixtures.updateGroup);
+
+        vinyl.updateGroup(update)
+          .then(result => {
+            assert.equal(result.name, 'some-group');
+
+            done();
+          });
+      });
+    });
   });
 });
