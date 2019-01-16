@@ -146,4 +146,17 @@ describe('VinylDns', () => {
         });
     });
   });
+
+  describe('getGroups', () => {
+    it('fetches groups', (done) => {
+      mockGet('/groups', fixtures.getGroups);
+
+      vinyl.getGroups()
+        .then(result => {
+          assert.equal(result.groups[0].name, 'some-other-group');
+
+          done();
+        });
+    });
+  });
 });

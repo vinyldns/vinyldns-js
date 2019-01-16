@@ -35,6 +35,14 @@ class Urls {
     return this.zonesBase();
   }
 
+  groupsBase() {
+    return `${this.apiUrl}/groups`;
+  }
+
+  getGroups(query) {
+    return this.groupsBase() + this.queryString(query);
+  }
+
   queryString(obj) {
     if (obj) {
       return '?' + Object.keys(obj).map(key => `${key}=${obj[key]}`).join('&');

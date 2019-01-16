@@ -123,5 +123,28 @@ module.exports = {
     "changeType": "Delete",
     "userId": "vinyl",
     "id": "89c463e3-1615-42f7-8299-a0ca7ccea439"
+  },
+
+  getGroups: {
+    "maxItems": 100,
+    "groups": [
+      {
+        "id": "93887728-2b26-4749-ba69-98871dda9cc0",
+        "name": "some-other-group",
+        "email": "test@example.com",
+        "created": "2017-03-02T16:23:07Z",
+        "status": "Active",
+        "members": [
+          {
+            "id": "2764183c-5e75-4ae6-8833-503cd5f4dcb0"
+          }
+        ],
+        "admins": [
+          {
+            "id": "2764183c-5e75-4ae6-8833-503cd5f4dcb0"
+          }
+        ]
+      }
+    ]
   }
 };
