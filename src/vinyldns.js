@@ -26,9 +26,7 @@ class VinylDns {
   }
 
   getZones(queryOpts) {
-    return this.request(this.requestOptions({
-      url: this.urls.getZones(queryOpts)
-    }));
+    return this._list(this.urls.getZones(queryOpts));
   }
 
   getZone(id) {
@@ -36,19 +34,11 @@ class VinylDns {
   }
 
   createZone(zone) {
-    return this.request(this.requestOptions({
-      url: this.urls.zonesBase(),
-      body: zone,
-      method: 'post'
-    }));
+    return this._createOrUpdate(zone, this.urls.zonesBase(), 'post');
   }
 
   updateZone(zone) {
-    return this.request(this.requestOptions({
-      url: this.urls.zone(zone.id),
-      body: zone,
-      method: 'put'
-    }));
+    return this._createOrUpdate(zone, this.urls.zone(zone.id), 'put');
   }
 
   deleteZone(id) {
@@ -56,9 +46,7 @@ class VinylDns {
   }
 
   getGroups(queryOpts) {
-    return this.request(this.requestOptions({
-      url: this.urls.getGroups(queryOpts)
-    }));
+    return this._list(this.urls.getGroups(queryOpts));
   }
 
   getGroup(id) {
@@ -66,19 +54,11 @@ class VinylDns {
   }
 
   createGroup(group) {
-    return this.request(this.requestOptions({
-      url: this.urls.groupsBase(),
-      body: group,
-      method: 'post'
-    }));
+    return this._createOrUpdate(group, this.urls.groupsBase(), 'post');
   }
 
   updateGroup(group) {
-    return this.request(this.requestOptions({
-      url: this.urls.group(group.id),
-      body: group,
-      method: 'put'
-    }));
+    return this._createOrUpdate(group, this.urls.group(group.id), 'put');
   }
 
   deleteGroup(id) {
@@ -114,10 +94,24 @@ class VinylDns {
     });
   }
 
-  _getOrDelete(resource, id, method) {
+  _list(url) {
     return this.request(this.requestOptions({
-      url: this.urls[resource](id),
+      url: url
+    }));
+  }
+
+  _getOrDelete(resourceType, id, method) {
+    return this.request(this.requestOptions({
+      url: this.urls[resourceType](id),
       method: method
+    }));
+  }
+
+  _createOrUpdate(resource, url, method) {
+    return this.request(this.requestOptions({
+      url: url,
+      method: method,
+      body: resource
     }));
   }
 }
