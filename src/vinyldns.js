@@ -65,7 +65,7 @@ class VinylDns {
     return this._getOrDelete('group', id, 'delete');
   }
 
-  requestOptions(opts) {
+  _requestOptions(opts) {
     return {
       service: 'vinyldns',
       region: 'us-east-1',
@@ -79,7 +79,7 @@ class VinylDns {
     };
   }
 
-  request(opts) {
+  _request(opts) {
     let signedReq = aws4.sign(opts, {
       accessKeyId: this.config.accessKeyId,
       secretAccessKey: this.config.secretAccessKey
@@ -95,20 +95,20 @@ class VinylDns {
   }
 
   _list(url) {
-    return this.request(this.requestOptions({
+    return this._request(this._requestOptions({
       url: url
     }));
   }
 
   _getOrDelete(resourceType, id, method) {
-    return this.request(this.requestOptions({
+    return this._request(this._requestOptions({
       url: this.urls[resourceType](id),
       method: method
     }));
   }
 
   _createOrUpdate(resource, url, method) {
-    return this.request(this.requestOptions({
+    return this._request(this._requestOptions({
       url: url,
       method: method,
       body: resource
