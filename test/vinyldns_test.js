@@ -158,5 +158,20 @@ describe('VinylDns', () => {
           done();
         });
     });
+
+    it('properly fetches groups with query params', (done) => {
+      mockGet('/groups?nameFilter=foo&startFrom=1&maxItems=100', fixtures.getGroups);
+
+      vinyl.getGroups({
+        nameFilter: 'foo',
+        startFrom: 1,
+        maxItems: 100
+      })
+        .then(result => {
+          assert.equal(result.groups[0].name, 'some-other-group');
+
+          done();
+        });
+    });
   });
 });
