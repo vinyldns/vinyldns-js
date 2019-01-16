@@ -39,7 +39,7 @@ class VinylDns {
 
   createZone(zone) {
     return this.request(this.requestOptions({
-      url: this.urls.createZone(),
+      url: this.urls.zonesBase(),
       body: zone,
       method: 'post'
     }));
@@ -69,6 +69,14 @@ class VinylDns {
   getGroup(id) {
     return this.request(this.requestOptions({
       url: this.urls.group(id)
+    }));
+  }
+
+  createGroup(group) {
+    return this.request(this.requestOptions({
+      url: this.urls.groupsBase(),
+      body: group,
+      method: 'post'
     }));
   }
 

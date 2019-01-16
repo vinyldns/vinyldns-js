@@ -167,5 +167,24 @@ module.exports = {
         "id": "2764183c-5e75-4ae6-8833-503cd5f4dcb0"
       }
     ]
+  },
+
+  createGroup: {
+    "id": "6f8afcda-7529-4cad-9f2d-76903f4b1aca",
+    "name": "some-group",
+    "email": "test@example.com",
+    "description": "an example group",
+    "created": "2017-03-02T15:29:21Z",
+    "status": "Active",
+    "members": [
+      {
+        "id": "2764183c-5e75-4ae6-8833-503cd5f4dcb0"
+      }
+    ],
+    "admins": [
+      {
+        "id": "2764183c-5e75-4ae6-8833-503cd5f4dcb0"
+      }
+    ]
   }
 };

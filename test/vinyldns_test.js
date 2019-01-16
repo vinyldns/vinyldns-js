@@ -190,5 +190,30 @@ describe('VinylDns', () => {
           });
       });
     });
+
+    describe('createGroup', () => {
+      it('creates the group with the details it is passed', (done) => {
+        let create = {
+          name: 'some-group',
+          email: 'test@example.com',
+          description: 'an example group',
+          members: [{
+            id: '123'
+          }],
+          admins: [{
+            id: '456'
+          }]
+        };
+
+        mockPost('/groups', create, fixtures.createGroup);
+
+        vinyl.createGroup(create)
+          .then(result => {
+            assert.equal(result.name, 'some-group');
+
+            done();
+          });
+      });
+    });
   });
 });
