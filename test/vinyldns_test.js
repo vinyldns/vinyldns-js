@@ -240,5 +240,18 @@ describe('VinylDns', () => {
           });
       });
     });
+
+    describe('deleteGroup', () => {
+      it('deletes the group with the ID it is passed', (done) => {
+        mockDelete('/groups/123', fixtures.deleteGroup);
+
+        vinyl.deleteGroup('123')
+          .then(result => {
+            assert.equal(result.status, 'Deleted');
+
+            done();
+          });
+      });
+    });
   });
 });

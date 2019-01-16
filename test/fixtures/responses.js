@@ -205,6 +205,26 @@ module.exports = {
         "id": "2764183c-5e75-4ae6-8833-503cd5f4dcb0"
       }
     ]
-  }
+  },
 
+  deleteGroup: {
+    "id": "6f8afcda-7529-4cad-9f2d-76903f4b1aca",
+    "name": "some-group",
+    "email": "test@example.com",
+    "created": "2017-03-02T15:29:21Z",
+    "status": "Deleted",
+    "members": [
+      {
+        "id": "2764183c-5e75-4ae6-8833-503cd5f4dcb0"
+      },
+      {
+        "id": "c8630ebc-0af2-4c9a-a0a0-d18c590ed03e"
+      }
+    ],
+    "admins": [
+      {
+        "id": "2764183c-5e75-4ae6-8833-503cd5f4dcb0"
+      }
+    ]
+  }
 };
