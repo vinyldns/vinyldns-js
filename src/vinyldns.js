@@ -66,6 +66,12 @@ class VinylDns {
     }));
   }
 
+  getGroup(id) {
+    return this.request(this.requestOptions({
+      url: this.urls.group(id)
+    }));
+  }
+
   requestOptions(opts) {
     return {
       service: 'vinyldns',

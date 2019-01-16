@@ -55,123 +55,140 @@ describe('VinylDns', () => {
     assert.equal(vinyl.config.apiUrl, 'http://my-vinyldns.com');
   });
 
-  describe('getZones', () => {
-    it('fetches zones', (done) => {
-      mockGet('/zones', fixtures.getZones);
+  describe('zones methods', () => {
+    describe('getZones', () => {
+      it('fetches zones', (done) => {
+        mockGet('/zones', fixtures.getZones);
 
-      vinyl.getZones()
-        .then(result => {
-          assert.equal(result.zones[0].name, 'list-zones-test-searched-1.');
+        vinyl.getZones()
+          .then(result => {
+            assert.equal(result.zones[0].name, 'list-zones-test-searched-1.');
 
-          done();
-        });
+            done();
+          });
+      });
+
+      it('properly fetches zones with query params', (done) => {
+        mockGet('/zones?nameFilter=foo&startFrom=1&maxItems=100', fixtures.getZones);
+
+        vinyl.getZones({
+          nameFilter: 'foo',
+          startFrom: 1,
+          maxItems: 100
+        })
+          .then(result => {
+            assert.equal(result.zones[0].name, 'list-zones-test-searched-1.');
+
+            done();
+          });
+      });
     });
 
-    it('properly fetches zones with query params', (done) => {
-      mockGet('/zones?nameFilter=foo&startFrom=1&maxItems=100', fixtures.getZones);
+    describe('getZone', () => {
+      it('fetches the zone with the ID it is passed', (done) => {
+        mockGet('/zones/123', fixtures.getZone);
 
-      vinyl.getZones({
-        nameFilter: 'foo',
-        startFrom: 1,
-        maxItems: 100
-      })
-        .then(result => {
-          assert.equal(result.zones[0].name, 'list-zones-test-searched-1.');
+        vinyl.getZone('123')
+          .then(result => {
+            assert.equal(result.zone.name, 'system-test.');
 
-          done();
-        });
+            done();
+          });
+      });
+    });
+
+    describe('createZone', () => {
+      it('creates the zone with the details it is passed', (done) => {
+        let create = {
+          adminGroupId: '123',
+          name: 'dummy.',
+          email: 'test@example.com'
+        };
+
+        mockPost('/zones', create, fixtures.createZone);
+
+        vinyl.createZone(create)
+          .then(result => {
+            assert.equal(result.zone.name, 'dummy.');
+
+            done();
+          });
+      });
+    });
+
+    describe('updateZone', () => {
+      it('updates the zone with the details it is passed', (done) => {
+        let update = {
+          name: 'dummy.',
+          email: 'test@example.com',
+          id: '123'
+        };
+
+        mockPut('/zones/123', update, fixtures.updateZone);
+
+        vinyl.updateZone(update)
+          .then(result => {
+            assert.equal(result.zone.name, 'dummy.');
+
+            done();
+          });
+      });
+    });
+
+    describe('deleteZone', () => {
+      it('deletes the zone with the ID it is passed', (done) => {
+        mockDelete('/zones/123', fixtures.deleteZone);
+
+        vinyl.deleteZone('123')
+          .then(result => {
+            assert.equal(result.zone.status, 'Deleted');
+
+            done();
+          });
+      });
     });
   });
 
-  describe('getZone', () => {
-    it('fetches the zone with the ID it is passed', (done) => {
-      mockGet('/zones/123', fixtures.getZone);
+  describe('groups methods', () => {
+    describe('getGroups', () => {
+      it('fetches groups', (done) => {
+        mockGet('/groups', fixtures.getGroups);
 
-      vinyl.getZone('123')
-        .then(result => {
-          assert.equal(result.zone.name, 'system-test.');
+        vinyl.getGroups()
+          .then(result => {
+            assert.equal(result.groups[0].name, 'some-other-group');
 
-          done();
-        });
-    });
-  });
+            done();
+          });
+      });
 
-  describe('createZone', () => {
-    it('creates the zone with the details it is passed', (done) => {
-      let create = {
-        adminGroupId: '123',
-        name: 'dummy.',
-        email: 'test@example.com'
-      };
+      it('properly fetches groups with query params', (done) => {
+        mockGet('/groups?nameFilter=foo&startFrom=1&maxItems=100', fixtures.getGroups);
 
-      mockPost('/zones', create, fixtures.createZone);
+        vinyl.getGroups({
+          nameFilter: 'foo',
+          startFrom: 1,
+          maxItems: 100
+        })
+          .then(result => {
+            assert.equal(result.groups[0].name, 'some-other-group');
 
-      vinyl.createZone(create)
-        .then(result => {
-          assert.equal(result.zone.name, 'dummy.');
-
-          done();
-        });
-    });
-  });
-
-  describe('updateZone', () => {
-    it('updates the zone with the details it is passed', (done) => {
-      let update = {
-        name: 'dummy.',
-        email: 'test@example.com',
-        id: '123'
-      };
-
-      mockPut('/zones/123', update, fixtures.updateZone);
-
-      vinyl.updateZone(update)
-        .then(result => {
-          assert.equal(result.zone.name, 'dummy.');
-
-          done();
-        });
-    });
-  });
-
-  describe('deleteZone', () => {
-    it('deletes the zone with the ID it is passed', (done) => {
-      mockDelete('/zones/123', fixtures.deleteZone);
-
-      vinyl.deleteZone('123')
-        .then(result => {
-          assert.equal(result.zone.status, 'Deleted');
-
-          done();
-        });
-    });
-  });
-
-  describe('getGroups', () => {
-    it('fetches groups', (done) => {
-      mockGet('/groups', fixtures.getGroups);
-
-      vinyl.getGroups()
-        .then(result => {
-          assert.equal(result.groups[0].name, 'some-other-group');
-
-          done();
-        });
+            done();
+          });
+      });
     });
 
-    it('properly fetches groups with query params', (done) => {
-      mockGet('/groups?nameFilter=foo&startFrom=1&maxItems=100', fixtures.getGroups);
+    describe('getGroup', () => {
+      it('fetches the group with the ID it is passed', (done) => {
+        mockGet('/groups/123', fixtures.getGroup);
 
-      vinyl.getGroups({
-        nameFilter: 'foo',
-        startFrom: 1,
-        maxItems: 100
-      })
-        .then(result => {
-          assert.equal(result.groups[0].name, 'some-other-group');
+        vinyl.getGroup('123')
+          .then(result => {
+            assert.equal(result.name, 'some-group');
 
-          done();
-        });
+            done();
+          });
+      });
     });
   });
 });

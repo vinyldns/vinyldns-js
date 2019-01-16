@@ -43,6 +43,10 @@ class Urls {
     return this.groupsBase() + this.queryString(query);
   }
 
+  group(id) {
+    return `${this.groupsBase()}/${id}`;
+  }
+
   queryString(obj) {
     if (obj) {
       return '?' + Object.keys(obj).map(key => `${key}=${obj[key]}`).join('&');
