@@ -32,9 +32,7 @@ class VinylDns {
   }
 
   getZone(id) {
-    return this.request(this.requestOptions({
-      url: this.urls.zone(id)
-    }));
+    return this._getOrDelete('zone', id, 'get');
   }
 
   createZone(zone) {
@@ -54,10 +52,7 @@ class VinylDns {
   }
 
   deleteZone(id) {
-    return this.request(this.requestOptions({
-      url: this.urls.zone(id),
-      method: 'delete'
-    }));
+    return this._getOrDelete('zone', id, 'delete');
   }
 
   getGroups(queryOpts) {
@@ -67,9 +62,7 @@ class VinylDns {
   }
 
   getGroup(id) {
-    return this.request(this.requestOptions({
-      url: this.urls.group(id)
-    }));
+    return this._getOrDelete('group', id, 'get');
   }
 
   createGroup(group) {
@@ -82,17 +75,14 @@ class VinylDns {
 
   updateGroup(group) {
     return this.request(this.requestOptions({
-      url: this.urls.groupsBase(),
+      url: this.urls.group(group.id),
       body: group,
       method: 'put'
     }));
   }
 
   deleteGroup(id) {
-    return this.request(this.requestOptions({
-      url: this.urls.group(id),
-      method: 'delete'
-    }));
+    return this._getOrDelete('group', id, 'delete');
   }
 
   requestOptions(opts) {
@@ -122,6 +112,13 @@ class VinylDns {
         fulfill(JSON.parse(resp.body));
       });
     });
+  }
+
+  _getOrDelete(resource, id, method) {
+    return this.request(this.requestOptions({
+      url: this.urls[resource](id),
+      method: method
+    }));
   }
 }
 

@@ -220,6 +220,7 @@ describe('VinylDns', () => {
       it('updates the group with the details it is passed', (done) => {
         let update = {
           name: 'some-group',
+          id: '123',
           email: 'test@example.com',
           description: 'an example group',
           members: [{
@@ -230,7 +231,7 @@ describe('VinylDns', () => {
           }]
         };
 
-        mockPut('/groups', update, fixtures.updateGroup);
+        mockPut('/groups/123', update, fixtures.updateGroup);
 
         vinyl.updateGroup(update)
           .then(result => {
