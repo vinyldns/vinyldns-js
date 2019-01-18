@@ -26,28 +26,36 @@ const vinyl = new VinylDns({
   secretAccessKey: '123'
 });
 
-function mockGet(path, resp) {
+function mockGet(path, resp, status) {
+  status = status || 200;
+
   return nock(host)
     .get(path)
-    .reply(200, resp);
+    .reply(status, resp);
 }
 
-function mockPost(path, body, resp) {
+function mockPost(path, body, resp, status) {
+  status = status || 200;
+
   return nock(host)
     .post(path, body)
-    .reply(200, resp);
+    .reply(status, resp);
 }
 
-function mockPut(path, body, resp) {
+function mockPut(path, body, resp, status) {
+  status = status || 200;
+
   return nock(host)
     .put(path, body)
-    .reply(200, resp);
+    .reply(status, resp);
 }
 
-function mockDelete(path, resp) {
+function mockDelete(path, resp, status) {
+  status = status || 200;
+
   return nock(host)
     .delete(path)
-    .reply(200, resp);
+    .reply(status, resp);
 }
 
 describe('VinylDns', () => {
@@ -82,6 +90,20 @@ describe('VinylDns', () => {
             done();
           });
       });
+
+      it('properly handles non-200 responses from the API', (done) => {
+        mockGet('/zones', 'some err', 500);
+
+        vinyl.getZones()
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
     });
 
     describe('getZone', () => {
@@ -91,6 +113,20 @@ describe('VinylDns', () => {
         vinyl.getZone('123')
           .then(result => {
             assert.equal(result.zone.name, 'system-test.');
+
+            done();
+          });
+      });
+
+      it('properly handles non-200 responses from the API', (done) => {
+        mockGet('/zones/123', 'some err', 500);
+
+        vinyl.getZone('123')
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
 
             done();
           });
@@ -114,6 +150,20 @@ describe('VinylDns', () => {
             done();
           });
       });
+
+      it('properly handles non-200 responses from the API', (done) => {
+        mockPost('/zones', {}, 'some err', 500);
+
+        vinyl.createZone({})
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
     });
 
     describe('updateZone', () => {
@@ -133,6 +183,20 @@ describe('VinylDns', () => {
             done();
           });
       });
+
+      it('properly handles non-200 responses from the API', (done) => {
+        mockPut('/zones/123', {id: '123'}, 'some err', 500);
+
+        vinyl.updateZone({id: '123'})
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
     });
 
     describe('deleteZone', () => {
@@ -142,6 +206,20 @@ describe('VinylDns', () => {
         vinyl.deleteZone('123')
           .then(result => {
             assert.equal(result.zone.status, 'Deleted');
+
+            done();
+          });
+      });
+
+      it('properly handles non-200 responses from the API', (done) => {
+        mockDelete('/zones/123', 'some err', 500);
+
+        vinyl.deleteZone('123')
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
 
             done();
           });
@@ -176,6 +254,20 @@ describe('VinylDns', () => {
             done();
           });
       });
+
+      it('properly handles non-200 responses from the API', (done) => {
+        mockGet('/groups', 'some err', 500);
+
+        vinyl.getGroups()
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
     });
 
     describe('getGroup', () => {
@@ -185,6 +277,20 @@ describe('VinylDns', () => {
         vinyl.getGroup('123')
           .then(result => {
             assert.equal(result.name, 'some-group');
+
+            done();
+          });
+      });
+
+      it('properly handles non-200 responses from the API', (done) => {
+        mockGet('/groups/123', 'some err', 500);
+
+        vinyl.getGroup('123')
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
 
             done();
           });
