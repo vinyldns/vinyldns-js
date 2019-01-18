@@ -34,10 +34,12 @@ function mockGet(path, resp, status) {
     .reply(status, resp);
 }
 
-function mockPost(path, body, resp) {
+function mockPost(path, body, resp, status) {
+  status = status || 200;
+
   return nock(host)
     .post(path, body)
-    .reply(200, resp);
+    .reply(status, resp);
 }
 
 function mockPut(path, body, resp) {
@@ -111,6 +113,20 @@ describe('VinylDns', () => {
             done();
           });
       });
+
+      it('properly handles non-200 responses from the API', (done) => {
+        mockGet('/zones/123', 'some err', 500);
+
+        vinyl.getZone('123')
+          .then(() => {
+            // NOOP
+          })
+          .catch(resp => {
+            assert.equal(resp.body, 'some err');
+
+            done();
+          });
+      });
     });
 
     describe('createZone', () => {
@@ -126,6 +142,20 @@ describe('VinylDns', () => {
         vinyl.createZone(create)
           .then(result => {
             assert.equal(result.zone.name, 'dummy.');
+
+            done();
+          });
+      });
+
+      it('properly handles non-200 responses from the API', (done) => {
+        mockPost('/zones', {}, 'some err', 500);
+
+        vinyl.createZone({})
+          .then(() => {
+            // NOOP
+          })
+          .catch(resp => {
+            assert.equal(resp.body, 'some err');
 
             done();
           });
