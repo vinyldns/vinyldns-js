@@ -50,10 +50,12 @@ function mockPut(path, body, resp, status) {
     .reply(status, resp);
 }
 
-function mockDelete(path, resp) {
+function mockDelete(path, resp, status) {
+  status = status || 200;
+
   return nock(host)
     .delete(path)
-    .reply(200, resp);
+    .reply(status, resp);
 }
 
 describe('VinylDns', () => {
@@ -204,6 +206,20 @@ describe('VinylDns', () => {
         vinyl.deleteZone('123')
           .then(result => {
             assert.equal(result.zone.status, 'Deleted');
+
+            done();
+          });
+      });
+
+      it('properly handles non-200 responses from the API', (done) => {
+        mockDelete('/zones/123', 'some err', 500);
+
+        vinyl.deleteZone('123')
+          .then(() => {
+            // NOOP
+          })
+          .catch(resp => {
+            assert.equal(resp.body, 'some err');
 
             done();
           });
