@@ -42,10 +42,12 @@ function mockPost(path, body, resp, status) {
     .reply(status, resp);
 }
 
-function mockPut(path, body, resp) {
+function mockPut(path, body, resp, status) {
+  status = status || 200;
+
   return nock(host)
     .put(path, body)
-    .reply(200, resp);
+    .reply(status, resp);
 }
 
 function mockDelete(path, resp) {
@@ -175,6 +177,20 @@ describe('VinylDns', () => {
         vinyl.updateZone(update)
           .then(result => {
             assert.equal(result.zone.name, 'dummy.');
+
+            done();
+          });
+      });
+
+      it('properly handles non-200 responses from the API', (done) => {
+        mockPut('/zones/123', {id: '123'}, 'some err', 500);
+
+        vinyl.updateZone({id: '123'})
+          .then(() => {
+            // NOOP
+          })
+          .catch(resp => {
+            assert.equal(resp.body, 'some err');
 
             done();
           });
