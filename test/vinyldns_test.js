@@ -254,6 +254,20 @@ describe('VinylDns', () => {
             done();
           });
       });
+
+      it('properly handles non-200 responses from the API', (done) => {
+        mockGet('/groups', 'some err', 500);
+
+        vinyl.getGroups()
+          .then(() => {
+            // NOOP
+          })
+          .catch(resp => {
+            assert.equal(resp.body, 'some err');
+
+            done();
+          });
+      });
     });
 
     describe('getGroup', () => {
