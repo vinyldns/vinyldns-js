@@ -26,10 +26,12 @@ const vinyl = new VinylDns({
   secretAccessKey: '123'
 });
 
-function mockGet(path, resp) {
+function mockGet(path, resp, status) {
+  status = status || 200;
+
   return nock(host)
     .get(path)
-    .reply(200, resp);
+    .reply(status, resp);
 }
 
 function mockPost(path, body, resp) {
@@ -78,6 +80,20 @@ describe('VinylDns', () => {
         })
           .then(result => {
             assert.equal(result.zones[0].name, 'list-zones-test-searched-1.');
+
+            done();
+          });
+      });
+
+      it('properly handles non-200 responses from the API', (done) => {
+        mockGet('/zones', 'some err', 500);
+
+        vinyl.getZones()
+          .then(() => {
+            // NOOP
+          })
+          .catch(resp => {
+            assert.equal(resp.body, 'some err');
 
             done();
           });
