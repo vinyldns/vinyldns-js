@@ -94,7 +94,15 @@ class VinylDns {
 
     return new Promise((fulfill, reject) => {
       request(signedReq, (err, resp) => {
-        if (err) reject(err);
+        if (err) {
+          reject(err);
+          return;
+        }
+
+        if (resp.statusCode !== 200) {
+          reject(resp);
+          return;
+        }
 
         fulfill(JSON.parse(resp.body));
       });
