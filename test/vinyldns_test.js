@@ -98,8 +98,8 @@ describe('VinylDns', () => {
           .then(() => {
             // NOOP
           })
-          .catch(resp => {
-            assert.equal(resp.body, 'some err');
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
 
             done();
           });
@@ -125,8 +125,8 @@ describe('VinylDns', () => {
           .then(() => {
             // NOOP
           })
-          .catch(resp => {
-            assert.equal(resp.body, 'some err');
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
 
             done();
           });
@@ -158,8 +158,8 @@ describe('VinylDns', () => {
           .then(() => {
             // NOOP
           })
-          .catch(resp => {
-            assert.equal(resp.body, 'some err');
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
 
             done();
           });
@@ -191,8 +191,8 @@ describe('VinylDns', () => {
           .then(() => {
             // NOOP
           })
-          .catch(resp => {
-            assert.equal(resp.body, 'some err');
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
 
             done();
           });
@@ -218,8 +218,8 @@ describe('VinylDns', () => {
           .then(() => {
             // NOOP
           })
-          .catch(resp => {
-            assert.equal(resp.body, 'some err');
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
 
             done();
           });
@@ -262,8 +262,8 @@ describe('VinylDns', () => {
           .then(() => {
             // NOOP
           })
-          .catch(resp => {
-            assert.equal(resp.body, 'some err');
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
 
             done();
           });
@@ -289,8 +289,8 @@ describe('VinylDns', () => {
           .then(() => {
             // NOOP
           })
-          .catch(resp => {
-            assert.equal(resp.body, 'some err');
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
 
             done();
           });
