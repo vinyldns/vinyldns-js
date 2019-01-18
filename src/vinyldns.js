@@ -26,53 +26,46 @@ class VinylDns {
   }
 
   getZones(queryOpts) {
-    return this.request(this.requestOptions({
-      url: this.urls.getZones(queryOpts)
-    }));
+    return this._list(this.urls.getZones(queryOpts));
   }
 
   getZone(id) {
-    return this.request(this.requestOptions({
-      url: this.urls.zone(id)
-    }));
+    return this._getOrDelete('zone', id, 'get');
   }
 
   createZone(zone) {
-    return this.request(this.requestOptions({
-      url: this.urls.createZone(),
-      body: zone,
-      method: 'post'
-    }));
+    return this._createOrUpdate(zone, this.urls.zonesBase(), 'post');
   }
 
   updateZone(zone) {
-    return this.request(this.requestOptions({
-      url: this.urls.zone(zone.id),
-      body: zone,
-      method: 'put'
-    }));
+    return this._createOrUpdate(zone, this.urls.zone(zone.id), 'put');
   }
 
   deleteZone(id) {
-    return this.request(this.requestOptions({
-      url: this.urls.zone(id),
-      method: 'delete'
-    }));
+    return this._getOrDelete('zone', id, 'delete');
   }
 
   getGroups(queryOpts) {
-    return this.request(this.requestOptions({
-      url: this.urls.getGroups(queryOpts)
-    }));
+    return this._list(this.urls.getGroups(queryOpts));
   }
 
   getGroup(id) {
-    return this.request(this.requestOptions({
-      url: this.urls.group(id)
-    }));
+    return this._getOrDelete('group', id, 'get');
   }
 
-  requestOptions(opts) {
+  createGroup(group) {
+    return this._createOrUpdate(group, this.urls.groupsBase(), 'post');
+  }
+
+  updateGroup(group) {
+    return this._createOrUpdate(group, this.urls.group(group.id), 'put');
+  }
+
+  deleteGroup(id) {
+    return this._getOrDelete('group', id, 'delete');
+  }
+
+  _requestOptions(opts) {
     return {
       service: 'vinyldns',
       region: 'us-east-1',
@@ -86,7 +79,7 @@ class VinylDns {
     };
   }
 
-  request(opts) {
+  _request(opts) {
     let signedReq = aws4.sign(opts, {
       accessKeyId: this.config.accessKeyId,
       secretAccessKey: this.config.secretAccessKey
@@ -107,6 +100,27 @@ class VinylDns {
         fulfill(JSON.parse(resp.body));
       });
     });
+  }
+
+  _list(url) {
+    return this._request(this._requestOptions({
+      url: url
+    }));
+  }
+
+  _getOrDelete(resourceType, id, method) {
+    return this._request(this._requestOptions({
+      url: this.urls[resourceType](id),
+      method: method
+    }));
+  }
+
+  _createOrUpdate(resource, url, method) {
+    return this._request(this._requestOptions({
+      url: url,
+      method: method,
+      body: resource
+    }));
   }
 }
 

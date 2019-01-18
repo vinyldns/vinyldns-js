@@ -31,10 +31,6 @@ class Urls {
     return `${this.zonesBase()}/${id}`;
   }
 
-  createZone() {
-    return this.zonesBase();
-  }
-
   groupsBase() {
     return `${this.apiUrl}/groups`;
   }

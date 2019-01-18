@@ -296,5 +296,69 @@ describe('VinylDns', () => {
           });
       });
     });
+
+    describe('createGroup', () => {
+      it('creates the group with the details it is passed', (done) => {
+        let create = {
+          name: 'some-group',
+          email: 'test@example.com',
+          description: 'an example group',
+          members: [{
+            id: '123'
+          }],
+          admins: [{
+            id: '456'
+          }]
+        };
+
+        mockPost('/groups', create, fixtures.createGroup);
+
+        vinyl.createGroup(create)
+          .then(result => {
+            assert.equal(result.name, 'some-group');
+
+            done();
+          });
+      });
+    });
+
+    describe('updateGroup', () => {
+      it('updates the group with the details it is passed', (done) => {
+        let update = {
+          name: 'some-group',
+          id: '123',
+          email: 'test@example.com',
+          description: 'an example group',
+          members: [{
+            id: '123'
+          }],
+          admins: [{
+            id: '456'
+          }]
+        };
+
+        mockPut('/groups/123', update, fixtures.updateGroup);
+
+        vinyl.updateGroup(update)
+          .then(result => {
+            assert.equal(result.name, 'some-group');
+
+            done();
+          });
+      });
+    });
+
+    describe('deleteGroup', () => {
+      it('deletes the group with the ID it is passed', (done) => {
+        mockDelete('/groups/123', fixtures.deleteGroup);
+
+        vinyl.deleteGroup('123')
+          .then(result => {
+            assert.equal(result.status, 'Deleted');
+
+            done();
+          });
+      });
+    });
   });
 });
