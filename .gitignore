@@ -60,3 +60,6 @@ typings/
 
 # dotenv environment variables file
 .env
+
+# VinylDNS repo (used to run local instance of VinylDNS API for integration testing)
+.vinyldns
