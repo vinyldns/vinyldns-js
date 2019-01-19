@@ -35,6 +35,10 @@ class Urls {
     return `${this.zonesBase()}/${id}`;
   }
 
+  syncZone(id) {
+    return `${this.zone(id)}/sync`;
+  }
+
   groupsBase() {
     return `${this.apiUrl}/groups`;
   }
