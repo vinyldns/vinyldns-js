@@ -23,19 +23,18 @@ const vinyl = new VinylDns({
   secretAccessKey: 'okSecretKey'
 });
 
-describe('VinylDns', () => {
+describe('VinylDns integration tests', () => {
   describe('groups methods', () => {
     it('fetches groups (when there are none)', (done) => {
       vinyl.getGroups()
         .then(result => {
-          console.log(result.groups);
           assert.equal(result.groups.length, 0);
 
           done();
         });
     });
 
-    xit('can properly create a group', (done) => {
+    it('can properly create a group', (done) => {
       vinyl.createGroup({
         name: 'ok-group',
         description: 'description',
@@ -56,7 +55,7 @@ describe('VinylDns', () => {
         });
     });
 
-    xit('fetches groups (when there are groups)', (done) => {
+    it('fetches groups (when there are groups)', (done) => {
       vinyl.getGroups()
         .then(result => {
           assert.equal(result.groups[0].name, 'ok-group');
