@@ -66,12 +66,13 @@ class VinylDns {
   }
 
   _requestOptions(opts) {
+    let parsedUrl = url.parse(opts.url);
+
     return {
-      service: 'vinyldns',
-      region: 'us-east-1',
-      host: url.parse(opts.url).host,
-      url: opts.url,
-      method: opts.method || 'get',
+      host: parsedUrl.host,
+      uri: opts.url,
+      method: opts.method ? opts.method.toUpperCase() : 'GET',
+      path: parsedUrl.path,
       headers: {
         'Content-Type': 'application/json'
       },
