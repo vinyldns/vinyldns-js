@@ -33,6 +33,10 @@ class VinylDns {
     return this._getOrDelete('zone', id, 'get');
   }
 
+  getZoneChanges(id, queryOpts) {
+    return this._list(this.urls.getZoneChanges(id, queryOpts));
+  }
+
   createZone(zone) {
     return this._createOrUpdate(zone, this.urls.zonesBase(), 'post');
   }

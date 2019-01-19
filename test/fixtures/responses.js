@@ -59,6 +59,32 @@ module.exports = {
     }
   },
 
+  getZoneChanges: {
+    "zoneChanges": [
+      {
+        "status": "Synced",
+        "zone": {
+          "status": "Active",
+          "updated": "2016-12-30T15:37:57Z",
+          "name": "system-test-history.",
+          "adminGroupId": "67b4da23-6832-4600-8450-9fa0664caeeb",
+          "created": "2016-12-30T15:37:56Z",
+          "account": "67b4da23-6832-4600-8450-9fa0664caeeb",
+          "email": "i.changed.this.10.times@history-test.com",
+          "shared": true,
+          "acl": {
+            "rules": []
+          },
+          "id": "9f353bc7-cb8d-491c-b074-34afafc97c5f"
+        },
+        "created": "2016-12-30T15:37:57Z",
+        "changeType": "Update",
+        "userId": "history-id",
+        "id": "6d4deccb-4632-475e-9ebc-3f6bace5fe68"
+      }
+    ]
+  },
+
   createZone: {
     "status": "Pending",
     "zone": {
