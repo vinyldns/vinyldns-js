@@ -47,9 +47,9 @@ function zone(groupId) {
   };
 }
 
-describe('VinylDns integration tests', () => {
-  describe('groups', () => {
-    it('fetches all groups (when there are none)', (done) => {
+describe('VinylDns interaction with a real VinylDNS API', () => {
+  describe('its support of VinylDNS groups', () => {
+    it('can fetch all groups (when there are none)', (done) => {
       vinyl.getGroups()
         .then(result => {
           assert.equal(result.groups.length, 0);
@@ -58,7 +58,7 @@ describe('VinylDns integration tests', () => {
         });
     });
 
-    it('creates groups', (done) => {
+    it('can create a group', (done) => {
       vinyl.createGroup(group())
         .then(result => {
           assert.equal(result.name, 'ok-group');
@@ -67,7 +67,7 @@ describe('VinylDns integration tests', () => {
         });
     });
 
-    it('fetches all groups (when there are groups)', (done) => {
+    it('can fetch all groups (when there are groups)', (done) => {
       vinyl.getGroups()
         .then(result => {
           assert.equal(result.groups[0].name, 'ok-group');
@@ -76,7 +76,7 @@ describe('VinylDns integration tests', () => {
         });
     });
 
-    it('deletes groups', (done) => {
+    it('can delete a group', (done) => {
       vinyl.getGroups()
         .then(groups => {
           vinyl.deleteGroup(groups.groups[0].id)
@@ -89,8 +89,8 @@ describe('VinylDns integration tests', () => {
     });
   });
 
-  describe('zones', () => {
-    it('fetches all zones (when there are none)', (done) => {
+  describe('its support of VinylDNS zones', () => {
+    it('can fetch all zones (when there are none)', (done) => {
       vinyl.getZones()
         .then(result => {
           assert.equal(result.zones.length, 0);
@@ -99,7 +99,7 @@ describe('VinylDns integration tests', () => {
         });
     });
 
-    it('creates zones', (done) => {
+    it('can create a zone', (done) => {
       vinyl.createGroup(group())
         .then(result => {
           vinyl.createZone(zone(result.id))
@@ -111,7 +111,7 @@ describe('VinylDns integration tests', () => {
       });
     });
 
-    it('fetches all zones (when there are zones)', (done) => {
+    it('can fetch all zones (when there are zones)', (done) => {
       vinyl.getZones()
         .then(result => {
           assert.equal(result.zones[0].name, zone().name);
@@ -120,7 +120,7 @@ describe('VinylDns integration tests', () => {
         });
     });
 
-    it('deletes zones', (done) => {
+    it('can delete a zone', (done) => {
       vinyl.getZones()
         .then(result => {
           vinyl.deleteZone(result.zones[0].id)
