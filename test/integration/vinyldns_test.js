@@ -41,7 +41,7 @@ function group() {
 
 function zone(groupId) {
   return {
-    adminGroupId: groupID,
+    adminGroupId: groupId,
     name: 'test-zone.',
     email: 'test@example.com'
   };
