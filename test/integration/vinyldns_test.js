@@ -24,7 +24,7 @@ const vinyl = new VinylDns({
 });
 
 describe('VinylDns integration tests', () => {
-  describe('groups methods', () => {
+  describe('groups', () => {
     it('fetches groups (when there are none)', (done) => {
       vinyl.getGroups()
         .then(result => {
@@ -34,7 +34,7 @@ describe('VinylDns integration tests', () => {
         });
     });
 
-    it('can properly create a group', (done) => {
+    it('creates groups', (done) => {
       vinyl.createGroup({
         name: 'ok-group',
         description: 'description',
@@ -61,6 +61,18 @@ describe('VinylDns integration tests', () => {
           assert.equal(result.groups[0].name, 'ok-group');
 
           done();
+        });
+    });
+
+    it('deletes groups', (done) => {
+      vinyl.getGroups()
+        .then(groups => {
+          vinyl.deleteGroup(groups.groups[0].id)
+            .then(result => {
+              assert.equal(result.status, 'Deleted');
+
+              done();
+          });
         });
     });
   });
