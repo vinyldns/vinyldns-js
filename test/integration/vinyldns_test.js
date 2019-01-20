@@ -23,9 +23,33 @@ const vinyl = new VinylDns({
   secretAccessKey: 'okSecretKey'
 });
 
+function group() {
+  return {
+    name: 'ok-group',
+    description: 'description',
+    email: 'test@test.com',
+    members: [{
+      userName: 'ok',
+      id: 'ok'
+    }],
+    admins: [{
+      userName: 'ok',
+      id: 'ok'
+    }]
+  };
+}
+
+function zone(groupId) {
+  return {
+    adminGroupId: groupID,
+    name: 'test-zone.',
+    email: 'test@example.com'
+  };
+}
+
 describe('VinylDns integration tests', () => {
   describe('groups', () => {
-    it('fetches groups (when there are none)', (done) => {
+    it('fetches all groups (when there are none)', (done) => {
       vinyl.getGroups()
         .then(result => {
           assert.equal(result.groups.length, 0);
@@ -35,19 +59,7 @@ describe('VinylDns integration tests', () => {
     });
 
     it('creates groups', (done) => {
-      vinyl.createGroup({
-        name: 'ok-group',
-        description: 'description',
-        email: 'test@test.com',
-        members: [{
-          userName: 'ok',
-          id: 'ok'
-        }],
-        admins: [{
-          userName: 'ok',
-          id: 'ok'
-        }]
-      })
+      vinyl.createGroup(group())
         .then(result => {
           assert.equal(result.name, 'ok-group');
 
@@ -55,7 +67,7 @@ describe('VinylDns integration tests', () => {
         });
     });
 
-    it('fetches groups (when there are groups)', (done) => {
+    it('fetches all groups (when there are groups)', (done) => {
       vinyl.getGroups()
         .then(result => {
           assert.equal(result.groups[0].name, 'ok-group');
@@ -74,6 +86,29 @@ describe('VinylDns integration tests', () => {
               done();
           });
         });
+    });
+  });
+
+  describe('zones', () => {
+    it('fetches all zones (when there are none)', (done) => {
+      vinyl.getZones()
+        .then(result => {
+          assert.equal(result.groups.length, 0);
+
+          done();
+        });
+    });
+
+    it('creates zones', (done) => {
+      vinyl.createGroup(group())
+        .then(result => {
+          vinyl.createZone(zone(result.id))
+            .then(result => {
+              assert.equal(result.zones[0].name, 'test-zone.');
+
+              done();
+        });
+      });
     });
   });
 });
