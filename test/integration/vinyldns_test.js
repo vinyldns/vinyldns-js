@@ -42,7 +42,7 @@ function group() {
 function zone(groupId) {
   return {
     adminGroupId: groupId,
-    name: 'test-zone.',
+    name: 'vinyldns.',
     email: 'test@example.com'
   };
 }
@@ -102,6 +102,7 @@ describe('VinylDns integration tests', () => {
     it('creates zones', (done) => {
       vinyl.createGroup(group())
         .then(result => {
+          console.log('GROUP ID: ', result.id)
           vinyl.createZone(zone(result.id))
             .then(result => {
               assert.equal(result.zones[0].name, zone().name);
