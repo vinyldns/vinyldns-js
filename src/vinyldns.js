@@ -93,7 +93,7 @@ class VinylDns {
           return;
         }
 
-        if (resp.statusCode !== 200) {
+        if (resp.statusCode >= 400) {
           reject(new Error(`${resp.statusCode}: ${resp.body}`));
           return;
         }
