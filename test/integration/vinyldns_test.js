@@ -102,10 +102,9 @@ describe('VinylDns integration tests', () => {
     it('creates zones', (done) => {
       vinyl.createGroup(group())
         .then(result => {
-          console.log('GROUP ID: ', result.id)
           vinyl.createZone(zone(result.id))
             .then(result => {
-              assert.equal(result.zones[0].name, zone().name);
+              assert.equal(result.zone.name, zone().name);
 
               done();
         });
@@ -122,12 +121,15 @@ describe('VinylDns integration tests', () => {
     });
 
     it('deletes zones', (done) => {
-      vinyl.deleteZone(zone().id)
+      vinyl.getZones()
         .then(result => {
-          assert.equal(result.zone.status, 'Deleted');
+          vinyl.deleteZone(result.zones[0].id)
+            .then(result => {
+              assert.equal(result.zone.status, 'Deleted');
 
-          done();
-        });
+              done();
+            });
+          });
     });
   });
 });
