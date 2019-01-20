@@ -93,7 +93,7 @@ describe('VinylDns integration tests', () => {
     it('fetches all zones (when there are none)', (done) => {
       vinyl.getZones()
         .then(result => {
-          assert.equal(result.groups.length, 0);
+          assert.equal(result.zones.length, 0);
 
           done();
         });
@@ -104,11 +104,29 @@ describe('VinylDns integration tests', () => {
         .then(result => {
           vinyl.createZone(zone(result.id))
             .then(result => {
-              assert.equal(result.zones[0].name, 'test-zone.');
+              assert.equal(result.zones[0].name, zone().name);
 
               done();
         });
       });
+    });
+
+    it('fetches all zones (when there are zones)', (done) => {
+      vinyl.getZones()
+        .then(result => {
+          assert.equal(result.zones[0].name, zone().name);
+
+          done();
+        });
+    });
+
+    it('deletes zones', (done) => {
+      vinyl.deleteZone(zone().id)
+        .then(result => {
+          assert.equal(result.zone.status, 'Deleted');
+
+          done();
+        });
     });
   });
 });
