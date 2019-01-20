@@ -114,6 +114,7 @@ describe('VinylDns interaction with a real VinylDNS API', () => {
     it('can fetch all zones (when there are zones)', (done) => {
       vinyl.getZones()
         .then(result => {
+          console.log('ZONES: ', result);
           assert.equal(result.zones[0].name, zone().name);
 
           done();
