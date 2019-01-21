@@ -14,15 +14,11 @@
  * limitations under the License.
  */
 
-const request = require('request');
-const aws4 = require('aws4');
-const url = require('url');
-const Urls = require('./urls');
+const Request = require('./request');
 
-class VinylDns {
+class VinylDns extends Request {
   constructor(config) {
-    this.config = config;
-    this.urls = new Urls(config.apiUrl);
+    super(config);
   }
 
   getZones(queryOpts) {
@@ -63,65 +59,6 @@ class VinylDns {
 
   deleteGroup(id) {
     return this._getOrDelete('group', id, 'delete');
-  }
-
-  _requestOptions(opts) {
-    let parsedUrl = url.parse(opts.url);
-
-    return {
-      host: parsedUrl.host,
-      uri: opts.url,
-      method: opts.method ? opts.method.toUpperCase() : 'GET',
-      path: parsedUrl.path,
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: opts.body ? JSON.stringify(opts.body) : ''
-    };
-  }
-
-  _request(opts) {
-    let signedReq = aws4.sign(opts, {
-      accessKeyId: this.config.accessKeyId,
-      secretAccessKey: this.config.secretAccessKey
-    });
-
-    return new Promise((fulfill, reject) => {
-      request(signedReq, (err, resp) => {
-        if (err) {
-          reject(err);
-          return;
-        }
-
-        if (resp.statusCode !== 200) {
-          reject(new Error(`${resp.statusCode}: ${resp.body}`));
-          return;
-        }
-
-        fulfill(JSON.parse(resp.body));
-      });
-    });
-  }
-
-  _list(url) {
-    return this._request(this._requestOptions({
-      url: url
-    }));
-  }
-
-  _getOrDelete(resourceType, id, method) {
-    return this._request(this._requestOptions({
-      url: this.urls[resourceType](id),
-      method: method
-    }));
-  }
-
-  _createOrUpdate(resource, url, method) {
-    return this._request(this._requestOptions({
-      url: url,
-      method: method,
-      body: resource
-    }));
   }
 }
 
