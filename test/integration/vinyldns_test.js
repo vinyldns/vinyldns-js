@@ -84,7 +84,7 @@ describe('VinylDns interaction with a real VinylDNS API', () => {
               assert.equal(result.status, 'Deleted');
 
               done();
-          });
+            });
         });
     });
   });
@@ -108,8 +108,8 @@ describe('VinylDns interaction with a real VinylDNS API', () => {
               assert.equal(result.status, 'Pending');
 
               done();
+            });
         });
-      });
     });
 
     it('can fetch all zones (when there are zones)', (done) => {
@@ -134,7 +134,7 @@ describe('VinylDns interaction with a real VinylDNS API', () => {
 
               done();
             });
-          });
+        });
     });
   });
 });
