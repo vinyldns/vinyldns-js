@@ -113,12 +113,16 @@ describe('VinylDns interaction with a real VinylDNS API', () => {
     });
 
     it('can fetch all zones (when there are zones)', (done) => {
-      vinyl.getZones()
-        .then(result => {
-          assert.equal(result.zones[0].name, zone().name);
+      // placed in a 5 second timeout such that the test runs once the zone is properly created
+      // TODO: implement a more elegant solution, such as polling or a getZoneAfterCreation method
+      setTimeout(() => {
+        vinyl.getZones()
+          .then(result => {
+            assert.equal(result.zones[0].name, zone().name);
 
-          done();
-        });
+            done();
+          });
+      }, 5000);
     });
 
     it('can delete a zone', (done) => {
