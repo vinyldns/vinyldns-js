@@ -12,10 +12,16 @@ Install dependencies:
 npm install
 ```
 
-Run tests and lint code:
+Run unit tests and lint code:
 
 ```
 npm test
+```
+
+Run integration tests against a Dockerized VinylDNS API running on `localhost:9000`:
+
+```
+npm run integration-tests
 ```
 
 ## Usage
@@ -81,5 +87,4 @@ Use the `vinyl` `vinyldns-js` client instance:
 ## Work that needs to be done
 
 * Create CRUD methods for all VinylDNS resources (including unit tests)
-* Create a suite of integration/acceptance tests executed against a Dockerized VinylDNS API running on `localhost`
 * Publish to NPM
