@@ -33,6 +33,14 @@ class VinylDns {
     return this._getOrDelete('zone', id, 'get');
   }
 
+  getZoneChanges(id, queryOpts) {
+    return this._list(this.urls.getZoneChanges(id, queryOpts));
+  }
+
+  syncZone(id) {
+    return this._sync(this.urls.syncZone(id));
+  }
+
   createZone(zone) {
     return this._createOrUpdate(zone, this.urls.zonesBase(), 'post');
   }
@@ -121,6 +129,13 @@ class VinylDns {
       url: url,
       method: method,
       body: resource
+    }));
+  }
+
+  _sync(url) {
+    return this._request(this._requestOptions({
+      url: url,
+      method: 'post'
     }));
   }
 }

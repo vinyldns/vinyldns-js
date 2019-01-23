@@ -133,6 +133,74 @@ describe('VinylDns', () => {
       });
     });
 
+    describe('syncZone', () => {
+      it('syncs the zone with the ID it is passed', (done) => {
+        mockPost('/zones/123/sync', '', fixtures.syncZone);
+
+        vinyl.syncZone('123')
+          .then(result => {
+            assert.equal(result.zone.name, 'sync-test.');
+
+            done();
+          });
+      });
+
+      it('properly handles non-200 responses from the API', (done) => {
+        mockPost('/zones/123/sync', '', 'some err', 500);
+
+        vinyl.syncZone('123')
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
+    });
+
+    describe('getZoneChanges', () => {
+      it('fetches zone changes', (done) => {
+        mockGet('/zones/123/changes', fixtures.getZoneChanges);
+
+        vinyl.getZoneChanges('123')
+          .then(result => {
+            assert.equal(result.zoneChanges[0].zone.name, 'system-test-history.');
+
+            done();
+          });
+      });
+
+      it('properly fetches zone changes with query params', (done) => {
+        mockGet('/zones/123/changes?startFrom=1&maxItems=100', fixtures.getZoneChanges);
+
+        vinyl.getZoneChanges('123', {
+          startFrom: 1,
+          maxItems: 100
+        })
+          .then(result => {
+            assert.equal(result.zoneChanges[0].zone.name, 'system-test-history.');
+
+            done();
+          });
+      });
+
+      it('properly handles non-200 responses from the API', (done) => {
+        mockGet('/zones/123/changes', 'some err', 500);
+
+        vinyl.getZoneChanges('123')
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
+    });
+
     describe('createZone', () => {
       it('creates the zone with the details it is passed', (done) => {
         let create = {

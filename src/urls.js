@@ -27,8 +27,16 @@ class Urls {
     return this.zonesBase() + this.queryString(query);
   }
 
+  getZoneChanges(id, query) {
+    return `${this.zone(id)}/changes${this.queryString(query)}`;
+  }
+
   zone(id) {
     return `${this.zonesBase()}/${id}`;
+  }
+
+  syncZone(id) {
+    return `${this.zone(id)}/sync`;
   }
 
   groupsBase() {

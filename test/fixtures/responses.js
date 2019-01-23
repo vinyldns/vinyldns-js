@@ -59,6 +59,54 @@ module.exports = {
     }
   },
 
+  getZoneChanges: {
+    "zoneChanges": [
+      {
+        "status": "Synced",
+        "zone": {
+          "status": "Active",
+          "updated": "2016-12-30T15:37:57Z",
+          "name": "system-test-history.",
+          "adminGroupId": "67b4da23-6832-4600-8450-9fa0664caeeb",
+          "created": "2016-12-30T15:37:56Z",
+          "account": "67b4da23-6832-4600-8450-9fa0664caeeb",
+          "email": "i.changed.this.10.times@history-test.com",
+          "shared": true,
+          "acl": {
+            "rules": []
+          },
+          "id": "9f353bc7-cb8d-491c-b074-34afafc97c5f"
+        },
+        "created": "2016-12-30T15:37:57Z",
+        "changeType": "Update",
+        "userId": "history-id",
+        "id": "6d4deccb-4632-475e-9ebc-3f6bace5fe68"
+      }
+    ]
+  },
+
+  syncZone: {
+    "status": "Pending",
+    "zone": {
+      "status": "Syncing",
+      "updated": "2016-12-28T19:22:02Z",
+      "name": "sync-test.",
+      "adminGroupId": "cf00d1e4-46f1-493a-a3be-0ae79dd306a5",
+      "created": "2016-12-28T19:22:01Z",
+      "account": "cf00d1e4-46f1-493a-a3be-0ae79dd306a5",
+      "email": "test@test.com",
+      "shared": false,
+      "acl": {
+        "rules": []
+      },
+      "id": "621a13df-a2e3-4394-84c0-3eb3a664dff4"
+    },
+    "created": "2016-12-28T19:22:02Z",
+    "changeType": "Sync",
+    "userId": "ok",
+    "id": "03f1ee91-9053-4346-8b53-e0f6042600f2"
+  },
+
   createZone: {
     "status": "Pending",
     "zone": {
