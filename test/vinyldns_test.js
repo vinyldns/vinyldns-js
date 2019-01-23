@@ -17,10 +17,10 @@
 const assert = require('assert');
 const nock = require('nock');
 const fixtures = require('./fixtures/responses');
-const VinylDns = require('../src/vinyldns');
+const VinylDNS = require('../src/vinyldns');
 
 const host = 'http://my-vinyldns.com';
-const vinyl = new VinylDns({
+const vinyl = new VinylDNS({
   apiUrl: host,
   accessKeyId: '123',
   secretAccessKey: '123'
@@ -58,7 +58,7 @@ function mockDelete(path, resp, status) {
     .reply(status, resp);
 }
 
-describe('VinylDns', () => {
+describe('VinylDNS', () => {
   it('is configurable', () => {
     assert.equal(vinyl.config.apiUrl, 'http://my-vinyldns.com');
   });

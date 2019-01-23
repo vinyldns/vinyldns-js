@@ -19,7 +19,7 @@ const aws4 = require('aws4');
 const url = require('url');
 const Urls = require('./urls');
 
-class VinylDns {
+class VinylDNS {
   constructor(config) {
     this.config = config;
     this.urls = new Urls(config.apiUrl);
@@ -125,4 +125,4 @@ class VinylDns {
   }
 }
 
-module.exports = VinylDns;
+module.exports = VinylDNS;

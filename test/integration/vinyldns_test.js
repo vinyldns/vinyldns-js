@@ -15,9 +15,9 @@
  */
 
 const assert = require('assert');
-const VinylDns = require('../../src/vinyldns');
+const VinylDNS = require('../../src/vinyldns');
 
-const vinyl = new VinylDns({
+const vinyl = new VinylDNS({
   apiUrl: 'http://localhost:9000',
   accessKeyId: 'okAccessKey',
   secretAccessKey: 'okSecretKey'
@@ -47,7 +47,7 @@ function zone(groupId) {
   };
 }
 
-describe('VinylDns interaction with a real VinylDNS API', () => {
+describe('VinylDNS interaction with a real VinylDNS API', () => {
   describe('its support of VinylDNS groups', () => {
     it('can fetch all groups (when there are none)', (done) => {
       vinyl.getGroups()
