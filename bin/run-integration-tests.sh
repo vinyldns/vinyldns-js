@@ -7,6 +7,11 @@ echo "Running vinyldns-js integration tests..."
 if [ ! -d ".vinyldns" ]; then \
   echo "fetching VinylDNS source code..."
   git clone https://github.com/vinyldns/vinyldns .vinyldns; \
+else
+  echo "updating VinylDNS source code..."
+  cd .vinyldns
+  git pull
+  cd ..
 fi
 
 echo "Starting localhost:9000 VinylDNS API instance..."
