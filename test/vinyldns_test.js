@@ -17,10 +17,10 @@
 const assert = require('assert');
 const nock = require('nock');
 const fixtures = require('./fixtures/responses');
-const VinylDns = require('../src/vinyldns');
+const VinylDNS = require('../src/vinyldns');
 
 const host = 'http://my-vinyldns.com';
-const vinyl = new VinylDns({
+const vinyl = new VinylDNS({
   apiUrl: host,
   accessKeyId: '123',
   secretAccessKey: '123'
@@ -58,7 +58,7 @@ function mockDelete(path, resp, status) {
     .reply(status, resp);
 }
 
-describe('VinylDns', () => {
+describe('VinylDNS', () => {
   it('is configurable', () => {
     assert.equal(vinyl.config.apiUrl, 'http://my-vinyldns.com');
   });
@@ -91,7 +91,7 @@ describe('VinylDns', () => {
           });
       });
 
-      it('properly handles non-200 responses from the API', (done) => {
+      it('properly handles not okay responses from the API', (done) => {
         mockGet('/zones', 'some err', 500);
 
         vinyl.getZones()
@@ -118,7 +118,7 @@ describe('VinylDns', () => {
           });
       });
 
-      it('properly handles non-200 responses from the API', (done) => {
+      it('properly handles not okay responses from the API', (done) => {
         mockGet('/zones/123', 'some err', 500);
 
         vinyl.getZone('123')
@@ -219,7 +219,7 @@ describe('VinylDns', () => {
           });
       });
 
-      it('properly handles non-200 responses from the API', (done) => {
+      it('properly handles not okay responses from the API', (done) => {
         mockPost('/zones', {}, 'some err', 500);
 
         vinyl.createZone({})
@@ -252,7 +252,7 @@ describe('VinylDns', () => {
           });
       });
 
-      it('properly handles non-200 responses from the API', (done) => {
+      it('properly handles not okay responses from the API', (done) => {
         mockPut('/zones/123', {id: '123'}, 'some err', 500);
 
         vinyl.updateZone({id: '123'})
@@ -279,7 +279,7 @@ describe('VinylDns', () => {
           });
       });
 
-      it('properly handles non-200 responses from the API', (done) => {
+      it('properly handles not okay responses from the API', (done) => {
         mockDelete('/zones/123', 'some err', 500);
 
         vinyl.deleteZone('123')
@@ -323,7 +323,7 @@ describe('VinylDns', () => {
           });
       });
 
-      it('properly handles non-200 responses from the API', (done) => {
+      it('properly handles not okay responses from the API', (done) => {
         mockGet('/groups', 'some err', 500);
 
         vinyl.getGroups()
@@ -350,7 +350,7 @@ describe('VinylDns', () => {
           });
       });
 
-      it('properly handles non-200 responses from the API', (done) => {
+      it('properly handles not okay responses from the API', (done) => {
         mockGet('/groups/123', 'some err', 500);
 
         vinyl.getGroup('123')
