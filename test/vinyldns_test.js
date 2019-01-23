@@ -145,7 +145,7 @@ describe('VinylDNS', () => {
           });
       });
 
-      it('properly handles non-200 responses from the API', (done) => {
+      it('properly handles not okay responses from the API', (done) => {
         mockPost('/zones/123/sync', '', 'some err', 500);
 
         vinyl.syncZone('123')
@@ -186,7 +186,7 @@ describe('VinylDNS', () => {
           });
       });
 
-      it('properly handles non-200 responses from the API', (done) => {
+      it('properly handles not okay responses from the API', (done) => {
         mockGet('/zones/123/changes', 'some err', 500);
 
         vinyl.getZoneChanges('123')
