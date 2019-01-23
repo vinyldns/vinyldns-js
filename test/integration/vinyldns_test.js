@@ -23,29 +23,27 @@ const vinyl = new VinylDNS({
   secretAccessKey: 'okSecretKey'
 });
 
-function group() {
-  return {
-    name: 'ok-group',
-    description: 'description',
-    email: 'test@test.com',
-    members: [{
-      userName: 'ok',
-      id: 'ok'
-    }],
-    admins: [{
-      userName: 'ok',
-      id: 'ok'
-    }]
-  };
-}
+const group = {
+  name: 'ok-group',
+  description: 'description',
+  email: 'test@test.com',
+  members: [{
+    userName: 'ok',
+    id: 'ok'
+  }],
+  admins: [{
+    userName: 'ok',
+    id: 'ok'
+  }]
+};
 
-function zone(groupId) {
+const zone = function(groupId) {
   return {
     adminGroupId: groupId,
     name: 'vinyldns.',
     email: 'test@example.com'
   };
-}
+};
 
 describe('VinylDNS interaction with a real VinylDNS API', () => {
   describe('its support of VinylDNS groups', () => {
@@ -59,7 +57,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
     });
 
     it('can create a group', (done) => {
-      vinyl.createGroup(group())
+      vinyl.createGroup(group)
         .then(result => {
           assert.equal(result.name, 'ok-group');
 
@@ -100,7 +98,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
     });
 
     it('can create a zone', (done) => {
-      vinyl.createGroup(group())
+      vinyl.createGroup(group)
         .then(result => {
           vinyl.createZone(zone(result.id))
             .then(result => {
