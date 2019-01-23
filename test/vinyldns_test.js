@@ -365,6 +365,33 @@ describe('VinylDNS', () => {
       });
     });
 
+    describe('getGroupAdmins', () => {
+      it('fetches the admins with the group ID it is passed', (done) => {
+        mockGet('/groups/123/admins', fixtures.getGroupAdmins);
+
+        vinyl.getGroupAdmins('123')
+          .then(result => {
+            assert.equal(result.admins[0].userName, 'jdoe201');
+
+            done();
+          });
+      });
+
+      it('properly handles not okay responses from the API', (done) => {
+        mockGet('/groups/123/admins', 'some err', 500);
+
+        vinyl.getGroupAdmins('123')
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
+    });
+
     describe('createGroup', () => {
       it('creates the group with the details it is passed', (done) => {
         let create = {

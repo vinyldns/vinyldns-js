@@ -217,6 +217,17 @@ module.exports = {
     ]
   },
 
+  getGroupAdmins: {
+    admins: [{
+      userName: 'jdoe201',
+      firstName: 'john',
+      created: '2017-03-02T16:39:02Z',
+      lastName: 'doe',
+      email: 'john_doe@example.com',
+      id: '2764183c-5e75-4ae6-8833-503cd5f4dcb0'
+    }]
+  },
+
   createGroup: {
     id: '6f8afcda-7529-4cad-9f2d-76903f4b1aca',
     name: 'some-group',
