@@ -241,6 +241,40 @@ module.exports = {
     id: 'fef81f0b-f439-462d-88df-c773d3686c9b'
   },
 
+  updateRecordSet: {
+    zone: {
+      name: 'vinyl.',
+      email: 'test@test.com',
+      status: 'Active',
+      created: '2017-02-23T14:52:44Z',
+      id: '2467dc05-68eb-4498-a9d5-78d24bb0893c',
+      account: '9b22b686-54bc-47fb-a8f8-cdc48e6d04ae',
+      shared: false,
+      acl: {
+        rules: []
+      },
+      adminGroupId: '9b22b686-54bc-47fb-a8f8-cdc48e6d04ae'
+    },
+    recordSet: {
+      type: 'A',
+      zoneId: '2467dc05-68eb-4498-a9d5-78d24bb0893c',
+      name: 'foo',
+      ttl: 300,
+      status: 'Pending',
+      created: '2017-02-23T14:58:54Z',
+      records: [{
+        address: '10.10.10.10'
+      }],
+      id: '9a41b99c-8e67-445f-bcf3-f9c7cd1f2357',
+      account: '0215d410-9b7e-4636-89fd-b6b948a06347'
+    },
+    userId: '0215d410-9b7e-4636-89fd-b6b948a06347',
+    changeType: 'Create',
+    status: 'Pending',
+    created: '2017-02-23T14:58:54Z',
+    id: 'fef81f0b-f439-462d-88df-c773d3686c9b'
+  },
+
   getGroups: {
     maxItems: 100,
     groups: [

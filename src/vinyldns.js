@@ -65,6 +65,10 @@ class VinylDNS {
     return this._createOrUpdate(recordSet, this.urls.recordSetsBase(recordSet.zoneId), 'post');
   }
 
+  updateRecordSet(recordSet) {
+    return this._createOrUpdate(recordSet, this.urls.recordSetsBase(recordSet.zoneId), 'put');
+  }
+
   getGroups(queryOpts) {
     return this._list(this.urls.getGroups(queryOpts));
   }

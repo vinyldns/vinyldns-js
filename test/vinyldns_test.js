@@ -417,6 +417,53 @@ describe('VinylDNS', () => {
           });
       });
     });
+
+    describe('updateRecordSet', () => {
+      it('updates the record with the details it is passed', (done) => {
+        let recordSet = {
+          name: 'foo',
+          type: 'A',
+          ttl: 300,
+          records: [{
+            address: '10.10.10.10'
+          }],
+          zoneId: '123'
+        };
+
+        mockPut('/zones/123/recordsets', recordSet, fixtures.updateRecordSet);
+
+        vinyl.updateRecordSet(recordSet)
+          .then(result => {
+            assert.equal(result.recordSet.name, 'foo');
+
+            done();
+          });
+      });
+
+      it('properly handles not okay responses from the API', (done) => {
+        let recordSet = {
+          name: 'foo',
+          type: 'A',
+          ttl: 300,
+          records: [{
+            address: '10.10.10.10'
+          }],
+          zoneId: '123'
+        };
+
+        mockPut('/zones/123/recordsets', recordSet, 'some err', 500);
+
+        vinyl.updateRecordSet(recordSet)
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
+    });
   });
 
   describe('groups methods', () => {
