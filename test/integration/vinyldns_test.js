@@ -98,6 +98,18 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         });
     });
 
+    it('can fetch group admins (when there are groups)', (done) => {
+      vinyl.getGroups()
+        .then(result => {
+          vinyl.getGroupAdmins(result.groups[0].id)
+            .then(result => {
+              assert.equal(result.admins[0].userName, 'ok');
+
+              done();
+            });
+        });
+    });
+
     it('can delete a group', (done) => {
       vinyl.getGroups()
         .then(groups => {
