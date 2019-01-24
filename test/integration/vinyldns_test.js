@@ -74,6 +74,18 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         });
     });
 
+    it('can fetch group activity (when there are groups)', (done) => {
+      vinyl.getGroups()
+        .then(result => {
+          vinyl.getGroupActivity(result.groups[0].id)
+            .then(result => {
+              assert.equal(result.changes[0].newGroup.name, 'ok-group');
+
+              done();
+            });
+        });
+    });
+
     it('can delete a group', (done) => {
       vinyl.getGroups()
         .then(groups => {
