@@ -55,6 +55,10 @@ class Urls {
     return `${this.groupsBase()}/${id}/admins`;
   }
 
+  getGroupMembers(id) {
+    return `${this.groupsBase()}/${id}/members`;
+  }
+
   queryString(obj) {
     if (obj) {
       return '?' + Object.keys(obj).map(key => `${key}=${obj[key]}`).join('&');

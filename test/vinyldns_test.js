@@ -366,7 +366,7 @@ describe('VinylDNS', () => {
     });
 
     describe('getGroupAdmins', () => {
-      it('fetches the admins with the group ID it is passed', (done) => {
+      it('fetches the admins of the group ID it is passed', (done) => {
         mockGet('/groups/123/admins', fixtures.getGroupAdmins);
 
         vinyl.getGroupAdmins('123')
@@ -381,6 +381,33 @@ describe('VinylDNS', () => {
         mockGet('/groups/123/admins', 'some err', 500);
 
         vinyl.getGroupAdmins('123')
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
+    });
+
+    describe('getGroupMembers', () => {
+      it('fetches the members of the group ID it is passed', (done) => {
+        mockGet('/groups/123/members', fixtures.getGroupMembers);
+
+        vinyl.getGroupMembers('123')
+          .then(result => {
+            assert.equal(result.members[0].userName, 'jdoe201');
+
+            done();
+          });
+      });
+
+      it('properly handles not okay responses from the API', (done) => {
+        mockGet('/groups/123/members', 'some err', 500);
+
+        vinyl.getGroupMembers('123')
           .then(() => {
             // NOOP
           })
