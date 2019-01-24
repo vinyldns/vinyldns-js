@@ -51,6 +51,10 @@ class Urls {
     return `${this.groupsBase()}/${id}`;
   }
 
+  getGroupActivity(id, query) {
+    return `${this.group(id)}/activity${this.queryString(query)}`;
+  }
+
   getGroupAdmins(id) {
     return `${this.groupsBase()}/${id}/admins`;
   }

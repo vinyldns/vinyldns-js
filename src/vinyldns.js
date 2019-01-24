@@ -61,6 +61,10 @@ class VinylDNS {
     return this._getOrDelete('group', id, 'get');
   }
 
+  getGroupActivity(id, queryOpts) {
+    return this._list(this.urls.getGroupActivity(id, queryOpts));
+  }
+
   getGroupAdmins(id) {
     return this._list(this.urls.getGroupAdmins(id));
   }
