@@ -57,6 +57,10 @@ class VinylDNS {
     return this._list(this.urls.getRecordSets(zoneId, queryOpts));
   }
 
+  getRecordSet(details) {
+    return this._list(this.urls.getRecordSet(details.zoneId, details.id));
+  }
+
   getGroups(queryOpts) {
     return this._list(this.urls.getGroups(queryOpts));
   }

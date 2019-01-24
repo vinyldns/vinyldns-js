@@ -337,6 +337,39 @@ describe('VinylDNS', () => {
           });
       });
     });
+
+    describe('getRecordSet', () => {
+      it('fetches the record set with the ID and zone ID it is passed', (done) => {
+        mockGet('/zones/123/recordsets/456', fixtures.getRecordSet);
+
+        vinyl.getRecordSet({
+          id: '456',
+          zoneId: '123'
+        })
+          .then(result => {
+            assert.equal(result.name, 'some-record-set');
+
+            done();
+          });
+      });
+
+      it('properly handles not okay responses from the API', (done) => {
+        mockGet('/zones/123/recordsets/456', 'some err', 500);
+
+        vinyl.getRecordSet({
+          zoneId: '123',
+          id: '456'
+        })
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
+    });
   });
 
   describe('groups methods', () => {
