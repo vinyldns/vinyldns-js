@@ -39,6 +39,14 @@ class Urls {
     return `${this.zone(id)}/sync`;
   }
 
+  recordSetsBase(zoneId) {
+    return `${this.zone(zoneId)}/recordsets`;
+  }
+
+  getRecordSets(zoneId, query) {
+    return this.recordSetsBase(zoneId) + this.queryString(query);
+  }
+
   groupsBase() {
     return `${this.apiUrl}/groups`;
   }

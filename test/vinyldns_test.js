@@ -295,6 +295,50 @@ describe('VinylDNS', () => {
     });
   });
 
+  describe('record sets methods', () => {
+    describe('getRecordSets', () => {
+      it('fetches record sets for the zone whose ID it is passed', (done) => {
+        mockGet('/zones/123/recordsets', fixtures.getRecordSets);
+
+        vinyl.getRecordSets('123')
+          .then(result => {
+            assert.equal(result.recordSets[0].name, 'some-record-set');
+
+            done();
+          });
+      });
+
+      it('properly fetches record sets with query params', (done) => {
+        mockGet('/zones/123/recordsets?nameFilter=foo&startFrom=1&maxItems=100', fixtures.getRecordSets);
+
+        vinyl.getRecordSets('123', {
+          nameFilter: 'foo',
+          startFrom: 1,
+          maxItems: 100
+        })
+          .then(result => {
+            assert.equal(result.recordSets[0].name, 'some-record-set');
+
+            done();
+          });
+      });
+
+      it('properly handles not okay responses from the API', (done) => {
+        mockGet('/zones/123/recordsets', 'some err', 500);
+
+        vinyl.getRecordSets('123')
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
+    });
+  });
+
   describe('groups methods', () => {
     describe('getGroups', () => {
       it('fetches groups', (done) => {

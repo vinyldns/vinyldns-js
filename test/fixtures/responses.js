@@ -173,6 +173,24 @@ module.exports = {
     id: '89c463e3-1615-42f7-8299-a0ca7ccea439'
   },
 
+  getRecordSets: {
+    recordSets: [{
+      type: 'A',
+      zoneId: '2467dc05-68eb-4498-a9d5-78d24bb0893c',
+      name: 'some-record-set',
+      ttl: 38400,
+      status: 'Active',
+      created: '2017-02-23T15:12:41Z',
+      updated: '2017-02-23T15:12:41Z',
+      records: [{
+        address: '6.6.6.1'
+      }],
+      id: 'dd9c1120-0594-4e61-982e-8ddcbc8b2d21',
+      account: '9b22b686-54bc-47fb-a8f8-cdc48e6d04ae',
+      accessLevel: 'Delete'
+    }]
+  },
+
   getGroups: {
     maxItems: 100,
     groups: [

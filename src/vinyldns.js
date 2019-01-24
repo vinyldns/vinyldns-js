@@ -53,6 +53,10 @@ class VinylDNS {
     return this._getOrDelete('zone', id, 'delete');
   }
 
+  getRecordSets(zoneId, queryOpts) {
+    return this._list(this.urls.getRecordSets(zoneId, queryOpts));
+  }
+
   getGroups(queryOpts) {
     return this._list(this.urls.getGroups(queryOpts));
   }
