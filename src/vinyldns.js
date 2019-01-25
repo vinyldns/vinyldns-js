@@ -82,15 +82,15 @@ class VinylDNS {
   }
 
   getGroupActivity(id, queryOpts) {
-    return this._list(this.urls.getGroupActivity(id, queryOpts));
+    return this._getOrDelete(this.urls.getGroupActivity(id, queryOpts), 'get');
   }
 
   getGroupAdmins(id) {
-    return this._list(this.urls.getGroupAdmins(id));
+    return this._getOrDelete(this.urls.getGroupAdmins(id), 'get');
   }
 
   getGroupMembers(id, queryOpts) {
-    return this._list(this.urls.getGroupMembers(id, queryOpts));
+    return this._getOrDelete(this.urls.getGroupMembers(id, queryOpts), 'get');
   }
 
   createGroup(group) {
