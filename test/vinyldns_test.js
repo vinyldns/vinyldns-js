@@ -445,6 +445,20 @@ describe('VinylDNS', () => {
           });
       });
 
+      it('properly fetches group members with query params', (done) => {
+        mockGet('/groups/123/members?startFrom=1&maxItems=100', fixtures.getGroupMembers);
+
+        vinyl.getGroupMembers('123', {
+          startFrom: 1,
+          maxItems: 100
+        })
+          .then(result => {
+            assert.equal(result.members[0].userName, 'jdoe201');
+
+            done();
+          });
+      });
+
       it('properly handles not okay responses from the API', (done) => {
         mockGet('/groups/123/members', 'some err', 500);
 

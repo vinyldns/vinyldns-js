@@ -56,11 +56,11 @@ class Urls {
   }
 
   getGroupAdmins(id) {
-    return `${this.groupsBase()}/${id}/admins`;
+    return `${this.group(id)}/admins`;
   }
 
-  getGroupMembers(id) {
-    return `${this.groupsBase()}/${id}/members`;
+  getGroupMembers(id, query) {
+    return `${this.group(id)}/members${this.queryString(query)}`;
   }
 
   queryString(obj) {

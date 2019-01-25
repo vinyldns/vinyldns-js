@@ -69,8 +69,8 @@ class VinylDNS {
     return this._list(this.urls.getGroupAdmins(id));
   }
 
-  getGroupMembers(id) {
-    return this._list(this.urls.getGroupMembers(id));
+  getGroupMembers(id, queryOpts) {
+    return this._list(this.urls.getGroupMembers(id, queryOpts));
   }
 
   createGroup(group) {
