@@ -26,15 +26,15 @@ class VinylDNS {
   }
 
   getZones(queryOpts) {
-    return this._list(this.urls.getZones(queryOpts));
+    return this._getOrDelete(this.urls.getZones(queryOpts), 'get');
   }
 
   getZone(id) {
-    return this._getOrDelete('zone', id, 'get');
+    return this._getOrDelete(this.urls.zone(id), 'get');
   }
 
   getZoneChanges(id, queryOpts) {
-    return this._list(this.urls.getZoneChanges(id, queryOpts));
+    return this._getOrDelete(this.urls.getZoneChanges(id, queryOpts), 'get');
   }
 
   syncZone(id) {
@@ -50,17 +50,15 @@ class VinylDNS {
   }
 
   deleteZone(id) {
-    return this._getOrDelete('zone', id, 'delete');
+    return this._getOrDelete(this.urls.zone(id), 'delete');
   }
 
   getRecordSets(zoneId, queryOpts) {
-    return this._list(this.urls.getRecordSets(zoneId, queryOpts));
+    return this._getOrDelete(this.urls.getRecordSets(zoneId, queryOpts), 'get');
   }
 
   getRecordSet(details) {
-    return this._request(this._requestOptions({
-      url: this.urls.getRecordSet(details.zoneId, details.id)
-    }));
+    return this._getOrDelete(this.urls.getRecordSet(details.zoneId, details.id), 'get');
   }
 
   createRecordSet(recordSet) {
@@ -72,18 +70,15 @@ class VinylDNS {
   }
 
   deleteRecordSet(details) {
-    return this._request(this._requestOptions({
-      url: this.urls.getRecordSet(details.zoneId, details.id),
-      method: 'delete'
-    }));
+    return this._getOrDelete(this.urls.getRecordSet(details.zoneId, details.id), 'delete');
   }
 
   getGroups(queryOpts) {
-    return this._list(this.urls.getGroups(queryOpts));
+    return this._getOrDelete(this.urls.getGroups(queryOpts), 'get');
   }
 
   getGroup(id) {
-    return this._getOrDelete('group', id, 'get');
+    return this._getOrDelete(this.urls.group(id), 'get');
   }
 
   getGroupActivity(id, queryOpts) {
@@ -107,7 +102,7 @@ class VinylDNS {
   }
 
   deleteGroup(id) {
-    return this._getOrDelete('group', id, 'delete');
+    return this._getOrDelete(this.urls.group(id), 'delete');
   }
 
   _requestOptions(opts) {
@@ -148,15 +143,9 @@ class VinylDNS {
     });
   }
 
-  _list(url) {
+  _getOrDelete(url, method) {
     return this._request(this._requestOptions({
-      url: url
-    }));
-  }
-
-  _getOrDelete(resourceType, id, method) {
-    return this._request(this._requestOptions({
-      url: this.urls[resourceType](id),
+      url: url,
       method: method
     }));
   }
