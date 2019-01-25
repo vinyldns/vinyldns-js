@@ -241,6 +241,56 @@ module.exports = {
     id: 'fef81f0b-f439-462d-88df-c773d3686c9b'
   },
 
+  deleteRecordSet: {
+    zone: {
+      name: 'vinyl.',
+      email: 'test@test.com',
+      status: 'Active',
+      created: '2017-02-23T14:52:44Z',
+      updated: '2017-02-23T15:12:33Z',
+      id: '2467dc05-68eb-4498-a9d5-78d24bb0893c',
+      account: '9b22b686-54bc-47fb-a8f8-cdc48e6d04ae',
+      shared: false,
+      acl: {
+        rules: []
+      },
+      adminGroupId: '9b22b686-54bc-47fb-a8f8-cdc48e6d04ae',
+      latestSync: '2017-02-23T15:12:33Z'
+    },
+    recordSet: {
+      type: 'A',
+      zoneId: '2467dc05-68eb-4498-a9d5-78d24bb0893c',
+      name: 'foo',
+      ttl: 38400,
+      status: 'PendingDelete',
+      created: '2017-02-23T15:12:33Z',
+      updated: '2017-02-23T15:18:27Z',
+      records: [{
+        address: '2.2.2.2'
+      }],
+      id: 'da57c384-d6e8-4166-986d-2ca9d483f760',
+      account: '9b22b686-54bc-47fb-a8f8-cdc48e6d04ae'
+    },
+    userId: '0215d410-9b7e-4636-89fd-b6b948a06347',
+    changeType: 'Delete',
+    status: 'Pending',
+    created: '2017-02-23T15:18:27Z',
+    updates: {
+      type: 'A',
+      zoneId: '2467dc05-68eb-4498-a9d5-78d24bb0893c',
+      name: 'foo',
+      ttl: 38400,
+      status: 'Active',
+      created: '2017-02-23T15:12:33Z',
+      records: [{
+        address: '2.2.2.2'
+      }],
+      id: 'da57c384-d6e8-4166-986d-2ca9d483f760',
+      account: '9b22b686-54bc-47fb-a8f8-cdc48e6d04ae'
+    },
+    id: 'c46cf622-285f-4f1b-b5b2-993a5a51ea5b'
+  },
+
   updateRecordSet: {
     zone: {
       name: 'vinyl.',

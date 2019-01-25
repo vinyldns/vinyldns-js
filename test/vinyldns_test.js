@@ -464,6 +464,39 @@ describe('VinylDNS', () => {
           });
       });
     });
+
+    describe('deleteRecordSet', () => {
+      it('deletes the record with the details it is passed', (done) => {
+        mockDelete('/zones/123/recordsets/456', fixtures.deleteRecordSet);
+
+        vinyl.deleteRecordSet({
+          zoneId: '123',
+          id: '456'
+        })
+          .then(result => {
+            assert.equal(result.changeType, 'Delete');
+
+            done();
+          });
+      });
+
+      it('properly handles not okay responses from the API', (done) => {
+        mockDelete('/zones/123/recordsets/456', 'some err', 500);
+
+        vinyl.deleteRecordSet({
+          zoneId: '123',
+          id: '456'
+        })
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
+    });
   });
 
   describe('groups methods', () => {
