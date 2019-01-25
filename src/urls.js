@@ -51,6 +51,18 @@ class Urls {
     return `${this.groupsBase()}/${id}`;
   }
 
+  getGroupActivity(id, query) {
+    return `${this.group(id)}/activity${this.queryString(query)}`;
+  }
+
+  getGroupAdmins(id) {
+    return `${this.group(id)}/admins`;
+  }
+
+  getGroupMembers(id, query) {
+    return `${this.group(id)}/members${this.queryString(query)}`;
+  }
+
   queryString(obj) {
     if (obj) {
       return '?' + Object.keys(obj).map(key => `${key}=${obj[key]}`).join('&');

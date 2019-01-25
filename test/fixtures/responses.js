@@ -217,6 +217,68 @@ module.exports = {
     ]
   },
 
+  getGroupActivity: {
+    maxItems: 100,
+    changes: [{
+      newGroup: {
+        status: 'Active',
+        name: 'test-list-group-activity-max-item-success',
+        created: '2017-03-02T18:49:58Z',
+        id: '1555bac7-0343-4d11-800f-955afb481818',
+        admins: [{
+          id: 'ok'
+        }],
+        members: [{
+          id: 'dummy199'
+        },{
+          id: 'ok'
+        }],
+        email: 'test@test.com'
+      },
+      created: '1488480605378',
+      userId: 'some-user',
+      changeType: 'Update',
+      oldGroup: {
+        status: 'Active',
+        name: 'test-list-group-activity-max-item-success',
+        created: '2017-03-02T18:49:58Z',
+        id: '1555bac7-0343-4d11-800f-955afb481818',
+        admins: [{
+          id: 'ok'
+        }],
+        members: [{
+          id: 'dummy198'
+        },{
+          id: 'ok'
+        }],
+        email: 'test@test.com'
+      },
+      id: '11abb88b-c47d-469b-bc2d-6656e00711cf'
+    }]
+  },
+
+  getGroupAdmins: {
+    admins: [{
+      userName: 'jdoe201',
+      firstName: 'john',
+      created: '2017-03-02T16:39:02Z',
+      lastName: 'doe',
+      email: 'john_doe@example.com',
+      id: '2764183c-5e75-4ae6-8833-503cd5f4dcb0'
+    }]
+  },
+
+  getGroupMembers: {
+    members: [{
+      userName: 'jdoe201',
+      firstName: 'john',
+      created: '2017-03-02T16:39:02Z',
+      lastName: 'doe',
+      email: 'john_doe@example.com',
+      id: '2764183c-5e75-4ae6-8833-503cd5f4dcb0'
+    }]
+  },
+
   createGroup: {
     id: '6f8afcda-7529-4cad-9f2d-76903f4b1aca',
     name: 'some-group',

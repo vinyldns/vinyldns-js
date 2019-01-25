@@ -365,6 +365,115 @@ describe('VinylDNS', () => {
       });
     });
 
+    describe('getGroupActivity', () => {
+      it('fetches activity for the group with the ID it is passed', (done) => {
+        mockGet('/groups/123/activity', fixtures.getGroupActivity);
+
+        vinyl.getGroupActivity('123')
+          .then(result => {
+            assert.equal(result.changes[0].changeType, 'Update');
+
+            done();
+          });
+      });
+
+      it('properly fetches group activity with query params', (done) => {
+        mockGet('/groups/123/activity?startFrom=1&maxItems=100', fixtures.getGroupActivity);
+
+        vinyl.getGroupActivity('123', {
+          startFrom: 1,
+          maxItems: 100
+        })
+          .then(result => {
+            assert.equal(result.changes[0].changeType, 'Update');
+
+            done();
+          });
+      });
+
+      it('properly handles not okay responses from the API', (done) => {
+        mockGet('/groups/123/activity', 'some err', 500);
+
+        vinyl.getGroupActivity('123')
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
+    });
+
+    describe('getGroupAdmins', () => {
+      it('fetches the admins of the group ID it is passed', (done) => {
+        mockGet('/groups/123/admins', fixtures.getGroupAdmins);
+
+        vinyl.getGroupAdmins('123')
+          .then(result => {
+            assert.equal(result.admins[0].userName, 'jdoe201');
+
+            done();
+          });
+      });
+
+      it('properly handles not okay responses from the API', (done) => {
+        mockGet('/groups/123/admins', 'some err', 500);
+
+        vinyl.getGroupAdmins('123')
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
+    });
+
+    describe('getGroupMembers', () => {
+      it('fetches the members of the group ID it is passed', (done) => {
+        mockGet('/groups/123/members', fixtures.getGroupMembers);
+
+        vinyl.getGroupMembers('123')
+          .then(result => {
+            assert.equal(result.members[0].userName, 'jdoe201');
+
+            done();
+          });
+      });
+
+      it('properly fetches group members with query params', (done) => {
+        mockGet('/groups/123/members?startFrom=1&maxItems=100', fixtures.getGroupMembers);
+
+        vinyl.getGroupMembers('123', {
+          startFrom: 1,
+          maxItems: 100
+        })
+          .then(result => {
+            assert.equal(result.members[0].userName, 'jdoe201');
+
+            done();
+          });
+      });
+
+      it('properly handles not okay responses from the API', (done) => {
+        mockGet('/groups/123/members', 'some err', 500);
+
+        vinyl.getGroupMembers('123')
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
+    });
+
     describe('createGroup', () => {
       it('creates the group with the details it is passed', (done) => {
         let create = {

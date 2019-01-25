@@ -74,6 +74,42 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         });
     });
 
+    it('can fetch group activity (when there are groups)', (done) => {
+      vinyl.getGroups()
+        .then(result => {
+          vinyl.getGroupActivity(result.groups[0].id)
+            .then(result => {
+              assert.equal(result.changes[0].newGroup.name, 'ok-group');
+
+              done();
+            });
+        });
+    });
+
+    it('can fetch group members (when there are groups)', (done) => {
+      vinyl.getGroups()
+        .then(result => {
+          vinyl.getGroupMembers(result.groups[0].id)
+            .then(result => {
+              assert.equal(result.members[0].userName, 'ok');
+
+              done();
+            });
+        });
+    });
+
+    it('can fetch group admins (when there are groups)', (done) => {
+      vinyl.getGroups()
+        .then(result => {
+          vinyl.getGroupAdmins(result.groups[0].id)
+            .then(result => {
+              assert.equal(result.admins[0].userName, 'ok');
+
+              done();
+            });
+        });
+    });
+
     it('can delete a group', (done) => {
       vinyl.getGroups()
         .then(groups => {
