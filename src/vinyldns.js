@@ -58,7 +58,7 @@ class VinylDNS {
   }
 
   getRecordSet(details) {
-    return this._getOrDelete(this.urls.getRecordSet(details.zoneId, details.id), 'get');
+    return this._getOrDelete(this.urls.recordSet(details), 'get');
   }
 
   createRecordSet(recordSet) {
@@ -70,7 +70,7 @@ class VinylDNS {
   }
 
   deleteRecordSet(details) {
-    return this._getOrDelete(this.urls.getRecordSet(details.zoneId, details.id), 'delete');
+    return this._getOrDelete(this.urls.recordSet(details), 'delete');
   }
 
   getGroups(queryOpts) {

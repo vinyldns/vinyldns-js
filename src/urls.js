@@ -47,8 +47,8 @@ class Urls {
     return this.recordSetsBase(zoneId) + this.queryString(query);
   }
 
-  getRecordSet(zoneId, id) {
-    return `${this.recordSetsBase(zoneId)}/${id}`;
+  recordSet(details) {
+    return `${this.recordSetsBase(details.zoneId)}/${details.id}`;
   }
 
   groupsBase() {
