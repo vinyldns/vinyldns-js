@@ -48,7 +48,11 @@ class Urls {
   }
 
   recordSet(details) {
-    return `${this.recordSetsBase(details.zoneId)}/${details.id}`;
+    return `${this.recordSetsBase(details.zoneId)}/${details.recordSetId}`;
+  }
+
+  recordSetChange(details) {
+    return `${this.recordSet(details)}/changes/${details.changeId}`;
   }
 
   groupsBase() {

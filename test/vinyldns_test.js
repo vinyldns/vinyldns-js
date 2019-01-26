@@ -343,7 +343,7 @@ describe('VinylDNS', () => {
         mockGet('/zones/123/recordsets/456', fixtures.getRecordSet);
 
         vinyl.getRecordSet({
-          id: '456',
+          recordSetId: '456',
           zoneId: '123'
         })
           .then(result => {
@@ -358,7 +358,7 @@ describe('VinylDNS', () => {
 
         vinyl.getRecordSet({
           zoneId: '123',
-          id: '456'
+          recordSetId: '456'
         })
           .then(() => {
             // NOOP
@@ -471,7 +471,7 @@ describe('VinylDNS', () => {
 
         vinyl.deleteRecordSet({
           zoneId: '123',
-          id: '456'
+          recordSetId: '456'
         })
           .then(result => {
             assert.equal(result.changeType, 'Delete');
@@ -485,7 +485,42 @@ describe('VinylDNS', () => {
 
         vinyl.deleteRecordSet({
           zoneId: '123',
-          id: '456'
+          recordSetId: '456'
+        })
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
+    });
+
+    describe('getRecordSetChange', () => {
+      it('fetches the record set change with the change ID, record set ID, and zone ID details it is passed', (done) => {
+        mockGet('/zones/123/recordsets/456/changes/789', fixtures.getRecordSetChange);
+
+        vinyl.getRecordSetChange({
+          changeId: '789',
+          recordSetId: '456',
+          zoneId: '123'
+        })
+          .then(result => {
+            assert.equal(result.recordSet.name, 'foo');
+
+            done();
+          });
+      });
+
+      it('properly handles not okay responses from the API', (done) => {
+        mockGet('/zones/123/recordsets/456/changes/789', 'some err', 500);
+
+        vinyl.getRecordSetChange({
+          changeId: '789',
+          recordSetId: '456',
+          zoneId: '123'
         })
           .then(() => {
             // NOOP
