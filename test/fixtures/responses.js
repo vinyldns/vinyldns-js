@@ -291,6 +291,58 @@ module.exports = {
     id: 'c46cf622-285f-4f1b-b5b2-993a5a51ea5b'
   },
 
+  getRecordSetChanges: {
+    recordSetChanges: [{
+      status: 'Complete',
+      zone: {
+        status: 'Active',
+        updated: '2016-12-30T15:37:57Z',
+        name: 'system-test-history.',
+        adminGroupId: '67b4da23-6832-4600-8450-9fa0664caeeb',
+        created: '2016-12-30T15:37:56Z',
+        account: '67b4da23-6832-4600-8450-9fa0664caeeb',
+        email: 'i.changed.this.10.times@history-test.com',
+        shared: true,
+        acl: {
+          rules: []
+        },
+        id: '9f353bc7-cb8d-491c-b074-34afafc97c5f'
+      },
+      created: '2016-12-30T15:37:58Z',
+      recordSet: {
+        status: 'Active',
+        updated: '2016-12-30T15:37:58Z',
+        name: 'test-create-cname-ok',
+        created: '2016-12-30T15:37:57Z',
+        account: 'history-id',
+        zoneId: '9f353bc7-cb8d-491c-b074-34afafc97c5f',
+        records: [{
+          cname: 'changed-cname.'
+        }],
+        ttl: 200,
+        type: 'CNAME',
+        id: 'f62235df-5372-443c-9ba4-bdd3fca452f4'
+      },
+      changeType: 'Delete',
+      userId: 'history-id',
+      updates: {
+        status: 'Active',
+        updated: '2016-12-30T15:37:58Z',
+        name: 'test-create-cname-ok',
+        created: '2016-12-30T15:37:57Z',
+        account: 'history-id',
+        zoneId: '9f353bc7-cb8d-491c-b074-34afafc97c5f',
+        records: [{
+          cname: 'changed-cname.'
+        }],
+        ttl: 200,
+        type: 'CNAME',
+        id: 'f62235df-5372-443c-9ba4-bdd3fca452f4'
+      },
+      id: '68fd6dbe-0da8-4280-bcf3-37f54528dc41'
+    }]
+  },
+
   getRecordSetChange: {
     zone: {
       name: 'vinyl.',

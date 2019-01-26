@@ -498,6 +498,39 @@ describe('VinylDNS', () => {
       });
     });
 
+    describe('getRecordSetChanges', () => {
+      it('fetches the record set changes with the record set ID and zone ID details it is passed', (done) => {
+        mockGet('/zones/123/recordsets/456/changes', fixtures.getRecordSetChanges);
+
+        vinyl.getRecordSetChanges({
+          recordSetId: '456',
+          zoneId: '123'
+        })
+          .then(result => {
+            assert.equal(result.recordSetChanges[0].status, 'Complete');
+
+            done();
+          });
+      });
+
+      it('properly handles not okay responses from the API', (done) => {
+        mockGet('/zones/123/recordsets/456/changes', 'some err', 500);
+
+        vinyl.getRecordSetChanges({
+          recordSetId: '456',
+          zoneId: '123'
+        })
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
+    });
+
     describe('getRecordSetChange', () => {
       it('fetches the record set change with the change ID, record set ID, and zone ID details it is passed', (done) => {
         mockGet('/zones/123/recordsets/456/changes/789', fixtures.getRecordSetChange);
