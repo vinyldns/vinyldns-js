@@ -185,7 +185,10 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
               .then(result => {
                 testZone = result;
 
-                resolve();
+                // wait until the zone has been created.
+                setTimeout(() => {
+                  resolve();
+                }, 1600);
               });
           });
       });
