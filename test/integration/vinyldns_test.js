@@ -171,4 +171,39 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         });
     });
   });
+
+  describe('its support of VinylDNS record sets', () => {
+    let testZone;
+
+    before(() => {
+      return new Promise(resolve => {
+        vinyl.createGroup(group)
+          .then(result => {
+            vinyl.createZone(zone(result.id))
+              .then(result => {
+                testZone = result;
+
+                resolve();
+              });
+          });
+      });
+    });
+
+    it('can create a record set', (done) => {
+      vinyl.createRecordSet({
+        name: 'foo',
+        type: 'A',
+        ttl: 300,
+        records: [{
+          address: '10.10.10.10'
+        }],
+        zoneId: testZone.zone.id
+      })
+        .then(result => {
+          assert.equal(result.recordSet.name, 'foo');
+
+          done();
+        });
+    });
+  });
 });
