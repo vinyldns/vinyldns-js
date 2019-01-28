@@ -23,18 +23,20 @@ const vinyl = new VinylDNS({
   secretAccessKey: 'okSecretKey'
 });
 
-const group = {
-  name: 'ok-group',
-  description: 'description',
-  email: 'test@test.com',
-  members: [{
-    userName: 'ok',
-    id: 'ok'
-  }],
-  admins: [{
-    userName: 'ok',
-    id: 'ok'
-  }]
+const group = function(name) {
+  return {
+    name: name || 'ok-group',
+    description: 'description',
+    email: 'test@test.com',
+    members: [{
+      userName: 'ok',
+      id: 'ok'
+    }],
+    admins: [{
+      userName: 'ok',
+      id: 'ok'
+    }]
+  };
 };
 
 const zone = function(groupId) {
@@ -57,9 +59,9 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
     });
 
     it('can create a group', (done) => {
-      vinyl.createGroup(group)
+      vinyl.createGroup(group('group-tests-group'))
         .then(result => {
-          assert.equal(result.name, 'ok-group');
+          assert.equal(result.name, 'group-tests-group');
 
           done();
         });
@@ -68,7 +70,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
     it('can fetch all groups (when there are groups)', (done) => {
       vinyl.getGroups()
         .then(result => {
-          assert.equal(result.groups[0].name, 'ok-group');
+          assert.equal(result.groups[0].name, 'group-tests-group');
 
           done();
         });
@@ -79,7 +81,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         .then(result => {
           vinyl.getGroupActivity(result.groups[0].id)
             .then(result => {
-              assert.equal(result.changes[0].newGroup.name, 'ok-group');
+              assert.equal(result.changes[0].newGroup.name, 'group-tests-group');
 
               done();
             });
@@ -113,7 +115,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
     it('can delete a group', (done) => {
       vinyl.getGroups()
         .then(groups => {
-          vinyl.deleteGroup(groups.groups[0].id)
+          vinyl.deleteGroup(groups.groups.find(g => g.name === 'group-tests-group').id)
             .then(result => {
               assert.equal(result.status, 'Deleted');
 
@@ -134,7 +136,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
     });
 
     it('can create a zone', (done) => {
-      vinyl.createGroup(group)
+      vinyl.createGroup(group('zone-tests-group'))
         .then(result => {
           vinyl.createZone(zone(result.id))
             .then(result => {
@@ -177,7 +179,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
 
     before(() => {
       return new Promise(resolve => {
-        vinyl.createGroup(group)
+        vinyl.createGroup(group('record-set-tests-group'))
           .then(result => {
             vinyl.createZone(zone(result.id))
               .then(result => {
