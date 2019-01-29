@@ -91,39 +91,30 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         });
     });
 
-    it('can fetch group activity (when there are groups)', (done) => {
-      vinyl.getGroups()
+    it('can fetch group activity', (done) => {
+      vinyl.getGroupActivity(testGroup.id)
         .then(result => {
-          vinyl.getGroupActivity(result.groups[0].id)
-            .then(result => {
-              assert.equal(result.changes[0].newGroup.name, 'group-tests-group');
+          assert.equal(result.changes[0].newGroup.name, 'group-tests-group');
 
-              done();
-            });
+          done();
         });
     });
 
-    it('can fetch group members (when there are groups)', (done) => {
-      vinyl.getGroups()
+    it('can fetch group members', (done) => {
+      vinyl.getGroupAdmins(testGroup.id)
         .then(result => {
-          vinyl.getGroupAdmins(result.groups.find(g => g.name === 'group-tests-group').id)
-            .then(result => {
-              assert.equal(result.members[0].userName, 'ok');
+          assert.equal(result.members[0].userName, 'ok');
 
-              done();
-            });
+          done();
         });
     });
 
     it('can fetch group admins (when there are groups)', (done) => {
-      vinyl.getGroups()
+      vinyl.getGroupAdmins(testGroup.id)
         .then(result => {
-          vinyl.getGroupAdmins(result.groups.find(g => g.name === 'group-tests-group').id)
-            .then(result => {
-              assert.equal(result.admins[0].userName, 'ok');
+          assert.equal(result.admins[0].userName, 'ok');
 
-              done();
-            });
+          done();
         });
     });
 
@@ -161,15 +152,18 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
     });
 
     it('can delete a zone', (done) => {
-      vinyl.getZones()
-        .then(result => {
-          vinyl.deleteZone(result.zones.find(z => z.name === 'zones-tests-zone').id)
-            .then(result => {
-              assert.equal(result.zone.status, 'Deleted');
+      // setTimeout ensures we wait until the zone is properly created
+      setTimout(() => {
+        vinyl.getZones()
+          .then(result => {
+            vinyl.deleteZone(result.zones.find(z => z.name === 'zones-tests-zone.').id)
+              .then(result => {
+                assert.equal(result.zone.status, 'Deleted');
 
-              done();
-            });
-        });
+                done();
+              });
+          });
+       }, 2000);
     });
   });
 
