@@ -64,6 +64,9 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
             .catch(err => {
               reject(err);
             });
+        })
+        .catch(err => {
+          reject(err);
         });
     });
   });
