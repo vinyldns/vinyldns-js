@@ -60,6 +60,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
           vinyl.createZone(zone(result.id))
             .then(result => {
               testZone = result;
+              resolve(result);
             })
             .catch(err => {
               reject(err);
