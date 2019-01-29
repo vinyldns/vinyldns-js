@@ -52,7 +52,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
   let testZone;
 
   before(() => {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       vinyl.createGroup(group())
         .then(result => {
           testGroup = result;
@@ -65,6 +65,9 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
               setTimeout(() => {
                 resolve();
               }, 1600);
+            })
+            .catch(err => {
+              reject(err);
             });
         });
     });
