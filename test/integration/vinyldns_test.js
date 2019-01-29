@@ -162,8 +162,8 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
 
                 done();
               });
-            });
-       }, 2000);
+          });
+      }, 2000);
     });
   });
 
