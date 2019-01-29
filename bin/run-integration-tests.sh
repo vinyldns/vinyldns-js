@@ -21,6 +21,6 @@ echo "Starting localhost:9000 VinylDNS API instance..."
 
 echo "Executing vinyldns-js integration tests..."
 
-node_modules/.bin/mocha test/integration/*.js
+node_modules/.bin/mocha --timeout 3000 test/integration/*.js
 
 .vinyldns/bin/remove-vinyl-containers.sh
