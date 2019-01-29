@@ -196,7 +196,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
 
     it('can create a record set', (done) => {
       vinyl.createRecordSet({
-        name: 'foo',
+        name: 'record-set-tests-create',
         type: 'A',
         ttl: 300,
         records: [{
@@ -205,7 +205,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         zoneId: testZone.zone.id
       })
         .then(result => {
-          assert.equal(result.recordSet.name, 'foo');
+          assert.equal(result.recordSet.name, 'record-set-tests-create');
 
           done();
         });
