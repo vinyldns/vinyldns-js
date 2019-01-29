@@ -153,7 +153,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
 
     it('can delete a zone', (done) => {
       // setTimeout ensures we wait until the zone is properly created
-      setTimout(() => {
+      setTimeout(() => {
         vinyl.getZones()
           .then(result => {
             vinyl.deleteZone(result.zones.find(z => z.name === 'zones-tests-zone.').id)
@@ -162,7 +162,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
 
                 done();
               });
-          });
+            });
        }, 2000);
     });
   });
