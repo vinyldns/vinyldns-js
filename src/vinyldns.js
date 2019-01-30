@@ -66,7 +66,7 @@ class VinylDNS {
   }
 
   updateRecordSet(recordSet) {
-    return this._createOrUpdate(recordSet, this.urls.recordSetsBase(recordSet.zoneId), 'put');
+    return this._createOrUpdate(recordSet, this.urls.recordSet(recordSet), 'put');
   }
 
   deleteRecordSet(details) {

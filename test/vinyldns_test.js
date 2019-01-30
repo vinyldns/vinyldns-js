@@ -343,7 +343,7 @@ describe('VinylDNS', () => {
         mockGet('/zones/123/recordsets/456', fixtures.getRecordSet);
 
         vinyl.getRecordSet({
-          recordSetId: '456',
+          id: '456',
           zoneId: '123'
         })
           .then(result => {
@@ -358,7 +358,7 @@ describe('VinylDNS', () => {
 
         vinyl.getRecordSet({
           zoneId: '123',
-          recordSetId: '456'
+          id: '456'
         })
           .then(() => {
             // NOOP
@@ -427,10 +427,11 @@ describe('VinylDNS', () => {
           records: [{
             address: '10.10.10.10'
           }],
-          zoneId: '123'
+          zoneId: '123',
+          id: '456'
         };
 
-        mockPut('/zones/123/recordsets', recordSet, fixtures.updateRecordSet);
+        mockPut('/zones/123/recordsets/456', recordSet, fixtures.updateRecordSet);
 
         vinyl.updateRecordSet(recordSet)
           .then(result => {
@@ -448,10 +449,11 @@ describe('VinylDNS', () => {
           records: [{
             address: '10.10.10.10'
           }],
-          zoneId: '123'
+          zoneId: '123',
+          id: '456'
         };
 
-        mockPut('/zones/123/recordsets', recordSet, 'some err', 500);
+        mockPut('/zones/123/recordsets/456', recordSet, 'some err', 500);
 
         vinyl.updateRecordSet(recordSet)
           .then(() => {
@@ -471,7 +473,7 @@ describe('VinylDNS', () => {
 
         vinyl.deleteRecordSet({
           zoneId: '123',
-          recordSetId: '456'
+          id: '456'
         })
           .then(result => {
             assert.equal(result.changeType, 'Delete');
@@ -485,7 +487,7 @@ describe('VinylDNS', () => {
 
         vinyl.deleteRecordSet({
           zoneId: '123',
-          recordSetId: '456'
+          id: '456'
         })
           .then(() => {
             // NOOP
