@@ -51,12 +51,12 @@ class Urls {
     return `${this.recordSetsBase(details.zoneId)}/${details.recordSetId}`;
   }
 
-  recordSetChanges(details) {
-    return `${this.recordSet(details)}/changes`;
+  recordSetChanges(zoneId, query) {
+    return `${this.zone(zoneId)}/recordsetchanges${this.queryString(query)}`;
   }
 
   recordSetChange(details) {
-    return `${this.recordSetChanges(details)}/${details.changeId}`;
+    return `${this.recordSet(details)}/changes/${details.changeId}`;
   }
 
   groupsBase() {

@@ -500,11 +500,22 @@ describe('VinylDNS', () => {
 
     describe('getRecordSetChanges', () => {
       it('fetches the record set changes with the record set ID and zone ID details it is passed', (done) => {
-        mockGet('/zones/123/recordsets/456/changes', fixtures.getRecordSetChanges);
+        mockGet('/zones/123/recordsetchanges', fixtures.getRecordSetChanges);
 
-        vinyl.getRecordSetChanges({
-          recordSetId: '456',
-          zoneId: '123'
+        vinyl.getRecordSetChanges('123')
+          .then(result => {
+            assert.equal(result.recordSetChanges[0].status, 'Complete');
+
+            done();
+          });
+      });
+
+      it('properly fetches record set changes with query params', (done) => {
+        mockGet('/zones/123/recordsetchanges?startFrom=1&maxItems=100', fixtures.getRecordSetChanges);
+
+        vinyl.getRecordSetChanges('123', {
+          startFrom: 1,
+          maxItems: 100
         })
           .then(result => {
             assert.equal(result.recordSetChanges[0].status, 'Complete');
@@ -514,12 +525,9 @@ describe('VinylDNS', () => {
       });
 
       it('properly handles not okay responses from the API', (done) => {
-        mockGet('/zones/123/recordsets/456/changes', 'some err', 500);
+        mockGet('/zones/123/recordsetchanges', 'some err', 500);
 
-        vinyl.getRecordSetChanges({
-          recordSetId: '456',
-          zoneId: '123'
-        })
+        vinyl.getRecordSetChanges('123')
           .then(() => {
             // NOOP
           })

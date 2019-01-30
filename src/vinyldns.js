@@ -77,8 +77,8 @@ class VinylDNS {
     return this._getOrDelete(this.urls.recordSetChange(details), 'get');
   }
 
-  getRecordSetChanges(details) {
-    return this._getOrDelete(this.urls.recordSetChanges(details), 'get');
+  getRecordSetChanges(zoneId, query) {
+    return this._getOrDelete(this.urls.recordSetChanges(zoneId, query), 'get');
   }
 
   getGroups(queryOpts) {
