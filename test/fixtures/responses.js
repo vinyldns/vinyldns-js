@@ -173,6 +173,244 @@ module.exports = {
     id: '89c463e3-1615-42f7-8299-a0ca7ccea439'
   },
 
+  getRecordSets: {
+    recordSets: [{
+      type: 'A',
+      zoneId: '2467dc05-68eb-4498-a9d5-78d24bb0893c',
+      name: 'some-record-set',
+      ttl: 38400,
+      status: 'Active',
+      created: '2017-02-23T15:12:41Z',
+      updated: '2017-02-23T15:12:41Z',
+      records: [{
+        address: '6.6.6.1'
+      }],
+      id: 'dd9c1120-0594-4e61-982e-8ddcbc8b2d21',
+      account: '9b22b686-54bc-47fb-a8f8-cdc48e6d04ae',
+      accessLevel: 'Delete'
+    }]
+  },
+
+  getRecordSet: {
+    type: 'A',
+    zoneId: '2467dc05-68eb-4498-a9d5-78d24bb0893c',
+    name: 'some-record-set',
+    ttl: 38400,
+    status: 'Active',
+    created: '2017-02-23T15:12:41Z',
+    updated: '2017-02-23T15:12:41Z',
+    records: [{
+      address: '6.6.6.1'
+    }],
+    id: 'dd9c1120-0594-4e61-982e-8ddcbc8b2d21',
+    account: '9b22b686-54bc-47fb-a8f8-cdc48e6d04ae',
+    accessLevel: 'Delete'
+  },
+
+  createRecordSet: {
+    zone: {
+      name: 'vinyl.',
+      email: 'test@test.com',
+      status: 'Active',
+      created: '2017-02-23T14:52:44Z',
+      id: '2467dc05-68eb-4498-a9d5-78d24bb0893c',
+      account: '9b22b686-54bc-47fb-a8f8-cdc48e6d04ae',
+      shared: false,
+      acl: {
+        rules: []
+      },
+      adminGroupId: '9b22b686-54bc-47fb-a8f8-cdc48e6d04ae'
+    },
+    recordSet: {
+      type: 'A',
+      zoneId: '2467dc05-68eb-4498-a9d5-78d24bb0893c',
+      name: 'foo',
+      ttl: 300,
+      status: 'Pending',
+      created: '2017-02-23T14:58:54Z',
+      records: [{
+        address: '10.10.10.10'
+      }],
+      id: '9a41b99c-8e67-445f-bcf3-f9c7cd1f2357',
+      account: '0215d410-9b7e-4636-89fd-b6b948a06347'
+    },
+    userId: '0215d410-9b7e-4636-89fd-b6b948a06347',
+    changeType: 'Create',
+    status: 'Pending',
+    created: '2017-02-23T14:58:54Z',
+    id: 'fef81f0b-f439-462d-88df-c773d3686c9b'
+  },
+
+  deleteRecordSet: {
+    zone: {
+      name: 'vinyl.',
+      email: 'test@test.com',
+      status: 'Active',
+      created: '2017-02-23T14:52:44Z',
+      updated: '2017-02-23T15:12:33Z',
+      id: '2467dc05-68eb-4498-a9d5-78d24bb0893c',
+      account: '9b22b686-54bc-47fb-a8f8-cdc48e6d04ae',
+      shared: false,
+      acl: {
+        rules: []
+      },
+      adminGroupId: '9b22b686-54bc-47fb-a8f8-cdc48e6d04ae',
+      latestSync: '2017-02-23T15:12:33Z'
+    },
+    recordSet: {
+      type: 'A',
+      zoneId: '2467dc05-68eb-4498-a9d5-78d24bb0893c',
+      name: 'foo',
+      ttl: 38400,
+      status: 'PendingDelete',
+      created: '2017-02-23T15:12:33Z',
+      updated: '2017-02-23T15:18:27Z',
+      records: [{
+        address: '2.2.2.2'
+      }],
+      id: 'da57c384-d6e8-4166-986d-2ca9d483f760',
+      account: '9b22b686-54bc-47fb-a8f8-cdc48e6d04ae'
+    },
+    userId: '0215d410-9b7e-4636-89fd-b6b948a06347',
+    changeType: 'Delete',
+    status: 'Pending',
+    created: '2017-02-23T15:18:27Z',
+    updates: {
+      type: 'A',
+      zoneId: '2467dc05-68eb-4498-a9d5-78d24bb0893c',
+      name: 'foo',
+      ttl: 38400,
+      status: 'Active',
+      created: '2017-02-23T15:12:33Z',
+      records: [{
+        address: '2.2.2.2'
+      }],
+      id: 'da57c384-d6e8-4166-986d-2ca9d483f760',
+      account: '9b22b686-54bc-47fb-a8f8-cdc48e6d04ae'
+    },
+    id: 'c46cf622-285f-4f1b-b5b2-993a5a51ea5b'
+  },
+
+  getRecordSetChanges: {
+    recordSetChanges: [{
+      status: 'Complete',
+      zone: {
+        status: 'Active',
+        updated: '2016-12-30T15:37:57Z',
+        name: 'system-test-history.',
+        adminGroupId: '67b4da23-6832-4600-8450-9fa0664caeeb',
+        created: '2016-12-30T15:37:56Z',
+        account: '67b4da23-6832-4600-8450-9fa0664caeeb',
+        email: 'i.changed.this.10.times@history-test.com',
+        shared: true,
+        acl: {
+          rules: []
+        },
+        id: '9f353bc7-cb8d-491c-b074-34afafc97c5f'
+      },
+      created: '2016-12-30T15:37:58Z',
+      recordSet: {
+        status: 'Active',
+        updated: '2016-12-30T15:37:58Z',
+        name: 'test-create-cname-ok',
+        created: '2016-12-30T15:37:57Z',
+        account: 'history-id',
+        zoneId: '9f353bc7-cb8d-491c-b074-34afafc97c5f',
+        records: [{
+          cname: 'changed-cname.'
+        }],
+        ttl: 200,
+        type: 'CNAME',
+        id: 'f62235df-5372-443c-9ba4-bdd3fca452f4'
+      },
+      changeType: 'Delete',
+      userId: 'history-id',
+      updates: {
+        status: 'Active',
+        updated: '2016-12-30T15:37:58Z',
+        name: 'test-create-cname-ok',
+        created: '2016-12-30T15:37:57Z',
+        account: 'history-id',
+        zoneId: '9f353bc7-cb8d-491c-b074-34afafc97c5f',
+        records: [{
+          cname: 'changed-cname.'
+        }],
+        ttl: 200,
+        type: 'CNAME',
+        id: 'f62235df-5372-443c-9ba4-bdd3fca452f4'
+      },
+      id: '68fd6dbe-0da8-4280-bcf3-37f54528dc41'
+    }]
+  },
+
+  getRecordSetChange: {
+    zone: {
+      name: 'vinyl.',
+      email: 'test@test.com',
+      status: 'Active',
+      created: '2017-02-23T14:52:44Z',
+      id: '2467dc05-68eb-4498-a9d5-78d24bb0893c',
+      account: '9b22b686-54bc-47fb-a8f8-cdc48e6d04ae',
+      shared: false,
+      acl: {
+        rules: []
+      },
+      adminGroupId: '9b22b686-54bc-47fb-a8f8-cdc48e6d04ae'
+    },
+    recordSet: {
+      type: 'A',
+      zoneId: '2467dc05-68eb-4498-a9d5-78d24bb0893c',
+      name: 'foo',
+      ttl: 300,
+      status: 'Pending',
+      created: '2017-02-23T14:58:54Z',
+      records: [{
+        address: '10.10.10.10'
+      }],
+      id: '9a41b99c-8e67-445f-bcf3-f9c7cd1f2357',
+      account: '0215d410-9b7e-4636-89fd-b6b948a06347'
+    },
+    userId: '0215d410-9b7e-4636-89fd-b6b948a06347',
+    changeType: 'Create',
+    status: 'Pending',
+    created: '2017-02-23T14:58:54Z',
+    id: 'fef81f0b-f439-462d-88df-c773d3686c9b'
+  },
+
+  updateRecordSet: {
+    zone: {
+      name: 'vinyl.',
+      email: 'test@test.com',
+      status: 'Active',
+      created: '2017-02-23T14:52:44Z',
+      id: '2467dc05-68eb-4498-a9d5-78d24bb0893c',
+      account: '9b22b686-54bc-47fb-a8f8-cdc48e6d04ae',
+      shared: false,
+      acl: {
+        rules: []
+      },
+      adminGroupId: '9b22b686-54bc-47fb-a8f8-cdc48e6d04ae'
+    },
+    recordSet: {
+      type: 'A',
+      zoneId: '2467dc05-68eb-4498-a9d5-78d24bb0893c',
+      name: 'foo',
+      ttl: 300,
+      status: 'Pending',
+      created: '2017-02-23T14:58:54Z',
+      records: [{
+        address: '10.10.10.10'
+      }],
+      id: '9a41b99c-8e67-445f-bcf3-f9c7cd1f2357',
+      account: '0215d410-9b7e-4636-89fd-b6b948a06347'
+    },
+    userId: '0215d410-9b7e-4636-89fd-b6b948a06347',
+    changeType: 'Create',
+    status: 'Pending',
+    created: '2017-02-23T14:58:54Z',
+    id: 'fef81f0b-f439-462d-88df-c773d3686c9b'
+  },
+
   getGroups: {
     maxItems: 100,
     groups: [

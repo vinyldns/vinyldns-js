@@ -39,6 +39,26 @@ class Urls {
     return `${this.zone(id)}/sync`;
   }
 
+  recordSetsBase(zoneId) {
+    return `${this.zone(zoneId)}/recordsets`;
+  }
+
+  getRecordSets(zoneId, query) {
+    return this.recordSetsBase(zoneId) + this.queryString(query);
+  }
+
+  recordSet(details) {
+    return `${this.recordSetsBase(details.zoneId)}/${details.id || details.recordSetId}`;
+  }
+
+  recordSetChanges(zoneId, query) {
+    return `${this.zone(zoneId)}/recordsetchanges${this.queryString(query)}`;
+  }
+
+  recordSetChange(details) {
+    return `${this.recordSet(details)}/changes/${details.changeId}`;
+  }
+
   groupsBase() {
     return `${this.apiUrl}/groups`;
   }

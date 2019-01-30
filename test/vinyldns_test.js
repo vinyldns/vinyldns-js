@@ -295,6 +295,288 @@ describe('VinylDNS', () => {
     });
   });
 
+  describe('record sets methods', () => {
+    describe('getRecordSets', () => {
+      it('fetches record sets for the zone whose ID it is passed', (done) => {
+        mockGet('/zones/123/recordsets', fixtures.getRecordSets);
+
+        vinyl.getRecordSets('123')
+          .then(result => {
+            assert.equal(result.recordSets[0].name, 'some-record-set');
+
+            done();
+          });
+      });
+
+      it('properly fetches record sets with query params', (done) => {
+        mockGet('/zones/123/recordsets?nameFilter=foo&startFrom=1&maxItems=100', fixtures.getRecordSets);
+
+        vinyl.getRecordSets('123', {
+          nameFilter: 'foo',
+          startFrom: 1,
+          maxItems: 100
+        })
+          .then(result => {
+            assert.equal(result.recordSets[0].name, 'some-record-set');
+
+            done();
+          });
+      });
+
+      it('properly handles not okay responses from the API', (done) => {
+        mockGet('/zones/123/recordsets', 'some err', 500);
+
+        vinyl.getRecordSets('123')
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
+    });
+
+    describe('getRecordSet', () => {
+      it('fetches the record set with the ID and zone ID it is passed', (done) => {
+        mockGet('/zones/123/recordsets/456', fixtures.getRecordSet);
+
+        vinyl.getRecordSet({
+          id: '456',
+          zoneId: '123'
+        })
+          .then(result => {
+            assert.equal(result.name, 'some-record-set');
+
+            done();
+          });
+      });
+
+      it('properly handles not okay responses from the API', (done) => {
+        mockGet('/zones/123/recordsets/456', 'some err', 500);
+
+        vinyl.getRecordSet({
+          zoneId: '123',
+          id: '456'
+        })
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
+    });
+
+    describe('createRecordSet', () => {
+      it('creates the record with the details it is passed', (done) => {
+        let recordSet = {
+          name: 'foo',
+          type: 'A',
+          ttl: 300,
+          records: [{
+            address: '10.10.10.10'
+          }],
+          zoneId: '123'
+        };
+
+        mockPost('/zones/123/recordsets', recordSet, fixtures.createRecordSet);
+
+        vinyl.createRecordSet(recordSet)
+          .then(result => {
+            assert.equal(result.recordSet.name, 'foo');
+
+            done();
+          });
+      });
+
+      it('properly handles not okay responses from the API', (done) => {
+        let recordSet = {
+          name: 'foo',
+          type: 'A',
+          ttl: 300,
+          records: [{
+            address: '10.10.10.10'
+          }],
+          zoneId: '123'
+        };
+
+        mockPost('/zones/123/recordsets', recordSet, 'some err', 500);
+
+        vinyl.createRecordSet(recordSet)
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
+    });
+
+    describe('updateRecordSet', () => {
+      it('updates the record with the details it is passed', (done) => {
+        let recordSet = {
+          name: 'foo',
+          type: 'A',
+          ttl: 300,
+          records: [{
+            address: '10.10.10.10'
+          }],
+          zoneId: '123',
+          id: '456'
+        };
+
+        mockPut('/zones/123/recordsets/456', recordSet, fixtures.updateRecordSet);
+
+        vinyl.updateRecordSet(recordSet)
+          .then(result => {
+            assert.equal(result.recordSet.name, 'foo');
+
+            done();
+          });
+      });
+
+      it('properly handles not okay responses from the API', (done) => {
+        let recordSet = {
+          name: 'foo',
+          type: 'A',
+          ttl: 300,
+          records: [{
+            address: '10.10.10.10'
+          }],
+          zoneId: '123',
+          id: '456'
+        };
+
+        mockPut('/zones/123/recordsets/456', recordSet, 'some err', 500);
+
+        vinyl.updateRecordSet(recordSet)
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
+    });
+
+    describe('deleteRecordSet', () => {
+      it('deletes the record with the details it is passed', (done) => {
+        mockDelete('/zones/123/recordsets/456', fixtures.deleteRecordSet);
+
+        vinyl.deleteRecordSet({
+          zoneId: '123',
+          id: '456'
+        })
+          .then(result => {
+            assert.equal(result.changeType, 'Delete');
+
+            done();
+          });
+      });
+
+      it('properly handles not okay responses from the API', (done) => {
+        mockDelete('/zones/123/recordsets/456', 'some err', 500);
+
+        vinyl.deleteRecordSet({
+          zoneId: '123',
+          id: '456'
+        })
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
+    });
+
+    describe('getRecordSetChanges', () => {
+      it('fetches the record set changes with the record set ID and zone ID details it is passed', (done) => {
+        mockGet('/zones/123/recordsetchanges', fixtures.getRecordSetChanges);
+
+        vinyl.getRecordSetChanges('123')
+          .then(result => {
+            assert.equal(result.recordSetChanges[0].status, 'Complete');
+
+            done();
+          });
+      });
+
+      it('properly fetches record set changes with query params', (done) => {
+        mockGet('/zones/123/recordsetchanges?startFrom=1&maxItems=100', fixtures.getRecordSetChanges);
+
+        vinyl.getRecordSetChanges('123', {
+          startFrom: 1,
+          maxItems: 100
+        })
+          .then(result => {
+            assert.equal(result.recordSetChanges[0].status, 'Complete');
+
+            done();
+          });
+      });
+
+      it('properly handles not okay responses from the API', (done) => {
+        mockGet('/zones/123/recordsetchanges', 'some err', 500);
+
+        vinyl.getRecordSetChanges('123')
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
+    });
+
+    describe('getRecordSetChange', () => {
+      it('fetches the record set change with the change ID, record set ID, and zone ID details it is passed', (done) => {
+        mockGet('/zones/123/recordsets/456/changes/789', fixtures.getRecordSetChange);
+
+        vinyl.getRecordSetChange({
+          changeId: '789',
+          recordSetId: '456',
+          zoneId: '123'
+        })
+          .then(result => {
+            assert.equal(result.recordSet.name, 'foo');
+
+            done();
+          });
+      });
+
+      it('properly handles not okay responses from the API', (done) => {
+        mockGet('/zones/123/recordsets/456/changes/789', 'some err', 500);
+
+        vinyl.getRecordSetChange({
+          changeId: '789',
+          recordSetId: '456',
+          zoneId: '123'
+        })
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
+    });
+  });
+
   describe('groups methods', () => {
     describe('getGroups', () => {
       it('fetches groups', (done) => {

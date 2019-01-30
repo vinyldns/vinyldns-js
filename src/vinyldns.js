@@ -26,15 +26,15 @@ class VinylDNS {
   }
 
   getZones(queryOpts) {
-    return this._list(this.urls.getZones(queryOpts));
+    return this._getOrDelete(this.urls.getZones(queryOpts), 'get');
   }
 
   getZone(id) {
-    return this._getOrDelete('zone', id, 'get');
+    return this._getOrDelete(this.urls.zone(id), 'get');
   }
 
   getZoneChanges(id, queryOpts) {
-    return this._list(this.urls.getZoneChanges(id, queryOpts));
+    return this._getOrDelete(this.urls.getZoneChanges(id, queryOpts), 'get');
   }
 
   syncZone(id) {
@@ -50,27 +50,55 @@ class VinylDNS {
   }
 
   deleteZone(id) {
-    return this._getOrDelete('zone', id, 'delete');
+    return this._getOrDelete(this.urls.zone(id), 'delete');
+  }
+
+  getRecordSets(zoneId, queryOpts) {
+    return this._getOrDelete(this.urls.getRecordSets(zoneId, queryOpts), 'get');
+  }
+
+  getRecordSet(details) {
+    return this._getOrDelete(this.urls.recordSet(details), 'get');
+  }
+
+  createRecordSet(recordSet) {
+    return this._createOrUpdate(recordSet, this.urls.recordSetsBase(recordSet.zoneId), 'post');
+  }
+
+  updateRecordSet(recordSet) {
+    return this._createOrUpdate(recordSet, this.urls.recordSet(recordSet), 'put');
+  }
+
+  deleteRecordSet(details) {
+    return this._getOrDelete(this.urls.recordSet(details), 'delete');
+  }
+
+  getRecordSetChange(details) {
+    return this._getOrDelete(this.urls.recordSetChange(details), 'get');
+  }
+
+  getRecordSetChanges(zoneId, query) {
+    return this._getOrDelete(this.urls.recordSetChanges(zoneId, query), 'get');
   }
 
   getGroups(queryOpts) {
-    return this._list(this.urls.getGroups(queryOpts));
+    return this._getOrDelete(this.urls.getGroups(queryOpts), 'get');
   }
 
   getGroup(id) {
-    return this._getOrDelete('group', id, 'get');
+    return this._getOrDelete(this.urls.group(id), 'get');
   }
 
   getGroupActivity(id, queryOpts) {
-    return this._list(this.urls.getGroupActivity(id, queryOpts));
+    return this._getOrDelete(this.urls.getGroupActivity(id, queryOpts), 'get');
   }
 
   getGroupAdmins(id) {
-    return this._list(this.urls.getGroupAdmins(id));
+    return this._getOrDelete(this.urls.getGroupAdmins(id), 'get');
   }
 
   getGroupMembers(id, queryOpts) {
-    return this._list(this.urls.getGroupMembers(id, queryOpts));
+    return this._getOrDelete(this.urls.getGroupMembers(id, queryOpts), 'get');
   }
 
   createGroup(group) {
@@ -82,7 +110,7 @@ class VinylDNS {
   }
 
   deleteGroup(id) {
-    return this._getOrDelete('group', id, 'delete');
+    return this._getOrDelete(this.urls.group(id), 'delete');
   }
 
   _requestOptions(opts) {
@@ -123,15 +151,9 @@ class VinylDNS {
     });
   }
 
-  _list(url) {
+  _getOrDelete(url, method) {
     return this._request(this._requestOptions({
-      url: url
-    }));
-  }
-
-  _getOrDelete(resourceType, id, method) {
-    return this._request(this._requestOptions({
-      url: this.urls[resourceType](id),
+      url: url,
       method: method
     }));
   }
