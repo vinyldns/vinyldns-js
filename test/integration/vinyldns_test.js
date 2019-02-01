@@ -91,12 +91,34 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         });
     });
 
-    it('can fetch group activity', (done) => {
-      vinyl.getGroupActivity(testGroup.id)
+    it('can update a group', (done) => {
+      vinyl.getGroups()
         .then(result => {
-          assert.equal(result.changes[0].newGroup.name, 'group-tests-group');
+          let g = result.groups.find(group => group.name === 'group-tests-group');
 
-          done();
+          g.name = 'group-tests-group-updated';
+
+          vinyl.updateGroup(g)
+            .then(result => {
+
+              assert.equal(result.name, 'group-tests-group-updated');
+
+              done();
+            });
+        });
+    });
+
+    it('can fetch group activity', (done) => {
+      vinyl.getGroups()
+        .then(result => {
+          let g = result.groups.find(group => group.name.includes('group-tests-group'));
+
+          vinyl.getGroupActivity(g.id)
+            .then(result => {
+              assert.equal(result.changes[0].newGroup.name.includes('group-tests-group'), true);
+
+              done();
+            });
         });
     });
 
