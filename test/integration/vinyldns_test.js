@@ -51,28 +51,21 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
   let testGroup;
   let testZone;
 
-  before(() => {
-    return new Promise((resolve, reject) => {
+  describe('its support of VinylDNS group creation', () => {
+    it('can create groups', (done) => {
       vinyl.createGroup(group())
         .then(result => {
+          // save the result in the `testGroup` variable for other tests to use
           testGroup = result;
 
-          vinyl.createZone(zone(result.id))
-            .then(result => {
-              testZone = result;
-              resolve(result);
-            })
-            .catch(err => {
-              reject(err);
-            });
-        })
-        .catch(err => {
-          reject(err);
+          assert.equal(result.group.name, 'ok-group');
+
+          done();
         });
     });
   });
 
-  describe('its support of VinylDNS groups', () => {
+  describe('its support of VinylDNS group fetching', () => {
     it('can fetch all groups', (done) => {
       vinyl.getGroups()
         .then(result => {
@@ -82,46 +75,17 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         });
     });
 
-    it('can create a group', (done) => {
-      vinyl.createGroup(group('group-tests-group'))
+    it('can fetch an individual group', (done) => {
+      vinyl.getGroup(testGroup.id)
         .then(result => {
-          assert.equal(result.name, 'group-tests-group');
+          assert.equal(result.name, 'ok-group');
 
           done();
         });
     });
+  });
 
-    it('can update a group', (done) => {
-      vinyl.getGroups()
-        .then(result => {
-          let g = result.groups.find(group => group.name === 'group-tests-group');
-
-          g.name = 'group-tests-group-updated';
-
-          vinyl.updateGroup(g)
-            .then(result => {
-
-              assert.equal(result.name, 'group-tests-group-updated');
-
-              done();
-            });
-        });
-    });
-
-    it('can fetch group activity', (done) => {
-      vinyl.getGroups()
-        .then(result => {
-          let g = result.groups.find(group => group.name.includes('group-tests-group'));
-
-          vinyl.getGroupActivity(g.id)
-            .then(result => {
-              assert.equal(result.changes[0].newGroup.name.includes('group-tests-group'), true);
-
-              done();
-            });
-        });
-    });
-
+  describe('its support of VinylDNS group membership', () => {
     it('can fetch group members', (done) => {
       vinyl.getGroupMembers(testGroup.id)
         .then(result => {
@@ -131,7 +95,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         });
     });
 
-    it('can fetch group members', (done) => {
+    it('can fetch group admins', (done) => {
       vinyl.getGroupAdmins(testGroup.id)
         .then(result => {
           assert.equal(result.admins[0].userName, 'ok');
@@ -139,21 +103,26 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
           done();
         });
     });
+  });
 
-    it('can delete a group', (done) => {
-      vinyl.getGroups()
-        .then(groups => {
-          vinyl.deleteGroup(groups.groups.find(g => g.name.includes('group-tests-group')).id)
-            .then(result => {
-              assert.equal(result.status, 'Deleted');
+  describe('its support of VinylDNS zone creation', () => {
+    it('can create a zone', (done) => {
+      vinyl.createZone(zone(testGroup.id))
+        .then(result => {
+          // Save the result as `testZone` for other tests to use
+          testZone = result;
 
-              done();
-            });
+          // Pause to allow the zone to propagate before proceeding to other tests, where the zone is used
+          setTimeout(() => {
+            assert.equal(result.zone.name, 'vinyldns.');
+
+            done();
+          }, 2000);
         });
     });
   });
 
-  describe('its support of VinylDNS zones', () => {
+  describe('its support of VinylDNS zone fetching', () => {
     it('can fetch all zones', (done) => {
       vinyl.getZones()
         .then(result => {
@@ -163,29 +132,13 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         });
     });
 
-    it('can create a zone', (done) => {
-      vinyl.createZone(zone(testGroup.id, 'zones-tests-zone'))
+    it('can fetch individual zones', (done) => {
+      vinyl.getZone(testZone.id)
         .then(result => {
-          assert.equal(result.zone.name, zone().name);
-          assert.equal(result.status, 'Pending');
+          assert.equal(result.zone.name, testZone.zone.name);
 
           done();
         });
-    });
-
-    it('can delete a zone', (done) => {
-      // setTimeout ensures we wait until the zone is properly created
-      setTimeout(() => {
-        vinyl.getZones()
-          .then(result => {
-            vinyl.deleteZone(result.zones.find(z => z.name === 'zones-tests-zone.').id)
-              .then(result => {
-                assert.equal(result.zone.status, 'Deleted');
-
-                done();
-              });
-          });
-      }, 2000);
     });
   });
 
@@ -202,6 +155,55 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
       })
         .then(result => {
           assert.equal(result.recordSet.name, 'record-set-tests-create');
+
+          done();
+        });
+    });
+  });
+
+  describe('its support of VinylDNS group updating', () => {
+    it('can update a group', (done) => {
+      let g = testGroup;
+
+      g.name = 'group-tests-group-updated';
+
+      vinyl.updateGroup(g)
+        .then(result => {
+
+          assert.equal(result.name, 'group-tests-group-updated');
+
+          done();
+        });
+    });
+  });
+
+  describe('its support of fetching VinylDNS group activity', () => {
+    it('can fetch group activity', (done) => {
+      vinyl.getGroupActivity(testGroup.id)
+        .then(result => {
+          assert.equal(result.changes[0].newGroup.name.includes('group-tests-group'), true);
+
+          done();
+        });
+    });
+  });
+
+  describe('its support of deleting VinylDNS groups', () => {
+    it('can delete a group', (done) => {
+      vinyl.deleteGroup(testGroup.id)
+        .then(result => {
+          assert.equal(result.status, 'Deleted');
+
+          done();
+        });
+    });
+  });
+
+  describe('its support of VinylDNS zone deletion', () => {
+    it('can delete a zone', (done) => {
+      vinyl.deleteZone(testZone.id)
+        .then(result => {
+          assert.equal(result.zone.status, 'Deleted');
 
           done();
         });
