@@ -23,7 +23,7 @@ const vinyl = new VinylDNS({
   secretAccessKey: 'okSecretKey'
 });
 
-const group = function(name) {
+const buildGroup = function(name) {
   return {
     name: name || 'ok-group',
     description: 'description',
@@ -39,7 +39,7 @@ const group = function(name) {
   };
 };
 
-const zone = function(groupId, name) {
+const buildZone = function(groupId, name) {
   return {
     adminGroupId: groupId,
     name: name || 'vinyldns.',
@@ -53,12 +53,12 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
 
   describe('its support of VinylDNS group creation', () => {
     it('can create groups', (done) => {
-      vinyl.createGroup(group())
+      vinyl.createGroup(buildGroup())
         .then(result => {
           // save the result in the `testGroup` variable for other tests to use
           testGroup = result;
 
-          assert.equal(result.group.name, 'ok-group');
+          assert.equal(result.name, 'ok-group');
 
           done();
         });
@@ -107,7 +107,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
 
   describe('its support of VinylDNS zone creation', () => {
     it('can create a zone', (done) => {
-      vinyl.createZone(zone(testGroup.id))
+      vinyl.createZone(buildZone(testGroup.id))
         .then(result => {
           // Save the result as `testZone` for other tests to use
           testZone = result;
@@ -189,10 +189,10 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
   });
 
   describe('its support of deleting VinylDNS groups', () => {
-    it('can delete a group', (done) => {
+    it('will report an error if it attempts to delete an admin group', (done) => {
       vinyl.deleteGroup(testGroup.id)
-        .then(result => {
-          assert.equal(result.status, 'Deleted');
+        .catch(err => {
+          assert.equal(err.message, '400: "group-tests-group-updated is the admin of a zone. Cannot delete."');
 
           done();
         });
