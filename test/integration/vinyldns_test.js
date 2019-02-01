@@ -123,7 +123,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
     });
 
     it('can fetch group members', (done) => {
-      vinyl.getGroupAdmins(testGroup.id)
+      vinyl.getGroupMembers(testGroup.id)
         .then(result => {
           assert.equal(result.members[0].userName, 'ok');
 
@@ -131,7 +131,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         });
     });
 
-    it('can fetch group admins (when there are groups)', (done) => {
+    it('can fetch group members', (done) => {
       vinyl.getGroupAdmins(testGroup.id)
         .then(result => {
           assert.equal(result.admins[0].userName, 'ok');
@@ -143,7 +143,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
     it('can delete a group', (done) => {
       vinyl.getGroups()
         .then(groups => {
-          vinyl.deleteGroup(groups.groups.find(g => g.name === 'group-tests-group').id)
+          vinyl.deleteGroup(groups.groups.find(g => g.name.includes('group-tests-group')).id)
             .then(result => {
               assert.equal(result.status, 'Deleted');
 
