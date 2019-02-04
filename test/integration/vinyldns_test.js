@@ -110,7 +110,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
       vinyl.createZone(buildZone(testGroup.id))
         .then(result => {
           // Save the result as `testZone` for other tests to use
-          testZone = result.zone;
+          testZone = result;
 
           // Pause to allow the zone to propagate before proceeding to other tests, where the zone is used
           setTimeout(() => {
@@ -126,7 +126,6 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
     it('can fetch all zones', (done) => {
       vinyl.getZones()
         .then(result => {
-          console.log('RESULT: ', result);
           assert.equal(result.zones[0].name, testZone.zone.name);
 
           done();
@@ -134,8 +133,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
     });
 
     it('can fetch individual zones', (done) => {
-      console.log(testZone);
-      vinyl.getZone(testZone.id)
+      vinyl.getZone(testZone.zone.id)
         .then(result => {
           assert.equal(result.zone.name, testZone.zone.name);
 
@@ -203,7 +201,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
 
   describe('its support of VinylDNS zone deletion', () => {
     it('can delete a zone', (done) => {
-      vinyl.deleteZone(testZone.id)
+      vinyl.deleteZone(testZone.zone.id)
         .then(result => {
           assert.equal(result.zone.status, 'Deleted');
 
