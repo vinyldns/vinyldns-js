@@ -805,6 +805,33 @@ describe('VinylDNS', () => {
             done();
           });
       });
+
+      it('properly handles not okay responses from the API', (done) => {
+        let update = {
+          name: 'some-group',
+          id: '123',
+          email: 'test@example.com',
+          description: 'an example group',
+          members: [{
+            id: '123'
+          }],
+          admins: [{
+            id: '456'
+          }]
+        };
+
+        mockPut('/groups/123', update, 'some err', 500);
+
+        vinyl.updateGroup(update)
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
     });
 
     describe('deleteGroup', () => {
