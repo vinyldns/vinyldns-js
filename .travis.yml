@@ -2,5 +2,12 @@ language: node_js
 
 script: npm test && npm run integration-tests
 
+after_script: .vinyldns/bin/remove-vinyl-containers.sh
+
 node_js:
 - 10.15.0
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change

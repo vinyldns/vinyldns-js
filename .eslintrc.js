@@ -8,7 +8,8 @@ module.exports = {
   },
  "globals": {
     "it": true,
-    "describe": true
+    "describe": true,
+    "before": true
   },
   "extends": "eslint:recommended",
   "rules": {
