@@ -85,6 +85,10 @@ class VinylDNS {
     return this._getOrDelete(this.urls.batchChanges(), 'get');
   }
 
+  getBatchChange(id) {
+    return this._getOrDelete(this.urls.batchChange(id), 'get');
+  }
+
   getGroups(queryOpts) {
     return this._getOrDelete(this.urls.getGroups(queryOpts), 'get');
   }

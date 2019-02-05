@@ -63,6 +63,10 @@ class Urls {
     return `${this.zonesBase()}/batchrecordchanges`;
   }
 
+  batchChange(id) {
+    return `${this.batchChanges()}/${id}`;
+  }
+
   groupsBase() {
     return `${this.apiUrl}/groups`;
   }

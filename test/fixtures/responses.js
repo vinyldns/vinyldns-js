@@ -423,6 +423,31 @@ module.exports = {
     }]
   },
 
+  getBatchChange: {
+    userId: 'vinyl',
+    userName: 'vinyl201',
+    comments: 'this is optional',
+    createdTimestamp: '2018-05-09T14:19:34Z',
+    changes: [{
+      changeType: 'Add',
+      inputName: 'parent.com.',
+      type: 'A',
+      ttl: 200,
+      record: {
+        address: '4.5.6.7'
+      },
+      status: 'Pending',
+      recordName: 'parent.com.',
+      zoneName: 'parent.com.',
+      zoneId: '74e93bfc-7296-4b86-83d3-1ffcb0eb3d13',
+      recordChangeId: 'a07299ce-5f81-11e8-9c2d-fa7ae01bbebc',
+      recordSetId: 'a0729f00-5f81-11e8-9c2d-fa7ae01bbebc',
+      id: '7573ca11-3e30-45a8-9ba5-791f7d6ae7a7'
+    }],
+    status: 'Pending',
+    id: '02bd95f4-a32c-443b-82eb-54dbaa55b31a'
+  },
+
   getGroups: {
     maxItems: 100,
     groups: [
