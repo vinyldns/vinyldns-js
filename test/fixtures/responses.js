@@ -448,6 +448,46 @@ module.exports = {
     id: '02bd95f4-a32c-443b-82eb-54dbaa55b31a'
   },
 
+  createBatchChange: {
+    userId: 'vinyl',
+    userName: 'vinyl201',
+    comments: 'this is optional',
+    createdTimestamp: '2018-05-09T14:19:34Z',
+    changes: [{
+      changeType: 'Add',
+      inputName: 'example.com.',
+      type: 'A',
+      ttl: 3600,
+      record: {
+        address: '1.1.1.1'
+      },
+      status: 'Pending',
+      recordName: 'example.com.',
+      zoneName: 'example.com.',
+      zoneId: '74e93bfc-7296-4b86-83d3-1ffcb0eb3d13',
+      recordChangeId: '255063ce-5f82-11e8-9c2d-fa7ae01bbebc',
+      recordSetId: '25506676-5f82-11e8-9c2d-fa7ae01bbebc',
+      id: '7573ca11-3e30-45a8-9ba5-791f7d6ae7a7'
+    },{
+      changeType: 'Add',
+      inputName: '192.0.2.195',
+      type: 'PTR',
+      ttl: 3600,
+      record: {
+        ptrdname: 'ptrdata.data.'
+      },
+      status: 'Pending',
+      recordName: '195',
+      zoneName: '2.0.192.in-addr.arpa.',
+      zoneId: '7fd52634-5a0c-11e8-9c2d-fa7ae01bbebc',
+      recordChangeId: '25506a9a-5f82-11e8-9c2d-fa7ae01bbebc',
+      recordSetId: '25506c84-5f82-11e8-9c2d-fa7ae01bbebc',
+      id: 'bece5338-5a0c-11e8-9c2d-fa7ae01bbebc'
+    }],
+    status: 'Pending',
+    id: '02bd95f4-a32c-443b-82eb-54dbaa55b31a'
+  },
+
   getGroups: {
     maxItems: 100,
     groups: [
