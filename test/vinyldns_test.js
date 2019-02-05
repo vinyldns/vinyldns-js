@@ -818,6 +818,20 @@ describe('VinylDNS', () => {
             done();
           });
       });
+
+      it('properly handles not okay responses from the API', (done) => {
+        mockDelete('/groups/123', 'some err', 500);
+
+        vinyl.deleteGroup('123')
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
     });
   });
 });
