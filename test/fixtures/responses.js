@@ -411,6 +411,18 @@ module.exports = {
     id: 'fef81f0b-f439-462d-88df-c773d3686c9b'
   },
 
+  getBatchChanges: {
+    batchChanges: [{
+      userId: 'vinyl',
+      userName: 'vinyl201',
+      comments: 'this is optional',
+      createdTimestamp: '2018-05-11T18:12:13Z',
+      totalChanges: 5,
+      status: 'Complete',
+      id: 'bd03175c-6fd7-419e-991c-3d5d1441d995'
+    }]
+  },
+
   getGroups: {
     maxItems: 100,
     groups: [

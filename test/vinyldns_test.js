@@ -577,6 +577,35 @@ describe('VinylDNS', () => {
     });
   });
 
+  describe('batch changes methods', () => {
+    describe('getBatchChanges', () => {
+      it('fetches batch changes', (done) => {
+        mockGet('/zones/batchrecordchanges', fixtures.getBatchChanges);
+
+        vinyl.getBatchChanges()
+          .then(result => {
+            assert.equal(result.batchChanges[0].userId, 'vinyl');
+
+            done();
+          });
+      });
+
+      it('properly handles not okay responses from the API', (done) => {
+        mockGet('/zones/batchrecordchanges', 'some err', 500);
+
+        vinyl.getBatchChanges()
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
+    });
+  });
+
   describe('groups methods', () => {
     describe('getGroups', () => {
       it('fetches groups', (done) => {

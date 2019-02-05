@@ -59,6 +59,10 @@ class Urls {
     return `${this.recordSet(details)}/changes/${details.changeId}`;
   }
 
+  batchChanges() {
+    return `${this.zonesBase()}/batchrecordchanges`;
+  }
+
   groupsBase() {
     return `${this.apiUrl}/groups`;
   }
