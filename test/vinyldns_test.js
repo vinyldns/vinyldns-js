@@ -577,6 +577,145 @@ describe('VinylDNS', () => {
     });
   });
 
+  describe('batch changes methods', () => {
+    describe('getBatchChanges', () => {
+      it('fetches batch changes', (done) => {
+        mockGet('/zones/batchrecordchanges', fixtures.getBatchChanges);
+
+        vinyl.getBatchChanges()
+          .then(result => {
+            assert.equal(result.batchChanges[0].userId, 'vinyl');
+
+            done();
+          });
+      });
+
+      it('properly fetches batch changes with query params', (done) => {
+        mockGet('/zones/batchrecordchanges?startFrom=1&maxItems=100', fixtures.getBatchChanges);
+
+        vinyl.getBatchChanges({
+          startFrom: 1,
+          maxItems: 100
+        })
+          .then(result => {
+            assert.equal(result.batchChanges[0].userId, 'vinyl');
+
+            done();
+          });
+      });
+
+      it('properly handles not okay responses from the API', (done) => {
+        mockGet('/zones/batchrecordchanges', 'some err', 500);
+
+        vinyl.getBatchChanges()
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
+    });
+
+    describe('getBatchChange', () => {
+      it('fetches the batch change whose ID it is passed', (done) => {
+        mockGet('/zones/batchrecordchanges/123', fixtures.getBatchChange);
+
+        vinyl.getBatchChange('123')
+          .then(result => {
+            assert.equal(result.userId, 'vinyl');
+
+            done();
+          });
+      });
+
+      it('properly handles not okay responses from the API', (done) => {
+        mockGet('/zones/batchrecordchanges/123', 'some err', 500);
+
+        vinyl.getBatchChange('123')
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
+    });
+
+    describe('createBatchChange', () => {
+      it('creates the batch change whose details it is passed', (done) => {
+        let change = {
+          comments: 'this is optional',
+          changes: [{
+            inputName: 'example.com.',
+            changeType: 'Add',
+            type: 'A',
+            ttl: 3600,
+            record: {
+              address: '1.1.1.1'
+            }
+          },{
+            inputName: '192.0.2.195',
+            changeType: 'Add',
+            type: 'PTR',
+            ttl: 3600,
+            record: {
+              ptrdname: 'ptrdata.data.'
+            }
+          }]
+        };
+
+        mockPost('/zones/batchrecordchanges', change, fixtures.createBatchChange);
+
+        vinyl.createBatchChange(change)
+          .then(result => {
+            assert.equal(result.status, 'Pending');
+
+            done();
+          });
+      });
+
+      it('properly handles not okay responses from the API', (done) => {
+        let change = {
+          comments: 'this is optional',
+          changes: [{
+            inputName: 'example.com.',
+            changeType: 'Add',
+            type: 'A',
+            ttl: 3600,
+            record: {
+              address: '1.1.1.1'
+            }
+          },{
+            inputName: '192.0.2.195',
+            changeType: 'Add',
+            type: 'PTR',
+            ttl: 3600,
+            record: {
+              ptrdname: 'ptrdata.data.'
+            }
+          }]
+        };
+
+        mockPost('/zones/batchrecordchanges', change, 'some err', 500);
+
+        vinyl.createBatchChange(change)
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, '500: some err');
+
+            done();
+          });
+      });
+    });
+  });
+
   describe('groups methods', () => {
     describe('getGroups', () => {
       it('fetches groups', (done) => {
