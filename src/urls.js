@@ -59,8 +59,8 @@ class Urls {
     return `${this.recordSet(details)}/changes/${details.changeId}`;
   }
 
-  batchChanges() {
-    return `${this.zonesBase()}/batchrecordchanges`;
+  batchChanges(query) {
+    return `${this.zonesBase()}/batchrecordchanges${this.queryString(query)}`;
   }
 
   batchChange(id) {

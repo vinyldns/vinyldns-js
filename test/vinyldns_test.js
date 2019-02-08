@@ -590,6 +590,20 @@ describe('VinylDNS', () => {
           });
       });
 
+      it('properly fetches batch changes with query params', (done) => {
+        mockGet('/zones/batchrecordchanges?startFrom=1&maxItems=100', fixtures.getBatchChanges);
+
+        vinyl.getBatchChanges({
+          startFrom: 1,
+          maxItems: 100
+        })
+          .then(result => {
+            assert.equal(result.batchChanges[0].userId, 'vinyl');
+
+            done();
+          });
+      });
+
       it('properly handles not okay responses from the API', (done) => {
         mockGet('/zones/batchrecordchanges', 'some err', 500);
 
