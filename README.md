@@ -29,8 +29,9 @@ npm run integration-tests
 All methods return a Promise.
 
 ```javascript
-const Vinyldns = require('vinyldns-js');
-const vinylClient = new Vinyldns({
+const VinylDNS = require('vinyldns-js');
+
+const vinylClient = new VinylDNS({
   apiUrl: 'http://my-vinyldns.com',
   accessKeyId: '123',
   secretAccessKey: '123'
@@ -84,7 +85,6 @@ Use the `vinyl` `vinyldns-js` client instance:
 > vinyl.getZones().then(res => { console.log(res) }).catch(err => { console.log(err) })
 ```
 
-## Work that needs to be done
+## Releasing
 
-* Create CRUD methods for all VinylDNS resources (including unit tests)
-* Publish to NPM
+[TravisCI](https://travis-ci.org/vinyldns/vinyldns-js) performs an `npm release` on each creation of a `git` tag.
