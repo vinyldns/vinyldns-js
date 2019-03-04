@@ -20,7 +20,8 @@ const url = require('url');
 const Urls = require('./urls');
 
 /**
- * Represents VinylDNS API.
+ * vinyldns-js offers an NPM module for interacting with the VinylDNS API.
+ * The VinylDNS class represents the VinylDNS API.
  * @class
  */
 class VinylDNS {
