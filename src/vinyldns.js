@@ -20,20 +20,13 @@ const url = require('url');
 const Urls = require('./urls');
 
 /**
- * vinyldns-js offers an NPM module for interacting with the VinylDNS API.
- * The VinylDNS class represents the VinylDNS API.
- * @class
+ * vinyldns-js offers an NPM module for interacting with the VinylDNS API. The VinylDNS class represents the VinylDNS API.
+ * @param {object} config - The configuration object.
+ * @param {string} config.apiURL - The VinylDNS API URL. Example: `https://my-vinyldns-api-instance.com`.
+ * @param {string} config.accessKeyId - The VinylDNS API access key ID.
+ * @param {string} config.secretAccessKey - The VinylDNS API secret access key.
  */
 class VinylDNS {
-
-  /**
-   * Instantiate a VinylDNS instance.
-   * @constructor
-   * @param {object} config - The configuration object.
-   * @param {string} config.apiURL - The VinylDNS API URL.
-   * @param {string} config.accessKeyId - The VinylDNS API access key ID.
-   * @param {string} config.secretAccessKey - The VinylDNS API secret access key.
-   */
   constructor(config) {
     this.config = config;
     this.urls = new Urls(config.apiUrl);
