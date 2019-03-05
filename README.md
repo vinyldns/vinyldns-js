@@ -2,33 +2,13 @@
 
 # vinyldns-js
 
-A JavaScript [vinylDNS](https://vinyldns.io) client.
+A JavaScript [VinylDNS](https://vinyldns.io) client.
 
 [View the docs &raquo;](http://vinyldns.github.io/vinyldns-js)
 
-## Contributing
-
-Install dependencies:
-
-```
-npm install
-```
-
-Run unit tests and lint code:
-
-```
-npm test
-```
-
-Run integration tests against a Dockerized VinylDNS API running on `localhost:9000`:
-
-```
-npm run integration-tests
-```
-
 ## Usage
 
-All methods return a Promise.
+All methods return a Promise. See [the documentation](http://vinyldns.github.io/vinyldns-js) for more details.
 
 ```javascript
 const VinylDNS = require('vinyldns-js');
@@ -87,6 +67,28 @@ Use the `vinyl` `vinyldns-js` client instance:
 > vinyl.getZones().then(res => { console.log(res) }).catch(err => { console.log(err) })
 ```
 
+## Contributing
+
+Install dependencies:
+
+```
+npm install
+```
+
+Run unit tests, lint code, and build documentation microsite:
+
+```
+npm test
+```
+
+Run integration tests against a Dockerized VinylDNS API running on `localhost:9000`:
+
+```
+npm run integration-tests
+```
+
 ## Releasing
 
 [TravisCI](https://travis-ci.org/vinyldns/vinyldns-js) performs an `npm release` on each creation of a `git` tag. TravisCI also publishes docs to [GitHub Pages](https://docs.travis-ci.com/user/deployment/pages/) at [vinyldns.github.io/vinyldns-js](https://vinyldns.github.io/vinyldns-js).
+
+`npm run tag` offers a convenience task for performing a release.
