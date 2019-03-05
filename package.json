@@ -1,6 +1,6 @@
 {
   "name": "vinyldns-js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A JavaScript client for VinylDNS",
   "main": "src/vinyldns.js",
   "scripts": {
