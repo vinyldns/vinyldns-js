@@ -2,7 +2,9 @@
 
 # vinyldns-js
 
-This project is a work in progress! If you would like to help us get this where it needs to be, please reach out to us in [gitter](https://gitter.im/vinyldns), open a pull request, or create an issue.
+A JavaScript [vinylDNS](https://vinyldns.io) client.
+
+[View the docs &raquo;](http://vinyldns.github.io/vinyldns-js)
 
 ## Contributing
 
@@ -87,4 +89,4 @@ Use the `vinyl` `vinyldns-js` client instance:
 
 ## Releasing
 
-[TravisCI](https://travis-ci.org/vinyldns/vinyldns-js) performs an `npm release` on each creation of a `git` tag.
+[TravisCI](https://travis-ci.org/vinyldns/vinyldns-js) performs an `npm release` on each creation of a `git` tag. TravisCI also publishes docs to [GitHub Pages](https://docs.travis-ci.com/user/deployment/pages/) at [vinyldns.github.io/vinyldns-js](https://vinyldns.github.io/vinyldns-js).

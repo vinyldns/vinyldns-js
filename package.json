@@ -1,13 +1,14 @@
 {
   "name": "vinyldns-js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A JavaScript client for VinylDNS",
   "main": "src/vinyldns.js",
   "scripts": {
-    "test": "node_modules/.bin/mocha && ./node_modules/.bin/eslint src/*.js test/**/*.js",
+    "test": "mocha && eslint src/*.js test/**/*.js && npm run generate-docs",
     "integration-tests": "bin/run-integration-tests.sh",
     "start-api": ".vinyldns/bin/docker-up-vinyldns.sh --api-only --version 0.8.0",
     "stop-api": ".vinyldns/bin/remove-vinyl-containers.sh",
+    "generate-docs": "documentation build src/** -f html -o docs",
     "repl": "node bin/repl.js"
   },
   "repository": {
@@ -30,6 +31,7 @@
   "devDependencies": {
     "eslint": "5.12.0",
     "mocha": "5.2.0",
-    "nock": "10.0.6"
+    "nock": "10.0.6",
+    "documentation": "9.3.0"
   }
 }
