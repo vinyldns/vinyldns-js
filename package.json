@@ -9,7 +9,8 @@
     "start-api": ".vinyldns/bin/docker-up-vinyldns.sh --api-only --version 0.8.0",
     "stop-api": ".vinyldns/bin/remove-vinyl-containers.sh",
     "generate-docs": "documentation build src/** -f html -o docs",
-    "repl": "node bin/repl.js"
+    "repl": "node bin/repl.js",
+    "tag": "git tag $npm_package_version && git push origin $npm_package_version"
   },
   "repository": {
     "type": "git",
