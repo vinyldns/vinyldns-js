@@ -285,6 +285,7 @@ class VinylDNS {
       request(signedReq, (err, resp) => {
         if (err) {
           reject(err);
+          console.log('Error occured');
           return;
         }
 
