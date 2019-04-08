@@ -271,7 +271,7 @@ class VinylDNS {
       headers: {
         'Content-Type': 'application/json'
       },
-      data: opts.data
+      body: opts.body ? JSON.stringify(opts.body) : ''
     };
   }
 
@@ -280,6 +280,8 @@ class VinylDNS {
       accessKeyId: this.config.accessKeyId,
       secretAccessKey: this.config.secretAccessKey
     });
+
+    signedReq.data = opts.body;
 
     return new Promise((fulfill, reject) => {
       axios(signedReq)
@@ -304,7 +306,7 @@ class VinylDNS {
     return this._request(this._requestOptions({
       url: url,
       method: method,
-      data: resource
+      body: resource
     }));
   }
 
