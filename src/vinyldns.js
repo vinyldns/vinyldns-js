@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-const request = require('request');
+const axios = require('axios');
 const aws4 = require('aws4');
 const url = require('url');
 const Urls = require('./urls');
@@ -265,7 +265,7 @@ class VinylDNS {
 
     return {
       host: parsedUrl.host,
-      uri: opts.url,
+      url: opts.url,
       method: opts.method ? opts.method.toUpperCase() : 'GET',
       path: parsedUrl.path,
       headers: {
@@ -276,26 +276,10 @@ class VinylDNS {
   }
 
   _request(opts) {
-    let signedReq = aws4.sign(opts, {
+    return axios(aws4.sign(opts, {
       accessKeyId: this.config.accessKeyId,
       secretAccessKey: this.config.secretAccessKey
-    });
-
-    return new Promise((fulfill, reject) => {
-      request(signedReq, (err, resp) => {
-        if (err) {
-          reject(err);
-          return;
-        }
-
-        if (resp.statusCode >= 400) {
-          reject(new Error(`${resp.statusCode}: ${resp.body}`));
-          return;
-        }
-
-        fulfill(JSON.parse(resp.body));
-      });
-    });
+    }));
   }
 
   _getOrDelete(url, method) {
