@@ -278,10 +278,10 @@ class VinylDNS {
   _request(opts) {
     let signedReq = aws4.sign(opts, {
       accessKeyId: this.config.accessKeyId,
-      secretAccessKey: this.config.secretAccessKey
+      secretAccessKey: this.config.secretAccessKey,
+      // axios expects a 'data'; aws4.sign expects a 'body'
+      data: opts.body
     });
-
-    signedReq.data = opts.body;
 
     return new Promise((fulfill, reject) => {
       axios(signedReq)
