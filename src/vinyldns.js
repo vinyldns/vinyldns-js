@@ -281,6 +281,7 @@ class VinylDNS {
       secretAccessKey: this.config.secretAccessKey
     });
 
+    // axios expects a 'data'; aws4.sign expects a 'body'
     signedReq.data = opts.body;
 
     return new Promise((fulfill, reject) => {
