@@ -271,15 +271,26 @@ class VinylDNS {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: opts.body ? JSON.stringify(opts.body) : ''
+      data: opts.data
     };
   }
 
   _request(opts) {
-    return axios(aws4.sign(opts, {
+    let signedReq = aws4.sign(opts, {
       accessKeyId: this.config.accessKeyId,
       secretAccessKey: this.config.secretAccessKey
-    }));
+    });
+
+    return new Promise((fulfill, reject) => {
+      axios(signedReq)
+        .then(resp => {
+          fulfill(resp.data);
+        })
+        .catch(err => {
+          reject(err);
+          return;
+        });
+    });
   }
 
   _getOrDelete(url, method) {
@@ -293,7 +304,7 @@ class VinylDNS {
     return this._request(this._requestOptions({
       url: url,
       method: method,
-      body: resource
+      data: resource
     }));
   }
 
