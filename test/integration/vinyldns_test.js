@@ -192,7 +192,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
     it('will report an error if it attempts to delete an admin group', (done) => {
       vinyl.deleteGroup(testGroup.id)
         .catch(err => {
-          assert.equal(err.message, '400: "group-tests-group-updated is the admin of a zone. Cannot delete."');
+          assert.equal(err.message, 'Request failed with status code 400');
 
           done();
         });

@@ -99,7 +99,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
@@ -126,7 +126,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
@@ -153,7 +153,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
@@ -194,7 +194,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
@@ -227,7 +227,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
@@ -260,7 +260,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
@@ -287,7 +287,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
@@ -331,7 +331,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
@@ -364,7 +364,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
@@ -411,7 +411,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
@@ -460,7 +460,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
@@ -493,7 +493,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
@@ -534,7 +534,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
@@ -569,7 +569,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
@@ -612,7 +612,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
@@ -639,7 +639,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
@@ -708,7 +708,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
@@ -752,7 +752,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
@@ -779,7 +779,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
@@ -820,7 +820,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
@@ -847,7 +847,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
@@ -888,7 +888,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
@@ -939,7 +939,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
@@ -992,7 +992,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
@@ -1019,7 +1019,7 @@ describe('VinylDNS', () => {
             // NOOP
           })
           .catch(err => {
-            assert.equal(err.message, '500: some err');
+            assert.equal(err.message, 'Request failed with status code 500');
 
             done();
           });
