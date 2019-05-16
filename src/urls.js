@@ -35,6 +35,10 @@ class Urls {
     return `${this.zonesBase()}/${id}`;
   }
 
+  zoneByName(name) {
+    return `${this.zonesBase()}/name/${name}`;
+  }
+
   syncZone(id) {
     return `${this.zone(id)}/sync`;
   }

@@ -132,8 +132,17 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         });
     });
 
-    it('can fetch individual zones', (done) => {
+    it('can fetch individual zones by ID', (done) => {
       vinyl.getZone(testZone.zone.id)
+        .then(result => {
+          assert.equal(result.zone.name, testZone.zone.name);
+
+          done();
+        });
+    });
+
+    it('can fetch individual zones by Name', (done) => {
+      vinyl.getZoneByName(testZone.zone.name)
         .then(result => {
           assert.equal(result.zone.name, testZone.zone.name);
 
@@ -151,11 +160,12 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         records: [{
           address: '10.10.10.10'
         }],
-        zoneId: testZone.zone.id
+        zoneId: testZone.zone.id,
+        ownerGroupId: testGroup.id
       })
         .then(result => {
           assert.equal(result.recordSet.name, 'record-set-tests-create');
-
+          assert.equal(result.recordSet.ownerGroupId, testGroup.id);
           done();
         });
     });
@@ -194,6 +204,35 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         .catch(err => {
           assert.equal(err.message, 'Request failed with status code 400');
 
+          done();
+        });
+    });
+  });
+
+  describe('its support of VinylDNS batch changes', () => {
+    it("can create a batch change", (done) => {
+
+      let batch = {
+        comments: 'this is optional',
+        ownerGroupId: testGroup.id,
+        changes: [
+            {
+                inputName: `testadd.${testZone.zone.name}`,
+                changeType: 'Add',
+                type: 'A',
+                ttl: 3600,
+                record: {
+                    address: '1.1.1.1'
+                }
+            }
+        ]
+      };
+
+      vinyl.createBatchChange(batch)
+        .then(result => {
+          console.log(result);
+          assert.equal(result.changes[0].recordName, 'testadd');
+          assert.equal(result.ownerGroupId, testGroup.id);
           done();
         });
     });

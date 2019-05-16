@@ -51,6 +51,14 @@ class VinylDNS {
   }
 
   /**
+   * Fetch zone.
+   * @param {string} name - The zone Name.
+   */
+  getZoneByName(name) {
+    return this.request.getOrDelete(this.urls.zoneByName(name), 'get');
+  }
+
+  /**
    * Fetch zone changes.
    * @param {string} id - The zone ID.
    * @param {object} queryOpts - The zone changes query parameters.

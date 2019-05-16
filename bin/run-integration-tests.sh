@@ -14,10 +14,12 @@ else
   cd ..
 fi
 
+.vinyldns/bin/remove-vinyl-containers.sh
+
 echo "Starting localhost:9000 VinylDNS API instance..."
 .vinyldns/bin/docker-up-vinyldns.sh \
   --api-only \
-  --version 0.8.0
+  --version 0.9.1
 
 echo "Executing vinyldns-js integration tests..."
 
