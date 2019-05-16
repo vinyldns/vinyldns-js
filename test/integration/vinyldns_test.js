@@ -210,27 +210,26 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
   });
 
   describe('its support of VinylDNS batch changes', () => {
-    it("can create a batch change", (done) => {
+    it('can create a batch change', (done) => {
 
       let batch = {
         comments: 'this is optional',
         ownerGroupId: testGroup.id,
         changes: [
-            {
-                inputName: `testadd.${testZone.zone.name}`,
-                changeType: 'Add',
-                type: 'A',
-                ttl: 3600,
-                record: {
-                    address: '1.1.1.1'
-                }
+          {
+            inputName: `testadd.${testZone.zone.name}`,
+            changeType: 'Add',
+            type: 'A',
+            ttl: 3600,
+            record: {
+              address: '1.1.1.1'
             }
+          }
         ]
       };
 
       vinyl.createBatchChange(batch)
         .then(result => {
-          console.log(result);
           assert.equal(result.changes[0].recordName, 'testadd');
           assert.equal(result.ownerGroupId, testGroup.id);
           done();
