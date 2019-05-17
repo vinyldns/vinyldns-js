@@ -133,6 +133,33 @@ describe('VinylDNS', () => {
       });
     });
 
+    describe('getZoneByName', () => {
+      it('fetches the zone with the Name it is passed', (done) => {
+        mockGet('/zones/name/123', fixtures.getZone);
+
+        vinyl.getZoneByName('123')
+          .then(result => {
+            assert.equal(result.zone.name, 'system-test.');
+
+            done();
+          });
+      });
+
+      it('properly handles not okay responses from the API', (done) => {
+        mockGet('/zones/name/123', 'some err', 500);
+
+        vinyl.getZoneByName('123')
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, 'Request failed with status code 500');
+
+            done();
+          });
+      });
+    });
+
     describe('syncZone', () => {
       it('syncs the zone with the ID it is passed', (done) => {
         mockPost('/zones/123/sync', '', fixtures.syncZone);
