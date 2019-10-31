@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/vinyldns/vinyldns-js.svg?branch=master)](https://travis-ci.org/vinyldns/vinyldns-js)
+![GitHub](https://img.shields.io/github/license/vinyldns/vinyldns-js)
 
 # vinyldns-js
 
