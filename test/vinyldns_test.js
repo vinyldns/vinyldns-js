@@ -16,6 +16,7 @@
 
 const assert = require('assert');
 const nock = require('nock');
+const pkg = require('../package.json');
 const fixtures = require('./fixtures/responses');
 const VinylDNS = require('../src/vinyldns');
 
@@ -100,6 +101,23 @@ describe('VinylDNS', () => {
           })
           .catch(err => {
             assert.equal(err.message, 'Request failed with status code 500');
+
+            done();
+          });
+      });
+
+      it('uses a default custom user agent', (done) => {
+        nock(host, {
+          reqheaders: {
+            'User-Agent': `vinyldns-js/${pkg.version}`
+          }
+         })
+          .get('/zones')
+          .reply(200, fixtures.getZones);
+
+        vinyl.getZones()
+          .then((result) => {
+            assert.equal(result.zones[0].name, 'list-zones-test-searched-1.');
 
             done();
           });

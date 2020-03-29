@@ -17,6 +17,7 @@
 const axios = require('axios');
 const aws4 = require('aws4');
 const url = require('url');
+const pkg = require('../package.json');
 
 class Request {
   constructor(config) {
@@ -54,7 +55,8 @@ class Request {
       method: opts.method ? opts.method.toUpperCase() : 'GET',
       path: parsedUrl.path,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'User-Agent': this._userAgent()
       },
       body: opts.body ? JSON.stringify(opts.body) : ''
     };
@@ -79,6 +81,10 @@ class Request {
           return;
         });
     });
+  }
+
+  _userAgent() {
+    return this.config.userAgent || `vinyldns-js/${pkg.version}`;
   }
 }
 
