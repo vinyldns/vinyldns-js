@@ -1,6 +1,6 @@
 {
   "name": "vinyldns-js",
-  "version": "0.9.6",
+  "version": "0.9.7",
   "description": "A JavaScript client for VinylDNS",
   "main": "src/vinyldns.js",
   "scripts": {
@@ -30,7 +30,7 @@
     "aws4": "1.8.0"
   },
   "devDependencies": {
-    "documentation": "12.0.2",
+    "documentation": "^13.0.2",
     "eslint": "6.2.2",
     "mocha": "7.1.1",
     "nock": "^12.0.3"

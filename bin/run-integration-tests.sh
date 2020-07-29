@@ -19,7 +19,7 @@ fi
 echo "Starting localhost:9000 VinylDNS API instance..."
 .vinyldns/bin/docker-up-vinyldns.sh \
   --api-only \
-  --version 0.9.3
+  --version 0.9.4
 
 echo "Executing vinyldns-js integration tests..."
 
