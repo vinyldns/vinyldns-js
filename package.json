@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha && eslint src/*.js test/**/*.js && npm run generate-docs",
     "integration-tests": "bin/run-integration-tests.sh",
-    "start-api": ".vinyldns/bin/docker-up-vinyldns.sh --api-only --version 0.8.0",
+    "start-api": ".vinyldns/bin/docker-up-vinyldns.sh --api-only --version 0.9.7",
     "stop-api": ".vinyldns/bin/remove-vinyl-containers.sh",
     "generate-docs": "documentation build src/** -f html -o docs",
     "repl": "node bin/repl.js",
