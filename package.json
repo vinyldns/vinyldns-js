@@ -1,6 +1,6 @@
 {
   "name": "vinyldns-js",
-  "version": "0.9.8",
+  "version": "0.9.9",
   "description": "A JavaScript client for VinylDNS",
   "main": "src/vinyldns.js",
   "scripts": {
@@ -26,8 +26,8 @@
     "url": "https://github.com/vinyldns/vinyldns-js/issues"
   },
   "dependencies": {
-    "axios": "0.21.0",
-    "aws4": "1.11.0"
+    "aws4": "1.11.0",
+    "axios": "^0.21.1"
   },
   "devDependencies": {
     "documentation": "13.1.0",
