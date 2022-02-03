@@ -8,37 +8,24 @@ on:
       - 'v*'
 
 jobs:
-  build:
+  publish-npm:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.4.0
 
       - name: Setup .npmrc file
         uses: actions/setup-node@v2
         with:
           node-version: 14
+          registry-url: https://registry.npmjs.org/
 
       - run: npm ci
 
       - name: Run tests
         run: make test
-        shell: bash    
-
-  publish-npm:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup .npmrc file
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14
-          registry-url: https://www.npmjs.com/package/vinyldns-js
+        shell: bash       
           
-      - run: npm ci
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
