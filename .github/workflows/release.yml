@@ -1,0 +1,31 @@
+# This GitHub action can publish assets for release when a tag is created.
+# Currently, it's setup to run on any tag that matches the pattern "v*" (ie. v0.1.0).
+
+name: release
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish-npm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.4.0
+
+      - name: Setup .npmrc file
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+          registry-url: https://registry.npmjs.org/
+
+      - run: npm ci
+
+      - name: Run tests
+        run: make test
+        shell: bash       
+          
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

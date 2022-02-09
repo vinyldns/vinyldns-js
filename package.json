@@ -4,10 +4,10 @@
   "description": "A JavaScript client for VinylDNS",
   "main": "src/vinyldns.js",
   "scripts": {
-    "test": "mocha && eslint src/*.js test/**/*.js && npm run generate-docs",
+    "test": "make tests",
     "integration-tests": "bin/run-integration-tests.sh",
-    "start-api": ".vinyldns/bin/docker-up-vinyldns.sh --api-only --version 0.9.7",
-    "stop-api": ".vinyldns/bin/remove-vinyl-containers.sh",
+    "start-api": "make start-api",
+    "stop-api": "make stop-api",
     "generate-docs": "documentation build src/** -f html -o docs",
     "repl": "node bin/repl.js",
     "tag": "git tag $npm_package_version && git push origin $npm_package_version"
