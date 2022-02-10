@@ -1,0 +1,26 @@
+name: verify
+
+on:
+  pull_request:
+    branches: [ '*' ]
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.4.0
+
+      - name: Setup .npmrc file
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - run: npm ci
+      
+      - name: Run tests
+        run: make test
+        shell: bash
