@@ -71,7 +71,6 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         .then(result => {
           assert.equal(result.groups[0].name, 'ok-group');
 
-          done();
         });
     });
 
@@ -80,7 +79,6 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         .then(result => {
           assert.equal(result.name, 'ok-group');
 
-          done();
         });
     });
   });
@@ -91,7 +89,6 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         .then(result => {
           assert.equal(result.members[0].userName, 'ok');
 
-          done();
         });
     });
 
@@ -100,7 +97,6 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         .then(result => {
           assert.equal(result.admins[0].userName, 'ok');
 
-          done();
         });
     });
   });
@@ -128,7 +124,6 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         .then(result => {
           assert.equal(result.zones[0].name, testZone.zone.name);
 
-          done();
         });
     });
 
@@ -137,7 +132,6 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         .then(result => {
           assert.equal(result.zone.name, testZone.zone.name);
 
-          done();
         });
     });
 
@@ -146,7 +140,6 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         .then(result => {
           assert.equal(result.zone.name, testZone.zone.name);
 
-          done();
         });
     });
   });
@@ -193,7 +186,6 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         .then(result => {
           assert.equal(result.changes[0].newGroup.name.includes('group-tests-group'), true);
 
-          done();
         });
     });
   });
@@ -204,7 +196,6 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         .catch(err => {
           assert.equal(err.message, 'Request failed with status code 400');
 
-          done();
         });
     });
   });
@@ -243,7 +234,6 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         .then(result => {
           assert.equal(result.zone.status, 'Deleted');
 
-          done();
         });
     });
   });
