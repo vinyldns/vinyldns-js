@@ -1,5 +1,5 @@
 [![verify](https://github.com/vinyldns/vinyldns-js/actions/workflows/verify.yml/badge.svg)](https://github.com/vinyldns/vinyldns-js/actions/workflows/verify.yml)
-![NPM](https://img.shields.io/npm/v/vinyldns-js?logo=npm)
+[![NPM](https://img.shields.io/npm/v/vinyldns-js?logo=npm)](https://www.npmjs.com/package/vinyldns-js)
 
 # vinyldns-js
 
