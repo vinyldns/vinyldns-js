@@ -30,7 +30,7 @@
     "axios": "^0.26.0"
   },
   "devDependencies": {
-    "documentation": "13.1.0",
+    "documentation": "13.2.5",
     "eslint": "7.14.0",
     "mocha": "8.2.1",
     "nock": "13.0.5",
