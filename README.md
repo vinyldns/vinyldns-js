@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/vinyldns/vinyldns-js.svg?branch=master)](https://travis-ci.org/vinyldns/vinyldns-js)
-![GitHub](https://img.shields.io/github/license/vinyldns/vinyldns-js)
+[![verify](https://github.com/vinyldns/vinyldns-js/actions/workflows/verify.yml/badge.svg)](https://github.com/vinyldns/vinyldns-js/actions/workflows/verify.yml)
+![NPM](https://img.shields.io/npm/v/vinyldns-js?logo=npm)
 
 # vinyldns-js
 
@@ -87,9 +87,3 @@ Run integration tests against a Dockerized VinylDNS API running on `localhost:90
 ```shell script
 npm run integration-tests
 ```
-
-## Releasing
-
-[TravisCI](https://travis-ci.org/vinyldns/vinyldns-js) performs an `npm release` on each creation of a `git` tag. TravisCI also publishes docs to [GitHub Pages](https://docs.travis-ci.com/user/deployment/pages/) at [vinyldns.github.io/vinyldns-js](https://vinyldns.github.io/vinyldns-js).
-
-`npm run tag` offers a convenience task for performing a release.
