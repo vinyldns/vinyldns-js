@@ -33,7 +33,7 @@
     "documentation": "13.1.0",
     "eslint": "7.14.0",
     "mocha": "8.2.1",
-    "nock": "13.0.5",
+    "nock": "13.2.4",
     "highlight.js": ">=10.4.1"
   }
 }
