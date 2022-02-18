@@ -66,41 +66,37 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
   });
 
   describe('its support of VinylDNS group fetching', () => {
-    it('can fetch all groups', (done) => {
+    it('can fetch all groups', () => {
       vinyl.getGroups()
         .then(result => {
           assert.equal(result.groups[0].name, 'ok-group');
 
-          done();
         });
     });
 
-    it('can fetch an individual group', (done) => {
+    it('can fetch an individual group', () => {
       vinyl.getGroup(testGroup.id)
         .then(result => {
           assert.equal(result.name, 'ok-group');
 
-          done();
         });
     });
   });
 
   describe('its support of VinylDNS group membership', () => {
-    it('can fetch group members', (done) => {
+    it('can fetch group members', () => {
       vinyl.getGroupMembers(testGroup.id)
         .then(result => {
           assert.equal(result.members[0].userName, 'ok');
 
-          done();
         });
     });
 
-    it('can fetch group admins', (done) => {
+    it('can fetch group admins', () => {
       vinyl.getGroupAdmins(testGroup.id)
         .then(result => {
           assert.equal(result.admins[0].userName, 'ok');
 
-          done();
         });
     });
   });
@@ -123,30 +119,27 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
   });
 
   describe('its support of VinylDNS zone fetching', () => {
-    it('can fetch all zones', (done) => {
+    it('can fetch all zones', () => {
       vinyl.getZones()
         .then(result => {
           assert.equal(result.zones[0].name, testZone.zone.name);
 
-          done();
         });
     });
 
-    it('can fetch individual zones by ID', (done) => {
+    it('can fetch individual zones by ID', () => {
       vinyl.getZone(testZone.zone.id)
         .then(result => {
           assert.equal(result.zone.name, testZone.zone.name);
 
-          done();
         });
     });
 
-    it('can fetch individual zones by Name', (done) => {
+    it('can fetch individual zones by Name', () => {
       vinyl.getZoneByName(testZone.zone.name)
         .then(result => {
           assert.equal(result.zone.name, testZone.zone.name);
 
-          done();
         });
     });
   });
@@ -188,23 +181,21 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
   });
 
   describe('its support of fetching VinylDNS group activity', () => {
-    it('can fetch group activity', (done) => {
+    it('can fetch group activity', () => {
       vinyl.getGroupActivity(testGroup.id)
         .then(result => {
           assert.equal(result.changes[0].newGroup.name.includes('group-tests-group'), true);
 
-          done();
         });
     });
   });
 
   describe('its support of deleting VinylDNS groups', () => {
-    it('will report an error if it attempts to delete an admin group', (done) => {
+    it('will report an error if it attempts to delete an admin group', () => {
       vinyl.deleteGroup(testGroup.id)
         .catch(err => {
           assert.equal(err.message, 'Request failed with status code 400');
 
-          done();
         });
     });
   });
@@ -238,12 +229,11 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
   });
 
   describe('its support of VinylDNS zone deletion', () => {
-    it('can delete a zone', (done) => {
+    it('can delete a zone', () => {
       vinyl.deleteZone(testZone.zone.id)
         .then(result => {
           assert.equal(result.zone.status, 'Deleted');
 
-          done();
         });
     });
   });
