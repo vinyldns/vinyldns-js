@@ -44,13 +44,13 @@ vinylClient.getZone('123')
 
 Install dependencies:
 
-```
+```shell script
 npm install
 ```
 
 Create the required environment variables:
 
-```
+```shell script
 export VINYLDNS_API_SERVER=http://my-vinyldns.com
 export VINYLDNS_ACCESS_KEY_ID=123
 export VINYLDNS_SECRET_ACCESS_KEY=123
@@ -64,7 +64,7 @@ npm run repl
 
 Use the `vinyl` `vinyldns-js` client instance:
 
-```
+```javascript
 > vinyl.getZones().then(res => { console.log(res) }).catch(err => { console.log(err) })
 ```
 
@@ -72,19 +72,19 @@ Use the `vinyl` `vinyldns-js` client instance:
 
 Install dependencies:
 
-```
+```shell script
 npm install
 ```
 
 Run unit tests, lint code, and build documentation microsite:
 
-```
+```shell script
 npm test
 ```
 
 Run integration tests against a Dockerized VinylDNS API running on `localhost:9000`:
 
-```
+```shell script
 npm run integration-tests
 ```
 
