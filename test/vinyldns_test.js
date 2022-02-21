@@ -161,7 +161,7 @@ describe('VinylDNS', () => {
     });
 
     describe('syncZone', () => {
-      it('syncs the zone with the ID it is passed', (done) => {
+      it('syncs the zone with the ID it is passed', () => {
         mockPost('/zones/123/sync', '', fixtures.syncZone);
 
         vinyl.syncZone('123')
@@ -172,7 +172,7 @@ describe('VinylDNS', () => {
           });
       });
 
-      it('properly handles not okay responses from the API', (done) => {
+      it('properly handles not okay responses from the API', () => {
         mockPost('/zones/123/sync', '', 'some err', 500);
 
         vinyl.syncZone('123')

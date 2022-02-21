@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/vinyldns/vinyldns-js.svg?branch=master)](https://travis-ci.org/vinyldns/vinyldns-js)
-![GitHub](https://img.shields.io/github/license/vinyldns/vinyldns-js)
+[![verify](https://img.shields.io/github/workflow/status/vinyldns/vinyldns-js/verify?logo=github)](https://github.com/vinyldns/vinyldns-js/actions/workflows/verify.yml)
+[![NPM](https://img.shields.io/npm/v/vinyldns-js?logo=npm)](https://www.npmjs.com/package/vinyldns-js)
 
 # vinyldns-js
 
@@ -44,13 +44,13 @@ vinylClient.getZone('123')
 
 Install dependencies:
 
-```
+```shell script
 npm install
 ```
 
 Create the required environment variables:
 
-```
+```shell script
 export VINYLDNS_API_SERVER=http://my-vinyldns.com
 export VINYLDNS_ACCESS_KEY_ID=123
 export VINYLDNS_SECRET_ACCESS_KEY=123
@@ -64,7 +64,7 @@ npm run repl
 
 Use the `vinyl` `vinyldns-js` client instance:
 
-```
+```javascript
 > vinyl.getZones().then(res => { console.log(res) }).catch(err => { console.log(err) })
 ```
 
@@ -72,24 +72,18 @@ Use the `vinyl` `vinyldns-js` client instance:
 
 Install dependencies:
 
-```
+```shell script
 npm install
 ```
 
 Run unit tests, lint code, and build documentation microsite:
 
-```
+```shell script
 npm test
 ```
 
 Run integration tests against a Dockerized VinylDNS API running on `localhost:9000`:
 
-```
+```shell script
 npm run integration-tests
 ```
-
-## Releasing
-
-[TravisCI](https://travis-ci.org/vinyldns/vinyldns-js) performs an `npm release` on each creation of a `git` tag. TravisCI also publishes docs to [GitHub Pages](https://docs.travis-ci.com/user/deployment/pages/) at [vinyldns.github.io/vinyldns-js](https://vinyldns.github.io/vinyldns-js).
-
-`npm run tag` offers a convenience task for performing a release.
