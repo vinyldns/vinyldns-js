@@ -198,6 +198,32 @@ class VinylDNS {
   }
 
   /**
+   * Approve batch change.
+   * @param {object} id - The batch change ID.
+   * @param {object} reviewComment - Review comment for the batch change if provided.
+   */
+  approveBatchChange(id, reviewComment=null) {
+    return this.request.createOrUpdate(reviewComment, this.urls.approveBatchChanges(id), 'post');
+  }
+
+  /**
+   * Reject batch change.
+   * @param {object} id - The batch change ID.
+   * @param {object} reviewComment - Review comment for the batch change if provided.
+   */
+  rejectBatchChange(id, reviewComment=null) {
+    return this.request.createOrUpdate(reviewComment, this.urls.rejectBatchChanges(id), 'post');
+  }
+
+  /**
+   * Cancel batch change.
+   * @param {object} id - The batch change ID.
+   */
+  cancelBatchChange(id) {
+    return this.request.getOrDelete(this.urls.cancelBatchChanges(id), 'post');
+  }
+
+  /**
    * Get groups.
    * @param {number} queryOpts.startFrom - In order to advance through pages of results, the startFrom is set to the nextId that is returned on the previous response.
    * @param {number} queryOpts.maxItems - The number of items to return in the page. Valid values are 1 - 100.

@@ -741,6 +741,52 @@ describe('VinylDNS', () => {
           });
       });
     });
+
+    describe('approveBatchChange', () => {
+      it('approves the batch change whose details it is passed', () => {
+
+        mockPost('/zones/batchrecordchanges/123/approve', fixtures.approveBatchChange);
+
+        let comment = {
+          reviewComment: 'Good to go!'
+        };
+
+        vinyl.approveBatchChange('123', comment)
+          .then(result => {
+            assert.equal(result.approvalStatus, 'ManuallyApproved');
+            assert.equal(result.reviewComment, 'Good to go!');
+          });
+      });
+    });
+
+    describe('rejectBatchChange', () => {
+      it('reject the batch change whose details it is passed', () => {
+
+        mockPost('/zones/batchrecordchanges/123/reject', fixtures.rejectBatchChange);
+
+        let comment = {
+          reviewComment: 'We cannot make this change!'
+        };
+
+        vinyl.rejectBatchChange('123', comment)
+          .then(result => {
+            assert.equal(result.approvalStatus, 'Rejected');
+            assert.equal(result.reviewComment, 'We cannot make this change!');
+          });
+      });
+    });
+
+    describe('cancelBatchChange', () => {  
+      it('cancel the batch change whose details it is passed', () => {
+
+        mockPost('/zones/batchrecordchanges/123/cancel', fixtures.cancelBatchChange);
+
+        vinyl.cancelBatchChange('123')
+          .then(result => {
+            assert.equal(result.status, 'Cancelled');
+          });
+      });
+    });
   });
 
   describe('groups methods', () => {
