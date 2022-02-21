@@ -50,6 +50,7 @@ const buildZone = function(groupId, name) {
 describe('VinylDNS interaction with a real VinylDNS API', () => {
   let testGroup;
   let testZone;
+  let testBatch;
 
   describe('its support of VinylDNS group creation', () => {
     it('can create groups', (done) => {
@@ -221,9 +222,44 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
 
       vinyl.createBatchChange(batch)
         .then(result => {
+          testBatch = result;
           assert.equal(result.changes[0].recordName, 'testadd');
           assert.equal(result.ownerGroupId, testGroup.id);
           done();
+        });
+    });
+
+    it('approves the batch change whose details it is passed', () => {
+
+      let comment = {
+        reviewComment: 'Good to go!'
+      };
+
+      vinyl.approveBatchChange(testBatch.id, comment)
+        .then(result => {
+          assert.equal(result.approvalStatus, 'ManuallyApproved');
+          assert.equal(result.reviewComment, 'Good to go!');
+        });
+    });
+
+    it('reject the batch change whose details it is passed', () => {
+
+      let comment = {
+        reviewComment: 'We cannot make this change!'
+      };
+
+      vinyl.rejectBatchChange(testBatch.id, comment)
+        .then(result => {
+          assert.equal(result.approvalStatus, 'Rejected');
+          assert.equal(result.reviewComment, 'We cannot make this change!');
+        });
+    });
+
+    it('cancel the batch change whose details it is passed', () => {
+
+      vinyl.cancelBatchChange(testBatch.id)
+        .then(result => {
+          assert.equal(result.status, 'Cancelled');
         });
     });
   });

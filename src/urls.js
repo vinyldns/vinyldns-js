@@ -71,6 +71,18 @@ class Urls {
     return `${this.batchChanges()}/${id}`;
   }
 
+  approveBatchChanges(id) {
+    return `${this.batchChanges()}/${id}/approve`;
+  }
+
+  rejectBatchChanges(id) {
+    return `${this.batchChanges()}/${id}/reject`;
+  }
+
+  cancelBatchChanges(id) {
+    return `${this.batchChanges()}/${id}/cancel`;
+  }
+  
   groupsBase() {
     return `${this.apiUrl}/groups`;
   }

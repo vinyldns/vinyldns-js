@@ -448,6 +448,93 @@ module.exports = {
     id: '02bd95f4-a32c-443b-82eb-54dbaa55b31a'
   },
 
+  approveBatchChange: {
+    userId: 'vinyl',
+    userName: 'vinyl201',
+    comments: 'this is optional',
+    createdTimestamp: '2018-05-09T14:19:34Z',
+    changes: [{
+      changeType: 'Add',
+      inputName: 'parent.com.',
+      type: 'A',
+      ttl: 200,
+      record: {
+        address: '4.5.6.7'
+      },
+      status: 'Pending',
+      recordName: 'parent.com.',
+      zoneName: 'parent.com.',
+      zoneId: '74e93bfc-7296-4b86-83d3-1ffcb0eb3d13',
+      recordChangeId: 'a07299ce-5f81-11e8-9c2d-fa7ae01bbebc',
+      recordSetId: 'a0729f00-5f81-11e8-9c2d-fa7ae01bbebc',
+      id: '7573ca11-3e30-45a8-9ba5-791f7d6ae7a7'
+    }],
+    status: 'PendingProcessing',
+    id: '2343fa88-d4da-4377-986a-34ba4e8ca628',
+    ownerGroupId: '159a41c5-e67e-4951-b539-05f5ac788139',
+    reviewerId: '90c11ffc-5a71-4794-97c6-74d19c81af7d',
+    reviewComment: 'Good to go!',
+    reviewTimestamp: '2019-07-25T20:10:28Z',
+    approvalStatus: 'ManuallyApproved'
+  },
+
+  rejectBatchChange: {
+    userId: 'vinyl',
+    userName: 'vinyl201',
+    comments: 'this is optional',
+    createdTimestamp: '2018-05-09T14:19:34Z',
+    changes: [{
+      changeType: 'Add',
+      inputName: 'parent.com.',
+      type: 'A',
+      ttl: 200,
+      record: {
+        address: '4.5.6.7'
+      },
+      status: 'Pending',
+      recordName: 'parent.com.',
+      zoneName: 'parent.com.',
+      zoneId: '74e93bfc-7296-4b86-83d3-1ffcb0eb3d13',
+      recordChangeId: 'a07299ce-5f81-11e8-9c2d-fa7ae01bbebc',
+      recordSetId: 'a0729f00-5f81-11e8-9c2d-fa7ae01bbebc',
+      id: '7573ca11-3e30-45a8-9ba5-791f7d6ae7a7'
+    }],
+    status: 'Rejected',
+    id: '2343fa88-d4da-4377-986a-34ba4e8ca628',
+    ownerGroupId: '159a41c5-e67e-4951-b539-05f5ac788139',
+    reviewerId: '90c11ffc-5a71-4794-97c6-74d19c81af7d',
+    reviewComment: 'We cannot make this change!',
+    reviewTimestamp: '2019-07-25T20:10:28Z',
+    approvalStatus: 'Rejected'
+  },
+
+  cancelBatchChange: {
+    userId: 'vinyl',
+    userName: 'vinyl201',
+    comments: 'this is optional',
+    createdTimestamp: '2018-05-09T14:19:34Z',
+    changes: [{
+      changeType: 'Add',
+      inputName: 'parent.com.',
+      type: 'A',
+      ttl: 200,
+      record: {
+        address: '4.5.6.7'
+      },
+      status: 'Pending',
+      recordName: 'parent.com.',
+      zoneName: 'parent.com.',
+      zoneId: '74e93bfc-7296-4b86-83d3-1ffcb0eb3d13',
+      recordChangeId: 'a07299ce-5f81-11e8-9c2d-fa7ae01bbebc',
+      recordSetId: 'a0729f00-5f81-11e8-9c2d-fa7ae01bbebc',
+      id: '7573ca11-3e30-45a8-9ba5-791f7d6ae7a7'
+    }],
+    status: 'Cancelled',
+    id: '2343fa88-d4da-4377-986a-34ba4e8ca628',
+    ownerGroupId: '159a41c5-e67e-4951-b539-05f5ac788139',
+    approvalStatus: 'Cancelled'
+  },
+
   createBatchChange: {
     userId: 'vinyl',
     userName: 'vinyl201',
