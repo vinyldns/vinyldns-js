@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "aws4": "1.11.0",
-    "axios": "^0.26.0"
+    "axios": "^1.2.2"
   },
   "devDependencies": {
     "documentation": "13.1.0",
