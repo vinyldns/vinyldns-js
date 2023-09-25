@@ -855,19 +855,17 @@ describe('VinylDNS', () => {
     });
 
     describe('getGroupChange', () => {
-      it('fetches the groupchange with the ID it is passed', (done) => {
+      it('fetches the groupchange with the ID it is passed', () => {
         mockGet('/groups/change/123', fixtures.getGroupChange);
 
         vinyl.getGroupChange('123')
           .then(result => {
             assert.equal(result.changeType, 'Update');
             assert.equal(result.groupChangeMessage, 'Group member/s with user name/s \'dummy198\' removed. Group member/s with user name/s \'dummy199\' added.');
-
-            done();
           });
       });
 
-      it('properly handles not okay responses from the API', (done) => {
+      it('properly handles not okay responses from the API', () => {
         mockGet('/groups/change/123', 'some err', 500);
 
         vinyl.getGroupChange('123')
@@ -876,8 +874,6 @@ describe('VinylDNS', () => {
           })
           .catch(err => {
             assert.equal(err.message, 'Request failed with status code 500');
-
-            done();
           });
       });
     });
