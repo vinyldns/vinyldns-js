@@ -226,6 +226,14 @@ class VinylDNS {
   }
 
   /**
+   * Get a group change.
+   * @param {string} id - The group change ID.
+   */
+    getGroupChange(id) {
+      return this.request.getOrDelete(this.urls.groupChange(id), 'get');
+    }
+
+  /**
    * Get group admins.
    * @param {string} id - The group ID.
    */
