@@ -87,25 +87,21 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
   });
 
   describe('its support of VinylDNS group change fetching', () => {
-    it('can fetch all group changes', (done) => {
+    it('can fetch all group changes', () => {
       vinyl.getGroupActivity(testGroup.id)
         .then(result => {
           // save the result in the `testGroupChangeId` variable for other tests to use
           testGroupChangeId = result.changes[0].id;
           assert.equal(result.changes[0].newGroup.name, 'ok-group');
           assert.equal(result.changes[0].userName, 'ok');
-
-          done();
         });
     });
 
-    it('can fetch an individual group change', (done) => {
+    it('can fetch an individual group change', () => {
       vinyl.getGroupChange(testGroupChangeId)
         .then(result => {
           assert.equal(result.newGroup.name, 'ok-group');
           assert.equal(result.userName, 'ok');
-
-          done();
         });
     });
   });
