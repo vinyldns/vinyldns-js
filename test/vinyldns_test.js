@@ -854,6 +854,30 @@ describe('VinylDNS', () => {
       });
     });
 
+    describe('getGroupChange', () => {
+      it('fetches the groupchange with the ID it is passed', () => {
+        mockGet('/groups/change/123', fixtures.getGroupChange);
+
+        vinyl.getGroupChange('123')
+          .then(result => {
+            assert.equal(result.changeType, 'Update');
+            assert.equal(result.groupChangeMessage, 'Group member/s with user name/s \'dummy198\' removed. Group member/s with user name/s \'dummy199\' added.');
+          });
+      });
+
+      it('properly handles not okay responses from the API', () => {
+        mockGet('/groups/change/123', 'some err', 500);
+
+        vinyl.getGroupChange('123')
+          .then(() => {
+            // NOOP
+          })
+          .catch(err => {
+            assert.equal(err.message, 'Request failed with status code 500');
+          });
+      });
+    });
+
     describe('getGroupAdmins', () => {
       it('fetches the admins of the group ID it is passed', (done) => {
         mockGet('/groups/123/admins', fixtures.getGroupAdmins);

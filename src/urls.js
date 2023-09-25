@@ -87,6 +87,10 @@ class Urls {
     return `${this.group(id)}/activity${this.queryString(query)}`;
   }
 
+  groupChange(id) {
+    return `${this.groupsBase()}/changes/${id}`;
+  }
+
   getGroupAdmins(id) {
     return `${this.group(id)}/admins`;
   }

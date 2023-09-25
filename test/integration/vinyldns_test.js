@@ -50,6 +50,7 @@ const buildZone = function(groupId, name) {
 describe('VinylDNS interaction with a real VinylDNS API', () => {
   let testGroup;
   let testZone;
+  let testGroupChangeId;
 
   describe('its support of VinylDNS group creation', () => {
     it('can create groups', (done) => {
@@ -79,6 +80,26 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         .then(result => {
           assert.equal(result.name, 'ok-group');
 
+        });
+    });
+  });
+
+  describe('its support of VinylDNS group change fetching', () => {
+    it('can fetch all group changes', () => {
+      vinyl.getGroupActivity(testGroup.id)
+        .then(result => {
+          // save the result in the `testGroupChangeId` variable for other tests to use
+          testGroupChangeId = result.changes[0].id;
+          assert.equal(result.changes[0].newGroup.name, 'ok-group');
+          assert.equal(result.changes[0].userName, 'ok');
+        });
+    });
+
+    it('can fetch an individual group change', () => {
+      vinyl.getGroupChange(testGroupChangeId)
+        .then(result => {
+          assert.equal(result.newGroup.name, 'ok-group');
+          assert.equal(result.userName, 'ok');
         });
     });
   });
