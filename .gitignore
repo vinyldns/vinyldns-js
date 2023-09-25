@@ -66,3 +66,6 @@ typings/
 
 # The generated docs
 docs
+
+# Package lock file
+package-lock.json
