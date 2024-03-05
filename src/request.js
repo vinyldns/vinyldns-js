@@ -54,7 +54,7 @@ class Request {
       method: opts.method ? opts.method.toUpperCase() : 'GET',
       path: parsedUrl.path,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/x-www-form-urlencoded'
       },
       body: opts.body ? JSON.stringify(opts.body) : ''
     };
