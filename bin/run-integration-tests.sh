@@ -5,7 +5,7 @@ set -e
 VINYLDNS_VERSION="0.10.4"
 
 echo "Removing VinylDNS API if exists.."
-if docker ps | grep -q "vinyldns-js-api"; then
+if docker ps -a| grep -q "vinyldns-js-api"; then
 	 docker kill vinyldns-js-api &> /dev/null || true
 	 docker rm vinyldns-js-api &> /dev/null || true
    echo "Removed VinylDNS API"
