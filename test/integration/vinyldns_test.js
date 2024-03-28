@@ -43,7 +43,7 @@ const buildZone = function(groupId, name) {
   return {
     adminGroupId: groupId,
     name: name || 'vinyldns.',
-    email: 'test@example.com'
+    email: 'test@test.com'
   };
 };
 
@@ -52,13 +52,14 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
   let testZone;
 
   describe('its support of VinylDNS group creation', () => {
-    it('can create groups', () => {
+    it('can create groups', (done) => {
       vinyl.createGroup(buildGroup())
         .then(result => {
           // save the result in the `testGroup` variable for other tests to use
           testGroup = result;
 
           assert.equal(result.name, 'ok-group');
+          done();
         });
     });
   });
@@ -100,7 +101,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
   });
 
   describe('its support of VinylDNS zone creation', () => {
-    it('can create a zone', () => {
+    it('can create a zone', (done) => {
       vinyl.createZone(buildZone(testGroup.id))
         .then(result => {
           // Save the result as `testZone` for other tests to use
@@ -109,7 +110,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
           // Pause to allow the zone to propagate before proceeding to other tests, where the zone is used
           setTimeout(() => {
             assert.equal(result.zone.name, 'vinyldns.');
-
+            done();
           }, 2000);
         });
     });
@@ -142,7 +143,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
   });
 
   describe('its support of VinylDNS record sets', () => {
-    it('can create a record set', () => {
+    it('can create a record set', (done) => {
       vinyl.createRecordSet({
         name: 'record-set-tests-create',
         type: 'A',
@@ -156,21 +157,21 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         .then(result => {
           assert.equal(result.recordSet.name, 'record-set-tests-create');
           assert.equal(result.recordSet.ownerGroupId, testGroup.id);
+          done();
         });
     });
   });
 
   describe('its support of VinylDNS group updating', () => {
-    it('can update a group', () => {
+    it('can update a group', (done) => {
       let g = testGroup;
 
       g.name = 'group-tests-group-updated';
 
       vinyl.updateGroup(g)
         .then(result => {
-
           assert.equal(result.name, 'group-tests-group-updated');
-
+          done();
         });
     });
   });
@@ -196,7 +197,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
   });
 
   describe('its support of VinylDNS batch changes', () => {
-    it('can create a batch change', () => {
+    it('can create a batch change', (done) => {
 
       let batch = {
         comments: 'this is optional',
@@ -218,6 +219,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         .then(result => {
           assert.equal(result.changes[0].recordName, 'testadd');
           assert.equal(result.ownerGroupId, testGroup.id);
+          done();
         });
     });
   });
