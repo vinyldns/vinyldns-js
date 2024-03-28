@@ -56,7 +56,7 @@ class Request {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: opts.body ? JSON.stringify(opts.body) : ''
+      body: JSON.stringify(opts.body)
     };
   }
 
