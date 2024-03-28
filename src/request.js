@@ -17,7 +17,6 @@
 const axios = require('axios');
 const aws4 = require('aws4');
 const url = require('url');
-const qs = require('qs');
 
 class Request {
   constructor(config) {
