@@ -39,6 +39,26 @@ class Urls {
     return `${this.zonesBase()}/name/${name}`;
   }
 
+  zoneDetails(id) {
+    return `${this.zone(id)}/details`;
+  }
+
+  zoneBackendIds() {
+    return `${this.zonesBase()}/backendids`;
+  }
+
+  zoneChangesFailure(query) {
+    return `${this.apiUrl}/metrics/health/zonechangesfailure${this.queryString(query)}`;
+  }
+
+  zonesDeletedChanges(query) {
+    return `${this.zonesBase()}/deleted/changes${this.queryString(query)}`;
+  }
+
+  zoneAclRules(id) {
+    return `${this.zone(id)}/acl/rules`;
+  }
+
   syncZone(id) {
     return `${this.zone(id)}/sync`;
   }
@@ -53,6 +73,18 @@ class Urls {
 
   recordSet(details) {
     return `${this.recordSetsBase(details.zoneId)}/${details.id || details.recordSetId}`;
+  }
+
+  recordSetCount(zoneId) {
+    return `${this.zone(zoneId)}/recordsetcount`;
+  }
+
+  recordSetChangeHistory(query) {
+    return `${this.apiUrl}/recordsetchange/history${this.queryString(query)}`;
+  }
+
+  recordSetChangesFailure(zoneId, query) {
+    return `${this.apiUrl}/metrics/health/zones/${zoneId}/recordsetchangesfailure${this.queryString(query)}`;
   }
 
   recordSetChanges(zoneId, query) {
@@ -71,6 +103,18 @@ class Urls {
     return `${this.batchChanges()}/${id}`;
   }
 
+  batchChangeApprove(id) {
+    return `${this.batchChange(id)}/approve`;
+  }
+
+  batchChangeReject(id) {
+    return `${this.batchChange(id)}/reject`;
+  }
+
+  batchChangeCancel(id) {
+    return `${this.batchChange(id)}/cancel`;
+  }
+
   groupsBase() {
     return `${this.apiUrl}/groups`;
   }
@@ -87,12 +131,86 @@ class Urls {
     return `${this.group(id)}/activity${this.queryString(query)}`;
   }
 
+  groupChange(id) {
+    return `${this.groupsBase()}/change/${id}`;
+  }
+
+  groupValidDomains() {
+    return `${this.groupsBase()}/valid/domains`;
+  }
+
   getGroupAdmins(id) {
     return `${this.group(id)}/admins`;
   }
 
   getGroupMembers(id, query) {
     return `${this.group(id)}/members${this.queryString(query)}`;
+  }
+
+  user(id) {
+    return `${this.apiUrl}/users/${id}`;
+  }
+
+  userLock(id) {
+    return `${this.user(id)}/lock`;
+  }
+
+  userUnlock(id) {
+    return `${this.user(id)}/unlock`;
+  }
+
+  ping() {
+    return `${this.apiUrl}/ping`;
+  }
+
+  health() {
+    return `${this.apiUrl}/health`;
+  }
+
+  color() {
+    return `${this.apiUrl}/color`;
+  }
+
+  metricsPrometheus(names) {
+    if (!names || names.length === 0) {
+      return `${this.apiUrl}/metrics/prometheus`;
+    }
+
+    const query = names.map(name => `name=${name}`).join('&');
+    return `${this.apiUrl}/metrics/prometheus?${query}`;
+  }
+
+  status() {
+    return `${this.apiUrl}/status`;
+  }
+
+  statusUpdate(processingDisabled) {
+    return `${this.apiUrl}/status?processingDisabled=${processingDisabled}`;
+  }
+
+  recordSetsGlobal(query) {
+    if (!query) {
+      return `${this.apiUrl}/recordsets`;
+    }
+
+    let params = [];
+    if (query.recordTypeFilter) {
+      const recordTypes = Array.isArray(query.recordTypeFilter)
+        ? query.recordTypeFilter
+        : [query.recordTypeFilter];
+      recordTypes.forEach(recordType => {
+        params.push(`recordTypeFilter[]=${recordType}`);
+      });
+    }
+
+    Object.keys(query).forEach(key => {
+      if (key === 'recordTypeFilter') {
+        return;
+      }
+      params.push(`${key}=${query[key]}`);
+    });
+
+    return `${this.apiUrl}/recordsets${params.length ? '?' + params.join('&') : ''}`;
   }
 
   queryString(obj) {

@@ -652,4 +652,267 @@ module.exports = {
       }
     ]
   }
+  ,
+  ping: 'PONG',
+  health: 'OK',
+  color: 'blue',
+  metricsPrometheus: 'some_metric 1',
+  status: {
+    processingDisabled: false,
+    color: 'blue',
+    keyName: 'vinyldns.',
+    version: '0.21.3'
+  },
+  zoneDetails: {
+    zone: {
+      name: 'system-test.',
+      email: 'test@example.com',
+      status: 'Active',
+      adminGroupId: '6baa85ad-267f-44ff-b535-818b7d7a2467',
+      adminGroupName: 'admins'
+    }
+  },
+  zoneBackendIds: {
+    backendIds: ['b1', 'b2']
+  },
+  zoneChangesFailure: {
+    failedZoneChanges: [
+      {
+        status: 'Failed',
+        zone: {
+          status: 'Active',
+          updated: '2016-12-30T15:37:57Z',
+          name: 'system-test-history.',
+          adminGroupId: '67b4da23-6832-4600-8450-9fa0664caeeb',
+          created: '2016-12-30T15:37:56Z',
+          account: '67b4da23-6832-4600-8450-9fa0664caeeb',
+          email: 'i.changed.this.10.times@history-test.com',
+          shared: true,
+          acl: {
+            rules: []
+          },
+          id: '9f353bc7-cb8d-491c-b074-34afafc97c5f'
+        },
+        created: '2016-12-30T15:37:57Z',
+        changeType: 'Update',
+        userId: 'history-id',
+        id: '6d4deccb-4632-475e-9ebc-3f6bace5fe68'
+      }
+    ]
+  },
+  zonesDeletedChanges: {
+    zonesDeletedInfo: [
+      {
+        zoneChange: {
+          status: 'Pending',
+          zone: {
+            status: 'Deleted',
+            name: 'deleted-zone.',
+            adminGroupId: 'admin-group',
+            created: '2016-12-28T18:45:53Z',
+            account: 'test_group',
+            email: 'test@test.com',
+            shared: false,
+            acl: {
+              rules: []
+            },
+            id: 'deleted-zone-id'
+          },
+          created: '2016-12-28T18:45:53Z',
+          changeType: 'Delete',
+          userId: 'vinyl',
+          id: 'deleted-change-id'
+        },
+        adminGroupName: 'admins',
+        userName: 'user',
+        accessLevel: 'Read'
+      }
+    ]
+  },
+  recordSetCount: {
+    count: 5
+  },
+  recordSetChangeHistory: {
+    recordSetChanges: [
+      {
+        status: 'Complete',
+        zone: {
+          status: 'Active',
+          updated: '2016-12-30T15:37:57Z',
+          name: 'system-test-history.',
+          adminGroupId: '67b4da23-6832-4600-8450-9fa0664caeeb',
+          created: '2016-12-30T15:37:56Z',
+          account: '67b4da23-6832-4600-8450-9fa0664caeeb',
+          email: 'i.changed.this.10.times@history-test.com',
+          shared: true,
+          acl: {
+            rules: []
+          },
+          id: '9f353bc7-cb8d-491c-b074-34afafc97c5f'
+        },
+        created: '2016-12-30T15:37:58Z',
+        recordSet: {
+          status: 'Active',
+          updated: '2016-12-30T15:37:58Z',
+          name: 'test-create-cname-ok',
+          created: '2016-12-30T15:37:57Z',
+          account: 'history-id',
+          zoneId: '9f353bc7-cb8d-491c-b074-34afafc97c5f',
+          records: [{
+            cname: 'changed-cname.'
+          }],
+          ttl: 200,
+          type: 'CNAME',
+          id: 'f62235df-5372-443c-9ba4-bdd3fca452f4'
+        },
+        changeType: 'Delete',
+        userId: 'history-id',
+        updates: {
+          status: 'Active',
+          updated: '2016-12-30T15:37:58Z',
+          name: 'test-create-cname-ok',
+          created: '2016-12-30T15:37:57Z',
+          account: 'history-id',
+          zoneId: '9f353bc7-cb8d-491c-b074-34afafc97c5f',
+          records: [{
+            cname: 'changed-cname.'
+          }],
+          ttl: 200,
+          type: 'CNAME',
+          id: 'f62235df-5372-443c-9ba4-bdd3fca452f4'
+        },
+        id: '68fd6dbe-0da8-4280-bcf3-37f54528dc41'
+      }
+    ]
+  },
+  recordSetChangesFailure: {
+    failedRecordSetChanges: [
+      {
+        status: 'Failed',
+        zone: {
+          status: 'Active',
+          updated: '2016-12-30T15:37:57Z',
+          name: 'system-test-history.',
+          adminGroupId: '67b4da23-6832-4600-8450-9fa0664caeeb',
+          created: '2016-12-30T15:37:56Z',
+          account: '67b4da23-6832-4600-8450-9fa0664caeeb',
+          email: 'i.changed.this.10.times@history-test.com',
+          shared: true,
+          acl: {
+            rules: []
+          },
+          id: '9f353bc7-cb8d-491c-b074-34afafc97c5f'
+        },
+        created: '2016-12-30T15:37:58Z',
+        recordSet: {
+          status: 'Active',
+          updated: '2016-12-30T15:37:58Z',
+          name: 'test-create-cname-ok',
+          created: '2016-12-30T15:37:57Z',
+          account: 'history-id',
+          zoneId: '9f353bc7-cb8d-491c-b074-34afafc97c5f',
+          records: [{
+            cname: 'changed-cname.'
+          }],
+          ttl: 200,
+          type: 'CNAME',
+          id: 'f62235df-5372-443c-9ba4-bdd3fca452f4'
+        },
+        changeType: 'Delete',
+        userId: 'history-id',
+        id: '68fd6dbe-0da8-4280-bcf3-37f54528dc41'
+      }
+    ]
+  },
+  recordSetsGlobal: {
+    recordSets: [{
+      type: 'A',
+      zoneId: '2467dc05-68eb-4498-a9d5-78d24bb0893c',
+      name: 'global-record-set',
+      ttl: 38400,
+      status: 'Active',
+      created: '2017-02-23T15:12:41Z',
+      updated: '2017-02-23T15:12:41Z',
+      records: [{
+        address: '6.6.6.1'
+      }],
+      id: 'global-record-set-id',
+      account: '9b22b686-54bc-47fb-a8f8-cdc48e6d04ae',
+      accessLevel: 'Delete'
+    }]
+  },
+  batchChangeApprove: {
+    id: '02bd95f4-a32c-443b-82eb-54dbaa55b31a',
+    status: 'Pending',
+    approvalStatus: 'Approved'
+  },
+  batchChangeReject: {
+    id: '02bd95f4-a32c-443b-82eb-54dbaa55b31a',
+    status: 'Pending',
+    approvalStatus: 'Rejected'
+  },
+  batchChangeCancel: {
+    id: '02bd95f4-a32c-443b-82eb-54dbaa55b31a',
+    status: 'Pending',
+    approvalStatus: 'Cancelled'
+  },
+  groupChange: {
+    id: 'change-id',
+    userId: 'user',
+    userName: 'user',
+    changeType: 'Update',
+    created: '2017-03-02T18:49:58Z',
+    groupChangeMessage: 'updated',
+    newGroup: {
+      status: 'Active',
+      name: 'group-change',
+      created: '2017-03-02T18:49:58Z',
+      id: 'group-change-id',
+      admins: [{
+        id: 'ok'
+      }],
+      members: [{
+        id: 'dummy199'
+      }],
+      email: 'test@test.com'
+    },
+    oldGroup: {
+      status: 'Active',
+      name: 'group-change',
+      created: '2017-03-02T18:49:58Z',
+      id: 'group-change-id',
+      admins: [{
+        id: 'ok'
+      }],
+      members: [{
+        id: 'dummy198'
+      }],
+      email: 'test@test.com'
+    }
+  },
+  groupValidDomains: ['example.com', 'test.com'],
+  user: {
+    id: 'user-id',
+    userName: 'user',
+    groupId: [{
+      id: 'group-1'
+    }],
+    lockStatus: 'Unlocked'
+  },
+  userLock: {
+    id: 'user-id',
+    userName: 'user',
+    groupId: [{
+      id: 'group-1'
+    }],
+    lockStatus: 'Locked'
+  },
+  userUnlock: {
+    id: 'user-id',
+    userName: 'user',
+    groupId: [{
+      id: 'group-1'
+    }],
+    lockStatus: 'Unlocked'
+  }
 };

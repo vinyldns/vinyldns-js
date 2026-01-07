@@ -63,6 +63,74 @@ describe('VinylDNS', () => {
     assert.equal(vinyl.config.apiUrl, 'http://my-vinyldns.com');
   });
 
+  describe('health and status methods', () => {
+    it('fetches ping', (done) => {
+      mockGet('/ping', fixtures.ping);
+
+      vinyl.ping()
+        .then(result => {
+          assert.equal(result, 'PONG');
+
+          done();
+        });
+    });
+
+    it('fetches health', (done) => {
+      mockGet('/health', fixtures.health);
+
+      vinyl.health()
+        .then(result => {
+          assert.equal(result, 'OK');
+
+          done();
+        });
+    });
+
+    it('fetches color', (done) => {
+      mockGet('/color', fixtures.color);
+
+      vinyl.color()
+        .then(result => {
+          assert.equal(result, 'blue');
+
+          done();
+        });
+    });
+
+    it('fetches prometheus metrics', (done) => {
+      mockGet('/metrics/prometheus?name=foo&name=bar', fixtures.metricsPrometheus);
+
+      vinyl.metricsPrometheus(['foo', 'bar'])
+        .then(result => {
+          assert.equal(result, 'some_metric 1');
+
+          done();
+        });
+    });
+
+    it('fetches status', (done) => {
+      mockGet('/status', fixtures.status);
+
+      vinyl.getStatus()
+        .then(result => {
+          assert.equal(result.processingDisabled, false);
+
+          done();
+        });
+    });
+
+    it('updates status', (done) => {
+      mockPost('/status?processingDisabled=true', {}, fixtures.status);
+
+      vinyl.updateStatus(true)
+        .then(result => {
+          assert.equal(result.processingDisabled, false);
+
+          done();
+        });
+    });
+  });
+
   describe('zones methods', () => {
     describe('getZones', () => {
       it('fetches zones', (done) => {
@@ -154,6 +222,65 @@ describe('VinylDNS', () => {
           })
           .catch(err => {
             assert.equal(err.message, 'Request failed with status code 500');
+
+            done();
+          });
+      });
+    });
+
+    describe('getZoneDetails', () => {
+      it('fetches zone details', (done) => {
+        mockGet('/zones/123/details', fixtures.zoneDetails);
+
+        vinyl.getZoneDetails('123')
+          .then(result => {
+            assert.equal(result.zone.adminGroupName, 'admins');
+
+            done();
+          });
+      });
+    });
+
+    describe('getZoneBackendIds', () => {
+      it('fetches zone backend ids', (done) => {
+        mockGet('/zones/backendids', fixtures.zoneBackendIds);
+
+        vinyl.getZoneBackendIds()
+          .then(result => {
+            assert.equal(result.backendIds.length, 2);
+
+            done();
+          });
+      });
+    });
+
+    describe('getZoneChangesFailure', () => {
+      it('fetches failed zone changes', (done) => {
+        mockGet('/metrics/health/zonechangesfailure?startFrom=1&maxItems=100', fixtures.zoneChangesFailure);
+
+        vinyl.getZoneChangesFailure({
+          startFrom: 1,
+          maxItems: 100
+        })
+          .then(result => {
+            assert.equal(result.failedZoneChanges[0].status, 'Failed');
+
+            done();
+          });
+      });
+    });
+
+    describe('getZonesDeletedChanges', () => {
+      it('fetches deleted zone changes', (done) => {
+        mockGet('/zones/deleted/changes?startFrom=1&maxItems=100&ignoreAccess=true', fixtures.zonesDeletedChanges);
+
+        vinyl.getZonesDeletedChanges({
+          startFrom: 1,
+          maxItems: 100,
+          ignoreAccess: true
+        })
+          .then(result => {
+            assert.equal(result.zonesDeletedInfo[0].accessLevel, 'Read');
 
             done();
           });
@@ -288,6 +415,44 @@ describe('VinylDNS', () => {
           })
           .catch(err => {
             assert.equal(err.message, 'Request failed with status code 500');
+
+            done();
+          });
+      });
+    });
+
+    describe('addZoneAclRule', () => {
+      it('adds a zone acl rule', (done) => {
+        let rule = {
+          accessLevel: 'Read',
+          recordTypes: ['A'],
+          groupId: 'group-id'
+        };
+
+        mockPut('/zones/123/acl/rules', rule, fixtures.updateZone);
+
+        vinyl.addZoneAclRule('123', rule)
+          .then(result => {
+            assert.equal(result.zone.name, 'dummy.');
+
+            done();
+          });
+      });
+    });
+
+    describe('deleteZoneAclRule', () => {
+      it('deletes a zone acl rule', (done) => {
+        let rule = {
+          accessLevel: 'Read',
+          recordTypes: ['A'],
+          groupId: 'group-id'
+        };
+
+        mockDelete('/zones/123/acl/rules', fixtures.updateZone);
+
+        vinyl.deleteZoneAclRule('123', rule)
+          .then(result => {
+            assert.equal(result.zone.name, 'dummy.');
 
             done();
           });
@@ -494,6 +659,19 @@ describe('VinylDNS', () => {
       });
     });
 
+    describe('getRecordSetCount', () => {
+      it('fetches record set count', (done) => {
+        mockGet('/zones/123/recordsetcount', fixtures.recordSetCount);
+
+        vinyl.getRecordSetCount('123')
+          .then(result => {
+            assert.equal(result.count, 5);
+
+            done();
+          });
+      });
+    });
+
     describe('deleteRecordSet', () => {
       it('deletes the record with the details it is passed', (done) => {
         mockDelete('/zones/123/recordsets/456', fixtures.deleteRecordSet);
@@ -568,6 +746,75 @@ describe('VinylDNS', () => {
       });
     });
 
+    describe('getRecordSetChangeHistory', () => {
+      it('fetches record set change history', (done) => {
+        mockGet('/recordsetchange/history?zoneId=123&fqdn=rs.ok.&recordType=A&startFrom=1&maxItems=100',
+          fixtures.recordSetChangeHistory);
+
+        vinyl.getRecordSetChangeHistory({
+          zoneId: '123',
+          fqdn: 'rs.ok.',
+          recordType: 'A',
+          startFrom: 1,
+          maxItems: 100
+        })
+          .then(result => {
+            assert.equal(result.recordSetChanges[0].status, 'Complete');
+
+            done();
+          });
+      });
+    });
+
+    describe('getRecordSetChangesFailure', () => {
+      it('fetches failed record set changes', (done) => {
+        mockGet('/metrics/health/zones/123/recordsetchangesfailure?startFrom=1&maxItems=100',
+          fixtures.recordSetChangesFailure);
+
+        vinyl.getRecordSetChangesFailure('123', {
+          startFrom: 1,
+          maxItems: 100
+        })
+          .then(result => {
+            assert.equal(result.failedRecordSetChanges[0].status, 'Failed');
+
+            done();
+          });
+      });
+    });
+
+    describe('getRecordSetsGlobal', () => {
+      it('fetches record sets globally', (done) => {
+        mockGet('/recordsets?startFrom=1&maxItems=100', fixtures.recordSetsGlobal);
+
+        vinyl.getRecordSetsGlobal({
+          startFrom: 1,
+          maxItems: 100
+        })
+          .then(result => {
+            assert.equal(result.recordSets[0].name, 'global-record-set');
+
+            done();
+          });
+      });
+
+      it('fetches record sets globally with record type filter', (done) => {
+        mockGet('/recordsets?recordTypeFilter[]=A&recordTypeFilter[]=CNAME&startFrom=1&maxItems=100',
+          fixtures.recordSetsGlobal);
+
+        vinyl.getRecordSetsGlobal({
+          recordTypeFilter: ['A', 'CNAME'],
+          startFrom: 1,
+          maxItems: 100
+        })
+          .then(result => {
+            assert.equal(result.recordSets[0].name, 'global-record-set');
+
+            done();
+          });
+      });
+    });
+
     describe('getRecordSetChange', () => {
       it('fetches the record set change with the change ID, record set ID, and zone ID details it is passed', (done) => {
         mockGet('/zones/123/recordsets/456/changes/789', fixtures.getRecordSetChange);
@@ -597,6 +844,125 @@ describe('VinylDNS', () => {
           })
           .catch(err => {
             assert.equal(err.message, 'Request failed with status code 500');
+
+            done();
+          });
+      });
+    });
+
+    describe('ownership transfer', () => {
+      it('requests ownership transfer', (done) => {
+        let recordSet = {
+          name: 'foo',
+          type: 'A',
+          ttl: 300,
+          records: [{
+            address: '10.10.10.10'
+          }],
+          zoneId: '123',
+          id: '456'
+        };
+
+        let payload = Object.assign({}, recordSet, {
+          recordSetGroupChange: {
+            ownershipTransferStatus: 'Requested',
+            requestedOwnerGroupId: 'group-id'
+          }
+        });
+
+        mockPut('/zones/123/recordsets/456', payload, fixtures.updateRecordSet);
+
+        vinyl.requestRecordSetOwnership(recordSet, 'group-id')
+          .then(result => {
+            assert.equal(result.recordSet.name, 'foo');
+
+            done();
+          });
+      });
+
+      it('approves ownership transfer', (done) => {
+        let recordSet = {
+          name: 'foo',
+          type: 'A',
+          ttl: 300,
+          records: [{
+            address: '10.10.10.10'
+          }],
+          zoneId: '123',
+          id: '456'
+        };
+
+        let payload = Object.assign({}, recordSet, {
+          ownerGroupId: 'group-id',
+          recordSetGroupChange: {
+            ownershipTransferStatus: 'ManuallyApproved',
+            requestedOwnerGroupId: 'group-id'
+          }
+        });
+
+        mockPut('/zones/123/recordsets/456', payload, fixtures.updateRecordSet);
+
+        vinyl.approveRecordSetOwnership(recordSet, 'group-id')
+          .then(result => {
+            assert.equal(result.recordSet.name, 'foo');
+
+            done();
+          });
+      });
+
+      it('rejects ownership transfer', (done) => {
+        let recordSet = {
+          name: 'foo',
+          type: 'A',
+          ttl: 300,
+          records: [{
+            address: '10.10.10.10'
+          }],
+          zoneId: '123',
+          id: '456'
+        };
+
+        let payload = Object.assign({}, recordSet, {
+          recordSetGroupChange: {
+            ownershipTransferStatus: 'ManuallyRejected',
+            requestedOwnerGroupId: 'group-id'
+          }
+        });
+
+        mockPut('/zones/123/recordsets/456', payload, fixtures.updateRecordSet);
+
+        vinyl.rejectRecordSetOwnership(recordSet, 'group-id')
+          .then(result => {
+            assert.equal(result.recordSet.name, 'foo');
+
+            done();
+          });
+      });
+
+      it('cancels ownership transfer', (done) => {
+        let recordSet = {
+          name: 'foo',
+          type: 'A',
+          ttl: 300,
+          records: [{
+            address: '10.10.10.10'
+          }],
+          zoneId: '123',
+          id: '456'
+        };
+
+        let payload = Object.assign({}, recordSet, {
+          recordSetGroupChange: {
+            ownershipTransferStatus: 'Cancelled',
+            requestedOwnerGroupId: 'group-id'
+          }
+        });
+
+        mockPut('/zones/123/recordsets/456', payload, fixtures.updateRecordSet);
+
+        vinyl.cancelRecordSetOwnership(recordSet, 'group-id')
+          .then(result => {
+            assert.equal(result.recordSet.name, 'foo');
 
             done();
           });
@@ -741,6 +1107,45 @@ describe('VinylDNS', () => {
           });
       });
     });
+
+    describe('approveBatchChange', () => {
+      it('approves the batch change', (done) => {
+        mockPost('/zones/batchrecordchanges/123/approve', {}, fixtures.batchChangeApprove);
+
+        vinyl.approveBatchChange('123')
+          .then(result => {
+            assert.equal(result.approvalStatus, 'Approved');
+
+            done();
+          });
+      });
+    });
+
+    describe('rejectBatchChange', () => {
+      it('rejects the batch change', (done) => {
+        mockPost('/zones/batchrecordchanges/123/reject', {}, fixtures.batchChangeReject);
+
+        vinyl.rejectBatchChange('123')
+          .then(result => {
+            assert.equal(result.approvalStatus, 'Rejected');
+
+            done();
+          });
+      });
+    });
+
+    describe('cancelBatchChange', () => {
+      it('cancels the batch change', (done) => {
+        mockPost('/zones/batchrecordchanges/123/cancel', {}, fixtures.batchChangeCancel);
+
+        vinyl.cancelBatchChange('123')
+          .then(result => {
+            assert.equal(result.approvalStatus, 'Cancelled');
+
+            done();
+          });
+      });
+    });
   });
 
   describe('groups methods', () => {
@@ -848,6 +1253,32 @@ describe('VinylDNS', () => {
           })
           .catch(err => {
             assert.equal(err.message, 'Request failed with status code 500');
+
+            done();
+          });
+      });
+    });
+
+    describe('getGroupChange', () => {
+      it('fetches group change', (done) => {
+        mockGet('/groups/change/123', fixtures.groupChange);
+
+        vinyl.getGroupChange('123')
+          .then(result => {
+            assert.equal(result.groupChangeMessage, 'updated');
+
+            done();
+          });
+      });
+    });
+
+    describe('getGroupValidDomains', () => {
+      it('fetches group valid domains', (done) => {
+        mockGet('/groups/valid/domains', fixtures.groupValidDomains);
+
+        vinyl.getGroupValidDomains()
+          .then(result => {
+            assert.equal(result.length, 2);
 
             done();
           });
@@ -1047,6 +1478,47 @@ describe('VinylDNS', () => {
           })
           .catch(err => {
             assert.equal(err.message, 'Request failed with status code 500');
+
+            done();
+          });
+      });
+    });
+  });
+
+  describe('users methods', () => {
+    describe('getUser', () => {
+      it('fetches the user', (done) => {
+        mockGet('/users/123', fixtures.user);
+
+        vinyl.getUser('123')
+          .then(result => {
+            assert.equal(result.userName, 'user');
+
+            done();
+          });
+      });
+    });
+
+    describe('lockUser', () => {
+      it('locks the user', (done) => {
+        mockPut('/users/123/lock', {}, fixtures.userLock);
+
+        vinyl.lockUser('123')
+          .then(result => {
+            assert.equal(result.lockStatus, 'Locked');
+
+            done();
+          });
+      });
+    });
+
+    describe('unlockUser', () => {
+      it('unlocks the user', (done) => {
+        mockPut('/users/123/unlock', {}, fixtures.userUnlock);
+
+        vinyl.unlockUser('123')
+          .then(result => {
+            assert.equal(result.lockStatus, 'Unlocked');
 
             done();
           });

@@ -59,6 +59,44 @@ class VinylDNS {
   }
 
   /**
+   * Fetch zone details.
+   * @param {string} id - The zone ID.
+   */
+  getZoneDetails(id) {
+    return this.request.getOrDelete(this.urls.zoneDetails(id), 'get');
+  }
+
+  /**
+   * Fetch zone backend IDs.
+   */
+  getZoneBackendIds() {
+    return this.request.getOrDelete(this.urls.zoneBackendIds(), 'get');
+  }
+
+  /**
+   * Fetch failed zone changes.
+   * @param {object} queryOpts - The query parameters.
+   * @param {string} queryOpts.nameFilter - Filter by zone name.
+   * @param {string} queryOpts.startFrom - The start key of the page.
+   * @param {number} queryOpts.maxItems - The page limit.
+   */
+  getZoneChangesFailure(queryOpts) {
+    return this.request.getOrDelete(this.urls.zoneChangesFailure(queryOpts), 'get');
+  }
+
+  /**
+   * Fetch deleted zone changes.
+   * @param {object} queryOpts - The query parameters.
+   * @param {string} queryOpts.nameFilter - Filter by zone name.
+   * @param {string} queryOpts.startFrom - The start key of the page.
+   * @param {number} queryOpts.maxItems - The page limit.
+   * @param {boolean} queryOpts.ignoreAccess - Ignore access restrictions.
+   */
+  getZonesDeletedChanges(queryOpts) {
+    return this.request.getOrDelete(this.urls.zonesDeletedChanges(queryOpts), 'get');
+  }
+
+  /**
    * Fetch zone changes.
    * @param {string} id - The zone ID.
    * @param {object} queryOpts - The zone changes query parameters.
@@ -91,6 +129,24 @@ class VinylDNS {
    */
   updateZone(zone) {
     return this.request.createOrUpdate(zone, this.urls.zone(zone.id), 'put');
+  }
+
+  /**
+   * Add ACL rule to zone.
+   * @param {string} zoneId - The zone ID.
+   * @param {object} aclRule - The ACL rule to add.
+   */
+  addZoneAclRule(zoneId, aclRule) {
+    return this.request.createOrUpdate(aclRule, this.urls.zoneAclRules(zoneId), 'put');
+  }
+
+  /**
+   * Delete ACL rule from zone.
+   * @param {string} zoneId - The zone ID.
+   * @param {object} aclRule - The ACL rule to delete.
+   */
+  deleteZoneAclRule(zoneId, aclRule) {
+    return this.request.createOrUpdate(aclRule, this.urls.zoneAclRules(zoneId), 'delete');
   }
 
   /**
@@ -141,6 +197,65 @@ class VinylDNS {
   }
 
   /**
+   * Request record set ownership transfer.
+   * @param {object} recordSet - The record set to update.
+   * @param {string} requestedOwnerGroupId - The requested owner group ID.
+   */
+  requestRecordSetOwnership(recordSet, requestedOwnerGroupId) {
+    return this._recordSetOwnershipTransfer(recordSet, 'Requested', requestedOwnerGroupId, false);
+  }
+
+  /**
+   * Approve record set ownership transfer.
+   * @param {object} recordSet - The record set to update.
+   * @param {string} requestedOwnerGroupId - The requested owner group ID.
+   */
+  approveRecordSetOwnership(recordSet, requestedOwnerGroupId) {
+    return this._recordSetOwnershipTransfer(recordSet, 'ManuallyApproved', requestedOwnerGroupId, true);
+  }
+
+  /**
+   * Reject record set ownership transfer.
+   * @param {object} recordSet - The record set to update.
+   * @param {string} requestedOwnerGroupId - The requested owner group ID.
+   */
+  rejectRecordSetOwnership(recordSet, requestedOwnerGroupId) {
+    return this._recordSetOwnershipTransfer(recordSet, 'ManuallyRejected', requestedOwnerGroupId, false);
+  }
+
+  /**
+   * Cancel record set ownership transfer.
+   * @param {object} recordSet - The record set to update.
+   * @param {string} requestedOwnerGroupId - The requested owner group ID.
+   */
+  cancelRecordSetOwnership(recordSet, requestedOwnerGroupId) {
+    return this._recordSetOwnershipTransfer(recordSet, 'Cancelled', requestedOwnerGroupId, false);
+  }
+
+  _recordSetOwnershipTransfer(recordSet, status, requestedOwnerGroupId, updateOwnerGroup) {
+    const updated = Object.assign({}, recordSet, {
+      recordSetGroupChange: {
+        ownershipTransferStatus: status,
+        requestedOwnerGroupId: requestedOwnerGroupId
+      }
+    });
+
+    if (updateOwnerGroup) {
+      updated.ownerGroupId = requestedOwnerGroupId;
+    }
+
+    return this.updateRecordSet(updated);
+  }
+
+  /**
+   * Fetch record set count for a zone.
+   * @param {string} zoneId - The zone ID.
+   */
+  getRecordSetCount(zoneId) {
+    return this.request.getOrDelete(this.urls.recordSetCount(zoneId), 'get');
+  }
+
+  /**
    * Delete record set.
    * @param {object} details - The record set details.
    * @param {string} details.id - The record set ID.
@@ -162,6 +277,19 @@ class VinylDNS {
   }
 
   /**
+   * Fetch record set change history.
+   * @param {object} queryOpts - The query parameters.
+   * @param {string} queryOpts.zoneId - The zone ID.
+   * @param {string} queryOpts.fqdn - The record set FQDN.
+   * @param {string} queryOpts.recordType - The record set type.
+   * @param {string} queryOpts.startFrom - The start key of the page.
+   * @param {number} queryOpts.maxItems - The page limit.
+   */
+  getRecordSetChangeHistory(queryOpts) {
+    return this.request.getOrDelete(this.urls.recordSetChangeHistory(queryOpts), 'get');
+  }
+
+  /**
    * Get record set change.
    * @param {string} zoneId - The zone ID.
    * @param {object} queryOpts - The request query parameters.
@@ -170,6 +298,25 @@ class VinylDNS {
    */
   getRecordSetChanges(zoneId, queryOpts) {
     return this.request.getOrDelete(this.urls.recordSetChanges(zoneId, queryOpts), 'get');
+  }
+
+  /**
+   * Fetch failed record set changes for a zone.
+   * @param {string} zoneId - The zone ID.
+   * @param {object} queryOpts - The query parameters.
+   * @param {string} queryOpts.startFrom - The start key of the page.
+   * @param {number} queryOpts.maxItems - The page limit.
+   */
+  getRecordSetChangesFailure(zoneId, queryOpts) {
+    return this.request.getOrDelete(this.urls.recordSetChangesFailure(zoneId, queryOpts), 'get');
+  }
+
+  /**
+   * Fetch record sets globally across zones.
+   * @param {object} queryOpts - The query parameters.
+   */
+  getRecordSetsGlobal(queryOpts) {
+    return this.request.getOrDelete(this.urls.recordSetsGlobal(queryOpts), 'get');
   }
 
   /**
@@ -195,6 +342,33 @@ class VinylDNS {
    */
   createBatchChange(batchChange) {
     return this.request.createOrUpdate(batchChange, this.urls.batchChanges(), 'post');
+  }
+
+  /**
+   * Approve a batch change.
+   * @param {string} id - The batch change ID.
+   * @param {object} review - Optional review payload.
+   */
+  approveBatchChange(id, review) {
+    return this.request.createOrUpdate(review || {}, this.urls.batchChangeApprove(id), 'post');
+  }
+
+  /**
+   * Reject a batch change.
+   * @param {string} id - The batch change ID.
+   * @param {object} review - Optional review payload.
+   */
+  rejectBatchChange(id, review) {
+    return this.request.createOrUpdate(review || {}, this.urls.batchChangeReject(id), 'post');
+  }
+
+  /**
+   * Cancel a batch change.
+   * @param {string} id - The batch change ID.
+   * @param {object} review - Optional review payload.
+   */
+  cancelBatchChange(id, review) {
+    return this.request.createOrUpdate(review || {}, this.urls.batchChangeCancel(id), 'post');
   }
 
   /**
@@ -226,6 +400,21 @@ class VinylDNS {
   }
 
   /**
+   * Get group change by ID.
+   * @param {string} id - The group change ID.
+   */
+  getGroupChange(id) {
+    return this.request.getOrDelete(this.urls.groupChange(id), 'get');
+  }
+
+  /**
+   * Get group valid domains.
+   */
+  getGroupValidDomains() {
+    return this.request.getOrDelete(this.urls.groupValidDomains(), 'get');
+  }
+
+  /**
    * Get group admins.
    * @param {string} id - The group ID.
    */
@@ -241,6 +430,30 @@ class VinylDNS {
    */
   getGroupMembers(id, queryOpts) {
     return this.request.getOrDelete(this.urls.getGroupMembers(id, queryOpts), 'get');
+  }
+
+  /**
+   * Get user by ID.
+   * @param {string} id - The user ID.
+   */
+  getUser(id) {
+    return this.request.getOrDelete(this.urls.user(id), 'get');
+  }
+
+  /**
+   * Lock user.
+   * @param {string} id - The user ID.
+   */
+  lockUser(id) {
+    return this.request.createOrUpdate({}, this.urls.userLock(id), 'put');
+  }
+
+  /**
+   * Unlock user.
+   * @param {string} id - The user ID.
+   */
+  unlockUser(id) {
+    return this.request.createOrUpdate({}, this.urls.userUnlock(id), 'put');
   }
 
   /**
@@ -265,6 +478,50 @@ class VinylDNS {
    */
   deleteGroup(id) {
     return this.request.getOrDelete(this.urls.group(id), 'delete');
+  }
+
+  /**
+   * Ping VinylDNS.
+   */
+  ping() {
+    return this.request.getOrDelete(this.urls.ping(), 'get');
+  }
+
+  /**
+   * Health check.
+   */
+  health() {
+    return this.request.getOrDelete(this.urls.health(), 'get');
+  }
+
+  /**
+   * Color status.
+   */
+  color() {
+    return this.request.getOrDelete(this.urls.color(), 'get');
+  }
+
+  /**
+   * Prometheus metrics.
+   * @param {array} names - Optional metric names.
+   */
+  metricsPrometheus(names) {
+    return this.request.getOrDelete(this.urls.metricsPrometheus(names), 'get');
+  }
+
+  /**
+   * Get system status.
+   */
+  getStatus() {
+    return this.request.getOrDelete(this.urls.status(), 'get');
+  }
+
+  /**
+   * Update system status.
+   * @param {boolean} processingDisabled - Processing disabled flag.
+   */
+  updateStatus(processingDisabled) {
+    return this.request.createOrUpdate({}, this.urls.statusUpdate(processingDisabled), 'post');
   }
 }
 

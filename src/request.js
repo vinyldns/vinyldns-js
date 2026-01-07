@@ -47,17 +47,24 @@ class Request {
 
   _requestOptions(opts) {
     let parsedUrl = url.parse(opts.url);
+    const hasBody = opts.body !== undefined && opts.body !== null;
 
-    return {
+    const request = {
       host: parsedUrl.host,
       url: opts.url,
       method: opts.method ? opts.method.toUpperCase() : 'GET',
       path: parsedUrl.path,
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: opts.body ? JSON.stringify(opts.body) : ''
+      service: this.config.service || 'VinylDNS',
+      region: this.config.region || 'us-east-1',
+      headers: {},
+      body: hasBody ? JSON.stringify(opts.body) : undefined
     };
+
+    if (hasBody) {
+      request.headers['Content-Type'] = 'application/json';
+    }
+
+    return request;
   }
 
   _request(opts) {
@@ -67,7 +74,9 @@ class Request {
     });
 
     // axios expects a 'data'; aws4.sign expects a 'body'
-    signedReq.data = opts.body;
+    if (opts.body !== undefined) {
+      signedReq.data = opts.body;
+    }
 
     return new Promise((fulfill, reject) => {
       axios(signedReq)
