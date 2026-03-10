@@ -167,8 +167,6 @@ describe('VinylDNS', () => {
         vinyl.syncZone('123')
           .then(result => {
             assert.equal(result.zone.name, 'sync-test.');
-
-            done();
           });
       });
 
@@ -177,12 +175,10 @@ describe('VinylDNS', () => {
 
         vinyl.syncZone('123')
           .then(() => {
-            // NOOP
+            throw new Error('expected request to fail');
           })
           .catch(err => {
             assert.equal(err.message, 'Request failed with status code 500');
-
-            done();
           });
       });
     });
