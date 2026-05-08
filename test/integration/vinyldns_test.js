@@ -50,6 +50,7 @@ const buildZone = function(groupId, name) {
 describe('VinylDNS interaction with a real VinylDNS API', () => {
   let testGroup;
   let testZone;
+  let testRecordSet;
 
   describe('its support of VinylDNS group creation', () => {
     it('can create groups', (done) => {
@@ -142,6 +143,24 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
 
         });
     });
+
+    it('can fetch zone details', () => {
+      vinyl.getZoneDetails(testZone.zone.id)
+        .then(result => {
+          assert.equal(result.zone.name, testZone.zone.name);
+          assert.equal(result.zone.adminGroupId, testGroup.id);
+
+        });
+    });
+
+    it('can fetch zone backend ids', () => {
+      vinyl.getZoneBackendIds()
+        .then(result => {
+          assert.equal(Array.isArray(result.backendIds), true);
+          assert.equal(result.backendIds.length > 0, true);
+
+        });
+    });
   });
 
   describe('its support of VinylDNS record sets', () => {
@@ -157,9 +176,49 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
         ownerGroupId: testGroup.id
       })
         .then(result => {
+          testRecordSet = result;
+
           assert.equal(result.recordSet.name, 'record-set-tests-create');
           assert.equal(result.recordSet.ownerGroupId, testGroup.id);
           done();
+        });
+    });
+
+    it('can fetch the record set count for a zone', () => {
+      vinyl.getRecordSetCount(testZone.zone.id)
+        .then(result => {
+          assert.equal(result.count > 0, true);
+
+        });
+    });
+
+    it('can fetch record set change history', () => {
+      vinyl.getRecordSetChangeHistory({
+        zoneId: testZone.zone.id,
+        fqdn: `${testRecordSet.recordSet.name}.${testZone.zone.name}`,
+        recordType: testRecordSet.recordSet.type
+      })
+        .then(result => {
+          assert.equal(result.recordSetChanges.length > 0, true);
+          assert.equal(
+            result.recordSetChanges.some(change => change.recordSet.name === testRecordSet.recordSet.name),
+            true
+          );
+
+        });
+    });
+
+    it('can fetch record sets globally', () => {
+      vinyl.getRecordSetsGlobal({
+        recordNameFilter: testRecordSet.recordSet.name
+      })
+        .then(result => {
+          assert.equal(result.recordSets.length > 0, true);
+          assert.equal(
+            result.recordSets.some(recordSet => recordSet.name === testRecordSet.recordSet.name),
+            true
+          );
+
         });
     });
   });
