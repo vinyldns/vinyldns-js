@@ -215,7 +215,9 @@ class Urls {
 
   queryString(obj) {
     if (obj) {
-      return '?' + Object.keys(obj).map(key => `${key}=${obj[key]}`).join('&');
+      return '?' + Object.keys(obj)
+        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`)
+        .join('&');
     }
 
     return '';
