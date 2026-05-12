@@ -44,4 +44,4 @@ integration-tests:
 tests:
 	set -euo pipefail
 	echo "Executing vinyldns-js tests..."
-	npm install && npx mocha && npx eslint src/*.js test/**/*.js && npm run generate-docs
+	npm install && npx mocha && npx eslint src test && npm run generate-docs
