@@ -288,28 +288,24 @@ describe('VinylDNS', () => {
     });
 
     describe('syncZone', () => {
-      it('syncs the zone with the ID it is passed', (done) => {
+      it('syncs the zone with the ID it is passed', () => {
         mockPost('/zones/123/sync', '', fixtures.syncZone);
 
-        vinyl.syncZone('123')
+        return vinyl.syncZone('123')
           .then(result => {
             assert.equal(result.zone.name, 'sync-test.');
-
-            done();
           });
       });
 
-      it('properly handles not okay responses from the API', (done) => {
+      it('properly handles not okay responses from the API', () => {
         mockPost('/zones/123/sync', '', 'some err', 500);
 
-        vinyl.syncZone('123')
+        return vinyl.syncZone('123')
           .then(() => {
-            // NOOP
+            throw new Error('expected request to fail');
           })
           .catch(err => {
             assert.equal(err.message, 'Request failed with status code 500');
-
-            done();
           });
       });
     });

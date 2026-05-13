@@ -43,7 +43,7 @@ const buildZone = function(groupId, name) {
   return {
     adminGroupId: groupId,
     name: name || 'vinyldns.',
-    email: 'test@example.com'
+    email: 'test@test.com'
   };
 };
 
@@ -60,7 +60,6 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
           testGroup = result;
 
           assert.equal(result.name, 'ok-group');
-
           done();
         });
     });
@@ -112,7 +111,6 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
           // Pause to allow the zone to propagate before proceeding to other tests, where the zone is used
           setTimeout(() => {
             assert.equal(result.zone.name, 'vinyldns.');
-
             done();
           }, 2000);
         });
@@ -231,9 +229,7 @@ describe('VinylDNS interaction with a real VinylDNS API', () => {
 
       vinyl.updateGroup(g)
         .then(result => {
-
           assert.equal(result.name, 'group-tests-group-updated');
-
           done();
         });
     });

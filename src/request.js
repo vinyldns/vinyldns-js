@@ -54,8 +54,6 @@ class Request {
       url: opts.url,
       method: opts.method ? opts.method.toUpperCase() : 'GET',
       path: parsedUrl.path,
-      service: this.config.service || 'VinylDNS',
-      region: this.config.region || 'us-east-1',
       headers: {},
       body: hasBody ? JSON.stringify(opts.body) : undefined
     };
